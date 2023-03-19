@@ -21,7 +21,7 @@ def main() -> None:
     application = Application.builder().token(Config.BOT_TOKEN).build()
     bot = application.add_handler
 
-    # on different commands - answer in Telegram es: /start
+    # on different commands - answer in Telegram
     commands_index.user_command(bot)
     commands_index.owner_command(bot)
 
