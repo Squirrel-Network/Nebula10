@@ -13,3 +13,4 @@ def core_handlers(bot):
 
 async def group_handlers(update, context):
     await handlers.chat_handlers.chat_status.status(update,context)
+    await handlers.user_handlers.user_status.status(update,context)

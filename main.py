@@ -23,6 +23,7 @@ def main() -> None:
 
     # on different commands - answer in Telegram
     commands_index.user_command(bot)
+    commands_index.admin_command(bot)
     commands_index.owner_command(bot)
 
     # Handlers
