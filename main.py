@@ -3,17 +3,25 @@
 
 # Copyright SquirrelNetwork
 
+import sys
 import logging
 from config import Config
 from core.commands import commands_index
 from core.handlers import handlers_index
 from telegram.ext import Application
 
+# if version < 3.7, stop bot.
+LOGGING = logging.getLogger(__name__)
+if sys.version_info[0] < 3 or sys.version_info[1] < 7:
+    LOGGING.error("You MUST have a python version of at least 3.7! Multiple features depend on this. Bot quitting.")
+    quit(1)
+
 # Enable logging
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
 logger = logging.getLogger(__name__)
+
 
 def main() -> None:
     """Start the bot."""

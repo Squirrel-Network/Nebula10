@@ -11,6 +11,7 @@ def admin_command(bot):
 
 def owner_command(bot):
     bot(CMH("test", owner.test.command_test))
+    bot(CMH("server", owner.server.init))
 
 def user_command(bot):
     bot(CMH("start", user.start.start))
