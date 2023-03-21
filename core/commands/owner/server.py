@@ -4,6 +4,7 @@
 # Copyright SquirrelNetwork
 import psutil, datetime, platform
 from core.decorators import restricted
+from core.utilities.message import message
 
 
 NAME_SERVER = "NAOS"
@@ -11,8 +12,7 @@ NAME_SERVER = "NAOS"
 @restricted.admin
 async def init(update,context):
     msg = system_status()
-    #message(update,context,msg)
-    await update.message.reply_text(msg,parse_mode='HTML')
+    await message(update,context,msg)
     formatter = "Eseguito da: {}".format(update.message.from_user.id)
     #sys_loggers("[SERVER_INFO_LOGS]",formatter,False,False,True)
 
