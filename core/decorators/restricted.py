@@ -3,14 +3,21 @@
 
 # Copyright SquirrelNetwork
 from functools import wraps
+from core.utilities.functions import get_owner_list
 
-LIST_OF_ADMINS = [1065189838]
+TITLES = ['creator', 'administrator']
+OWNER_LIST = get_owner_list()
 
 def admin(func):
     @wraps(func)
     async def wrapped(update, context, *args, **kwargs):
+        bot = context.bot
+        chat = update.effective_chat.id
         user_id = update.effective_user.id
-        if user_id not in LIST_OF_ADMINS:
+        get_user = await bot.get_chat_member(chat,user_id)
+        stat = get_user.status
+
+        if stat not in TITLES:
             print(f"Unauthorized access denied for {user_id}.")
             return
         return await func(update, context, *args, **kwargs)

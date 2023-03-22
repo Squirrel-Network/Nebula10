@@ -4,6 +4,6 @@
 # Copyright SquirrelNetwork
 
 """Import Files"""
-__all__ = ["getlang"]
+__all__ = ["EN","getLang","IT"]
 
 from languages import *

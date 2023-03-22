@@ -8,6 +8,7 @@ from core.commands import admin,owner,user
 
 def admin_command(bot):
     bot(CMH("ban",admin.ban.ban_command))
+    bot(CMH("say", admin.say.init))
 
 def owner_command(bot):
     bot(CMH("test", owner.test.command_test))

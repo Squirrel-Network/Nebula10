@@ -17,3 +17,7 @@ class Config(object):
     PASSWORD = os.environ.get('MYSQL_PASSWORD')
     DBNAME = os.environ.get('MYSQL_DBNAME')
     BOT_TOKEN = os.environ.get('TOKEN')
+    ##########################
+    ##   PROJECT SETTINGS   ##
+    ##########################
+    DEFAULT_LANGUAGE = "EN"
