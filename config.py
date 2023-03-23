@@ -20,4 +20,15 @@ class Config(object):
     ##########################
     ##   PROJECT SETTINGS   ##
     ##########################
+    DEBUG = False
     DEFAULT_LANGUAGE = "EN"
+    VERSION = '10.0.0'
+    VERSION_NAME = 'Lucario'
+    REPO = 'https://github.com/Squirrel-Network/nebula10'
+    ###########################
+    ##   TELEGRAM SETTINGS  ##
+    ##########################
+    DEFAULT_WELCOME = os.environ.get('TG_DEFAULT_WELCOME', 'Welcome {} to the {} group')
+    DEFAULT_RULES = os.environ.get('TG_DEFAULT_RULES', 'https://github.com/Squirrel-Network/GroupRules')
+    DEFAULT_LOG_CHANNEL = os.environ.get('TG_DEFAULT_LOG_CHANNEL')
+    DEFAULT_STAFF_GROUP = os.environ.get('TG_DEFAULT_STAFF_GROUP')

@@ -22,3 +22,18 @@ def admin(func):
             return
         return await func(update, context, *args, **kwargs)
     return wrapped
+
+
+
+def owner(func):
+    @wraps(func)
+    async def wrapped(update, context):
+        if update.effective_user is not None:
+            user_id = update.effective_user.id
+            if user_id not in OWNER_LIST:
+                print("Unauthorized access denied for {}.".format(user_id))
+                return
+        else:
+            return False
+        return await func(update, context)
+    return wrapped

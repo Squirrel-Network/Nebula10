@@ -6,8 +6,9 @@
 #from core.database.repository.group import GroupRepository
 #from core.utilities.message import message
 from core.utilities.entities import TelegramObjects
+from core.decorators import restricted
 
-
+@restricted.owner
 async def command_test(update,context):
     bot = context.bot
     chat = update.effective_chat.id

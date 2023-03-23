@@ -9,7 +9,7 @@ from core.utilities.message import message
 
 NAME_SERVER = "NAOS"
 
-@restricted.admin
+@restricted.owner
 async def init(update,context):
     msg = system_status()
     await message(update,context,msg)
