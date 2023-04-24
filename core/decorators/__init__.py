@@ -4,6 +4,6 @@
 # Copyright SquirrelNetwork
 
 """Import Files"""
-__all__ = ["restricted"]
+__all__ = ["delete","private","restricted"]
 
 from core.decorators import *

@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-#TODO RuntimeWarning: Enable tracemalloc to get the object allocation traceback with getChat
 class TelegramObjects:
     def __init__(self, update, context):
         self.bot = context.bot

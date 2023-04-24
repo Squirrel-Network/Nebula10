@@ -14,9 +14,10 @@ def get_owner_list() -> list:
         arr_owners.append(owners)
     return arr_owners
 
-
 async def close_menu(update, context):
     query = update.callback_query
     languages(update,context)
     if query.data == 'closeMenu':
         await query.message.delete()
+
+

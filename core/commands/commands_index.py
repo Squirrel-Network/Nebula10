@@ -26,4 +26,4 @@ def owner_command(bot):
 
 
 def user_command(bot):
-    bot(CMH("start", user.start.start))
+    bot(CMH("start", user.start.init))
