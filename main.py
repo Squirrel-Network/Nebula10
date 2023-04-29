@@ -6,9 +6,10 @@
 import logging
 import sys
 
+from dotenv import load_dotenv
 from telegram.ext import Application
 
-from core.config import Session
+from core.config import Config, Session
 
 
 # if version < 3.7, stop bot.
@@ -25,6 +26,12 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
+    # Load .env file
+    load_dotenv()
+
+    # Load the Config
+    Session.config = Config()
+
     """Start the bot."""
     # Create the Application and pass it your bot's token.
     application = Application.builder().token(Session.config.BOT_TOKEN).build()
