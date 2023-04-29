@@ -9,7 +9,7 @@ import sys
 from dotenv import load_dotenv
 from telegram.ext import Application
 
-from core.config import Config, Session
+from config import Config, Session
 
 
 # if version < 3.7, stop bot.

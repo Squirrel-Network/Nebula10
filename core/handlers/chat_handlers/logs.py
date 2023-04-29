@@ -6,7 +6,7 @@
 
 import logging
 
-from core.config import Session
+from config import Session
 from core.database.repository.group import GroupRepository
 from core.utilities.message import message
 

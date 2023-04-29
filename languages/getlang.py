@@ -3,7 +3,7 @@
 
 # Copyright SquirrelNetwork
 
-from core.config import Session
+from config import Session
 from core.database.repository.group_language import GroupLanguageRepository
 from languages import EN, IT
 

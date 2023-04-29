@@ -8,7 +8,7 @@ import re
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
-from core.config import Session
+from config import Session
 from core.database.repository.superban import SuperbanRepository
 from core.database.repository.user import UserRepository
 from core.decorators import restricted

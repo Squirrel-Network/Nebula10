@@ -6,7 +6,7 @@
 import pymysql
 from sqlalchemy import create_engine
 
-from core.config import Session
+from config import Session
 
 
 class Connection:

@@ -6,5 +6,5 @@
 __all__ = ["Config", "Session"]
 
 
-from core.config.config import Config
-from core.config.session import Session
+from config.config import Config
+from config.session import Session
