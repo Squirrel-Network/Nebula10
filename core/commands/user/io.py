@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+
 from core import decorators
-from core.utilities.message import message
-from core.utilities.entities import TelegramObjects
 from core.database.repository.superban import SuperbanRepository
+from core.utilities.entities import TelegramObjects
+from core.utilities.message import message
+
 
 @decorators.private.init
 @decorators.delete.init

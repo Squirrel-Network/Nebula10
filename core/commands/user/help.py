@@ -2,9 +2,12 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-from core.utilities.menu import build_menu
-from languages.getLang import languages
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
+from core.utilities.menu import build_menu
+from languages.getlang import languages
+
 
 async def init(update,context):
     bot = context.bot

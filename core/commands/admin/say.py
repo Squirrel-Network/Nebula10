@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+
 from core.decorators import restricted
-from languages.getLang import languages
 from core.utilities.message import message
+from languages.getlang import languages
+
 
 @restricted.admin
 async def init(update,context):

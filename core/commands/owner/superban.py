@@ -2,18 +2,22 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-import re
+
 import datetime
-from config import Config
-from core.decorators import restricted
-from core.utilities.menu import build_menu
-from core.utilities.message import message
+import re
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
+from config import Config
 from core.database.repository.superban import SuperbanRepository
 from core.database.repository.user import UserRepository
-from core.handlers.chat_handlers.logs import sys_loggers, debug_channel
-from core.utilities.strings import Strings
+from core.decorators import restricted
+from core.handlers.chat_handlers.logs import debug_channel, sys_loggers
+from core.utilities.menu import build_menu
+from core.utilities.message import message
 from core.utilities.regex import Regex
+from core.utilities.strings import Strings
+
 
 @restricted.owner
 async def init(update, context):

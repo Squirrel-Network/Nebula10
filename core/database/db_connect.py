@@ -2,14 +2,18 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+
 import pymysql
-from config import Config
 from sqlalchemy import create_engine
 
-"""
-This class handles database connection and inbound queries
-"""
+from config import Config
+
+
 class Connection:
+    """
+    This class handles database connection and inbound queries
+    """
+    
     def __init__(self):
         self.con = pymysql.connect(
             host = Config.HOST,

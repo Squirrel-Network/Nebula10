@@ -2,12 +2,15 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-from core import decorators
-from languages.getLang import languages
-from core.utilities.message import message
-from core.utilities.entities import TelegramObjects
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
+from core import decorators
+from core.utilities.entities import TelegramObjects
 from core.utilities.menu import build_menu
+from core.utilities.message import message
+from languages.getlang import languages
+
 
 @decorators.private.init
 @decorators.delete.init
