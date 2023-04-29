@@ -3,9 +3,10 @@
 
 # Copyright SquirrelNetwork
 
-from config import Config
+from core.config import Session
 from core.database.repository.group_language import GroupLanguageRepository
-from languages import (EN,IT)
+from languages import EN, IT
+
 
 def get(update, context):
     chat = update.effective_message.chat_id
@@ -19,7 +20,7 @@ def languages(update, context):
     LANGUAGE = get(update,context)
 
     if LANGUAGE == "" or LANGUAGE is None:
-        LANGUAGE = Config.DEFAULT_LANGUAGE
+        LANGUAGE = Session.config.DEFAULT_LANGUAGE
 
     if LANGUAGE == "IT":
         setLang = IT.Italian
