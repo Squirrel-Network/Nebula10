@@ -4,6 +4,6 @@
 # Copyright SquirrelNetwork
 
 """Import Files"""
-__all__ = ["EN","getlang","IT"]
+__all__ = ["get_group_lang", "get_lang", "load_languages"]
 
-from languages import *
+from .languages import get_group_lang, get_lang, load_languages

@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from telegram.ext import Application
 
 from config import Config, Session
+from languages import load_languages
 
 
 # if version < 3.7, stop bot.
@@ -31,6 +32,9 @@ def main() -> None:
 
     # Load the Config
     Session.config = Config()
+
+    # Load languages
+    Session.lang = load_languages()
 
     """Start the bot."""
     # Create the Application and pass it your bot's token.
