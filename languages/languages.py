@@ -4,6 +4,7 @@
 # Copyright SquirrelNetwork
 
 import json
+import pathlib
 
 from telegram import Update
 
@@ -13,8 +14,14 @@ from core.utilities.lang import Lang
 
 
 def load_languages() -> dict[str, Lang]:
-    with open("languages/languages.json", "r") as f:
-        return json.load(f)
+    languages = dict()
+    path = pathlib.Path(__file__).parent
+
+    for x in path.glob("*.json"):
+        with open(x, "r") as f:
+            languages[x.stem] = json.load(f)
+
+    return languages
     
 
 def get_group_lang(update: Update) -> str | None:
