@@ -30,14 +30,9 @@ def get_group_lang(update: Update) -> str | None:
 
     if row:
         return row['languages']
-    
-    return None
 
 
 def get_lang(update: Update) -> Lang:
-    lang = get_group_lang(update)
-
-    if not lang:
-        lang = Session.config.DEFAULT_LANGUAGE
+    lang = get_group_lang(update) or Session.config.DEFAULT_LANGUAGE
     
     return Session.lang[lang.lower()]
