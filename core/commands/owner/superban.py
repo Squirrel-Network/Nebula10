@@ -2,18 +2,22 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-import re
+
 import datetime
-from config import Config
-from core.decorators import restricted
-from core.utilities.menu import build_menu
-from core.utilities.message import message
+import re
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
+from config import Session
 from core.database.repository.superban import SuperbanRepository
 from core.database.repository.user import UserRepository
-from core.handlers.chat_handlers.logs import sys_loggers, debug_channel
-from core.utilities.strings import Strings
+from core.decorators import restricted
+from core.handlers.chat_handlers.logs import debug_channel, sys_loggers
+from core.utilities.menu import build_menu
+from core.utilities.message import message
 from core.utilities.regex import Regex
+from core.utilities.strings import Strings
+
 
 @restricted.owner
 async def init(update, context):
@@ -58,7 +62,7 @@ async def init(update, context):
 
                     # Log in Telegram Channel
                     logs_text = Strings.SUPERBAN_LOG.format(default_user_first_name, id_user, default_motivation,save_date, operator_first_name, operator_username,operator_id)
-                    await message(update, context, logs_text, 'HTML', 'messageid', Config.DEFAULT_LOG_CHANNEL, None)
+                    await message(update, context, logs_text, 'HTML', 'messageid', Session.config.DEFAULT_LOG_CHANNEL, None)
             else:
                 number = re.search(Regex.HAS_NUMBER, user_id)
                 if number is None:
@@ -81,7 +85,7 @@ async def init(update, context):
 
                     #Log in Telegram Channel
                     logs_text = Strings.SUPERBAN_LOG.format(default_user_first_name,user_id,default_motivation,save_date,operator_first_name,operator_username,operator_id)
-                    await message(update, context, logs_text, 'HTML', 'messageid', Config.DEFAULT_LOG_CHANNEL, None)
+                    await message(update, context, logs_text, 'HTML', 'messageid', Session.config.DEFAULT_LOG_CHANNEL, None)
 
                     #Log in Debug Channel
                     formatter = "Superban eseguito da: {}[<code>{}</code>] verso l'utente: [<code>{}</code>]".format(operator_username,operator_id,user_id)
@@ -158,7 +162,7 @@ async def update_superban(update, context):
             await bot.delete_message(chat_id, query.message.reply_to_message.message_id)
             #Telegram Logs
             logs_text = Strings.SUPERBAN_LOG.format(user.first_name,user.id,motivation,save_date,operator_first_name,operator_username,operator_id)
-            await message(update, context, logs_text, 'HTML', 'messageid', Config.DEFAULT_LOG_CHANNEL, None)
+            await message(update, context, logs_text, 'HTML', 'messageid', Session.config.DEFAULT_LOG_CHANNEL, None)
             #System Logs
             formatter = "Superban eseguito dall'operatore: {}<code>[{}]</code>\nVerso l'utente: {} [<code>{}</code>]\nNella chat: [<code>{}</code>]".format(operator_username,operator_id,user.first_name,user.id,chat_id)
             sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)

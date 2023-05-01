@@ -2,25 +2,29 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+
 import pymysql
-from config import Config
 from sqlalchemy import create_engine
 
-"""
-This class handles database connection and inbound queries
-"""
+from config import Session
+
+
 class Connection:
+    """
+    This class handles database connection and inbound queries
+    """
+    
     def __init__(self):
         self.con = pymysql.connect(
-            host = Config.HOST,
-            port = Config.PORT,
-            user = Config.USER,
-            password = Config.PASSWORD,
-            db = Config.DBNAME,
+            host = Session.config.HOST,
+            port = Session.config.PORT,
+            user = Session.config.USER,
+            password = Session.config.PASSWORD,
+            db = Session.config.DBNAME,
             autocommit=True,
             charset = 'utf8mb4',
             cursorclass = pymysql.cursors.DictCursor
-            )
+        )
         self.cur = self.con.cursor()
 
     def _select(self,sql,args=None):
@@ -60,9 +64,9 @@ class Connection:
 
 class SqlAlchemyConnection:
     def __init__(self):
-        self.server = '{}:{}'.format(Config.HOST,Config.PORT)
-        self.db = Config.DBNAME
-        self.login = Config.USER
-        self.passwd = Config.PASSWORD
+        self.server = '{}:{}'.format(Session.config.HOST, Session.config.PORT)
+        self.db = Session.config.DBNAME
+        self.login = Session.config.USER
+        self.passwd = Session.config.PASSWORD
         self.engine_str = 'mysql+pymysql://{}:{}@{}/{}'.format(self.login, self.passwd, self.server, self.db)
         self.engine = create_engine(self.engine_str)

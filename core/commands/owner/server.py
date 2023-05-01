@@ -2,10 +2,14 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-import psutil, datetime, platform
+
+import datetime
+import platform
+
+import psutil
+
 from core.decorators import restricted
 from core.utilities.message import message
-
 
 NAME_SERVER = "NAOS"
 

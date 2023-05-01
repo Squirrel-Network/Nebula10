@@ -2,15 +2,17 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-from core.utilities.menu import build_menu
-from languages.getLang import languages
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
+from core.utilities.menu import build_menu
+from languages import get_lang
+
 
 async def init(update,context):
     bot = context.bot
     chat = update.effective_message.chat_id
-    languages(update,context)
-    msg = languages.helps.format("@"+bot.username)
+    msg = get_lang(update)["HELP_COMMAND"].format("@"+bot.username)
     buttons = []
     buttons.append(InlineKeyboardButton("Commands List", url='https://github.com/Squirrel-Network/nebula8/wiki/Command-List'))
     buttons.append(InlineKeyboardButton("Source", url='https://github.com/Squirrel-Network/nebula10'))

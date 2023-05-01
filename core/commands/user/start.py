@@ -2,18 +2,20 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-from core import decorators
-from languages.getLang import languages
-from core.utilities.message import message
-from core.utilities.entities import TelegramObjects
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
+from core import decorators
+from core.utilities.entities import TelegramObjects
 from core.utilities.menu import build_menu
+from core.utilities.message import message
+from languages import get_lang
+
 
 @decorators.private.init
 @decorators.delete.init
 async def init(update, context):
     bot = context.bot
-    languages(update,context)
     chat = update.effective_message.chat_id
     get_bot = TelegramObjects(update,context).bot_object()
     user = TelegramObjects(update,context).user_object()
@@ -34,4 +36,4 @@ async def init(update, context):
                "ℹ Se hai bisogno di aiuto: [/help]\n\n\n🔵 Sapevi che sono OpenSource e cerco sempre aiuto? [/source]".format("@"+get_bot.username)
         await bot.send_message(chat, text, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
     else:
-        await message(update,context,languages.start.format("@"+get_bot.username))
+        await message(update,context,get_lang(update)["START_COMMAND"].start.format("@"+get_bot.username))

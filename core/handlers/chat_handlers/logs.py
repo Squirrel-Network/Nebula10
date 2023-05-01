@@ -3,16 +3,18 @@
 
 # Copyright SquirrelNetwork
 # Credits https://github.com/PaulSonOfLars/tgbot/
+
 import logging
-from config import Config
-from core.utilities.message import message
+
+from config import Session
 from core.database.repository.group import GroupRepository
+from core.utilities.message import message
 
 SET_CHANNEL_DEBUG = True
 
 def sys_loggers(name="",message="",debugs = False,info = False,warning = False,errors = False, critical = False):
     logger = logging.getLogger(name)
-    logger.setLevel((logging.INFO, logging.DEBUG)[Config.DEBUG])
+    logger.setLevel((logging.INFO, logging.DEBUG)[Session.config.DEBUG])
     fh = logging.FileHandler('debug.log')
     fh.setLevel(logging.INFO)
     logger.addHandler(fh)
@@ -37,7 +39,7 @@ set if it is not set it is sent to the default channel
 def telegram_loggers(update,context,msg = ""):
     chat = update.effective_message.chat_id
     row = GroupRepository().getById([chat])
-    id_channel = Config.DEFAULT_LOG_CHANNEL
+    id_channel = Session.config.DEFAULT_LOG_CHANNEL
     if row:
         get_log_channel = row['log_channel']
         send = message(update, context, msg, 'HTML', 'messageid', get_log_channel, None)
@@ -46,7 +48,7 @@ def telegram_loggers(update,context,msg = ""):
     return send
 
 def staff_loggers(update,context,msg = ""):
-    id_staff_group = Config.DEFAULT_STAFF_GROUP
+    id_staff_group = Session.config.DEFAULT_STAFF_GROUP
     send = message(update, context, msg, 'HTML', 'messageid', id_staff_group, None)
     return send
 
