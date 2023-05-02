@@ -17,34 +17,34 @@ LIST_ENV = (
     ("DEFAULT_RULES", "TG_DEFAULT_RULES"),
     ("DEFAULT_LOG_CHANNEL", "TG_DEFAULT_LOG_CHANNEL"),
     ("DEFAULT_STAFF_GROUP", "TG_DEFAULT_STAFF_GROUP"),
+    ("OWNER_ID", "TG_OWNER_ID"),
+    ("OWNER_USERNAME","TG_OWNER_USERNAME"),
 )
 
 
 class Config(BaseSettings):
-    ###########################
-    ##   DATABASE SETTINGS  ##
-    ##########################
+    # Database settings
     HOST: str = "localhost"
     PORT: int = 3306
     USER: str = "root"
     PASSWORD: str
     DBNAME: str
     BOT_TOKEN: str
-    ##########################
-    ##   PROJECT SETTINGS   ##
-    ##########################
+
+    # Project settings
     DEBUG: bool = False
     DEFAULT_LANGUAGE: str = "EN"
     VERSION: str = "10.0.0"
     VERSION_NAME: str = "Lucario"
     REPO: str = "https://github.com/Squirrel-Network/nebula10"
-    ###########################
-    ##   TELEGRAM SETTINGS  ##
-    ##########################
+
+    # Telegram settings
     DEFAULT_WELCOME: str = "Welcome {} to the {} group"
     DEFAULT_RULES: str = "https://github.com/Squirrel-Network/GroupRules"
     DEFAULT_LOG_CHANNEL: str
     DEFAULT_STAFF_GROUP: str
+    OWNER_ID: int
+    OWNER_USERNAME: str
 
     class Config:
         fields = {

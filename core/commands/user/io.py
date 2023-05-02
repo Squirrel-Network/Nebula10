@@ -9,8 +9,6 @@ from core.utilities.entities import TelegramObjects
 from core.utilities.message import message
 
 
-@decorators.private.init
-@decorators.delete.init
 async def init(update,context):
     user = TelegramObjects(update,context).user_object()
     nickname = "@"+ user.username

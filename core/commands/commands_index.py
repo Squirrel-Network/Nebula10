@@ -3,13 +3,17 @@
 
 # Copyright SquirrelNetwork
 
-from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH)
-from core.commands import admin,owner,user
+from telegram.ext import CallbackQueryHandler as CQH
+from telegram.ext import CommandHandler as CMH
+from telegram.ext import ChatMemberHandler
+
+from core.commands import admin, owner, user
 from core.utilities.functions import close_menu
 
+
 def admin_command(bot):
-    bot(CMH("ban",admin.ban.ban_command))
     bot(CMH("say", admin.say.init))
+    bot(CMH("settings", admin.settings.init))
 
 def owner_command(bot):
     bot(CMH("test", owner.test.command_test))

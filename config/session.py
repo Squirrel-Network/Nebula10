@@ -10,3 +10,4 @@ from core.utilities.lang import Lang
 class Session:
     config: Config
     lang: dict[str, Lang]
+    owner_ids: list[int]

@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-"""Import Files"""
-__all__ = ["ban","say"]
+__all__ = ["say", "settings"]
 
-from core.commands.admin import *
+from . import say, settings

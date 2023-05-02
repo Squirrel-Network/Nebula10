@@ -13,12 +13,13 @@ from core.utilities.message import message
 
 NAME_SERVER = "NAOS"
 
-@restricted.owner
+
 async def init(update,context):
     msg = system_status()
     await message(update,context,msg)
     formatter = "Eseguito da: {}".format(update.message.from_user.id)
     #sys_loggers("[SERVER_INFO_LOGS]",formatter,False,False,True)
+
 
 def get_size(bytes, suffix="B"):
     """
@@ -32,6 +33,7 @@ def get_size(bytes, suffix="B"):
         if bytes < factor:
             return f"{bytes:.2f}{unit}{suffix}"
         bytes /= factor
+
 
 def system_status():
         cpu_percent = psutil.cpu_percent()

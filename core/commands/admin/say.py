@@ -8,7 +8,6 @@ from core.utilities.message import message
 from languages import get_lang
 
 
-@restricted.admin
 async def init(update,context):
     msg = update.message.text[4:].strip()
     

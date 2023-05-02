@@ -3,11 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-"""Import Files"""
-__all__ = ["admin",
-           "owner",
-           "user",
-           "commands_index"
-           ]
+__all__ = ["admin", "owner", "user"]
 
-from core.commands import *
+from . import admin, owner, user

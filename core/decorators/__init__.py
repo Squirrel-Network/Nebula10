@@ -3,7 +3,8 @@
 
 # Copyright SquirrelNetwork
 
-"""Import Files"""
-__all__ = ["delete","private","restricted"]
+__all__ = [
+    "check_role"
+]
 
-from core.decorators import *
+from .restricted import check_role

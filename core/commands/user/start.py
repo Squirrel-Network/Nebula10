@@ -12,8 +12,6 @@ from core.utilities.message import message
 from languages import get_lang
 
 
-@decorators.private.init
-@decorators.delete.init
 async def init(update, context):
     bot = context.bot
     chat = update.effective_message.chat_id
