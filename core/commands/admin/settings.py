@@ -32,28 +32,26 @@ BUTTONS_MENU = (
 
 def get_keyboard_settings(chat_id: int) -> InlineKeyboardMarkup:
     group = GroupRepository().getById(chat_id)
-    buttons = []
-
-    for name, cb, db_name in BUTTONS_MENU:
-        get_check = "✅" if group[db_name] else "❌"
-        buttons.append(
-            InlineKeyboardButton(f"{get_check} {name}", callback_data=cb)
-        )
-
-    buttons.append(InlineKeyboardButton('Languages 🌍', callback_data='lang'))
-    buttons.append(
+    buttons = [
         InlineKeyboardButton(
-            'Commands', 
-            url='https://github.com/Squirrel-Network/nebula8/wiki/Command-List'
+            f"{'✅' if group[db_name] else '❌'} {name}", callback_data=cb
         )
+        for name, cb, db_name in BUTTONS_MENU
+    ]
+
+    buttons.extend(
+        [
+            InlineKeyboardButton("Languages 🌍", callback_data="lang"),
+            InlineKeyboardButton(
+                "Commands",
+                url="https://github.com/Squirrel-Network/nebula8/wiki/Command-List",
+            ),
+            InlineKeyboardButton(
+                "Dashboard", url="https://nebula.squirrel-network.online"
+            ),
+            InlineKeyboardButton("Close 🗑", callback_data="close"),
+        ]
     )
-    buttons.append(
-        InlineKeyboardButton(
-            'Dashboard', 
-            url='https://nebula.squirrel-network.online'
-        )
-    )
-    buttons.append(InlineKeyboardButton("Close 🗑", callback_data='close'))
 
     return InlineKeyboardMarkup(build_menu(buttons, 2))
 
@@ -63,9 +61,8 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(
         update.effective_chat.id,
         get_lang(update)["MAIN_TEXT_SETTINGS"].format(
-            update.effective_chat.title, 
-            update.effective_chat.id
+            update.effective_chat.title, update.effective_chat.id
         ),
         reply_markup=get_keyboard_settings(update.effective_chat.id),
-        parse_mode="HTML"
+        parse_mode="HTML",
     )
