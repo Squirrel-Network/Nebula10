@@ -20,6 +20,7 @@ async def init(update, context):
     get_bot = TelegramObjects(update,context).bot_object()
     user = TelegramObjects(update,context).user_object()
     get_user_lang = user.language_code
+    
     if get_user_lang == 'it':
         list_buttons = []
         list_buttons.append(InlineKeyboardButton('Commands', url='https://github.com/Squirrel-Network/nebula8/wiki/Command-List'))
@@ -36,4 +37,4 @@ async def init(update, context):
                "ℹ Se hai bisogno di aiuto: [/help]\n\n\n🔵 Sapevi che sono OpenSource e cerco sempre aiuto? [/source]".format("@"+get_bot.username)
         await bot.send_message(chat, text, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
     else:
-        await message(update,context,get_lang(update)["START_COMMAND"].start.format("@"+get_bot.username))
+        await message(update,context,get_lang(update)["START_COMMAND"].format("@"+get_bot.username))
