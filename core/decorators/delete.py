@@ -14,9 +14,8 @@ def delete_command(func: typing.Callable):
     @functools.wraps(func)
     async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if update.message.text and update.message.text.startswith("/"):
-            await context.bot.delete_message(
-                update.effective_message.chat_id, update.message.message_id
-            )
+            await update.message.delete()
 
         return await func(update, context)
+
     return wrapper
