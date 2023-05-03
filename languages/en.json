@@ -10,7 +10,7 @@
     "BAN_BOT": "I can't ban myself!",
     "BAN_ERROR": "Incorrect command syntax or unrecognized user: {}",
     "BAN_USER_ERROR": "There was a problem with the user ban %s",
-    "SAY_MESSAGE": "Error the message cannot be empty!",
+    "SAY_MISSING_MESSAGE_WARNING": "⚠️ <u><b>Invalid syntax</b></u>\nTry again with <code>/say {message}</code>.",
     "DELETE_MESSAGE": "You must use this command in response to a message!",
     "CLOSE_SETTINGS": "You have closed the bot settings menu!",
     "MAIN_TEXT_SETTINGS": "⚙️ Bot settings\n\n📜 Group Name: <i>{}</i>\n🏷 ChatId: <code>{}</code>",

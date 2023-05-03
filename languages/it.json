@@ -10,7 +10,7 @@
     "BAN_BOT": "Non posso bannarmi da sola!",
     "BAN_ERROR": "Sintassi del comando errata o utente non riconosciuto: {}",
     "BAN_USER_ERROR": "Si è verificato un problema per il ban dell'utente %s",
-    "SAY_MESSAGE": "Errore il messaggio non può essere vuoto!",
+    "SAY_MISSING_MESSAGE_WARNING": "⚠️ <u><b>Sintassi non valida</b></u>\nRiprova con <code>/say {messaggio}</code>.",
     "DELETE_MESSAGE": "Devi utilizzare questo comando in risposta ad un messaggio!",
     "CLOSE_SETTINGS": "Hai chiuso il menu impostazioni del bot!",
     "MAIN_TEXT_SETTINGS": "⚙️ Impostazioni del bot\n\n📜 Nome del gruppo: <i>{}</i>\n🏷 ChatId: <code>{}</code>",

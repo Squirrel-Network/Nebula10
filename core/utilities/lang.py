@@ -13,7 +13,7 @@ class Lang(typing.TypedDict):
     BAN_BOT: str
     BAN_ERROR: str
     BAN_USER_ERROR: str
-    SAY_MESSAGE: str
+    SAY_MISSING_MESSAGE_WARNING: str
     DELETE_MESSAGE: str
     CLOSE_SETTINGS: str
     MAIN_TEXT_SETTINGS: str
