@@ -3,23 +3,37 @@
 
 # Copyright SquirrelNetwork
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ContextTypes
 
 from core.utilities.menu import build_menu
 from languages import get_lang
 
 
-async def init(update,context):
+async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     bot = context.bot
-    chat = update.effective_message.chat_id
-    msg = get_lang(update)["HELP_COMMAND"].format("@"+bot.username)
-    buttons = []
-    buttons.append(InlineKeyboardButton("Commands List", url='https://github.com/Squirrel-Network/nebula8/wiki/Command-List'))
-    buttons.append(InlineKeyboardButton("Source", url='https://github.com/Squirrel-Network/nebula10'))
-    buttons.append(InlineKeyboardButton("Logs Channel", url='https://t.me/nebulalogs'))
-    buttons.append(InlineKeyboardButton("News Channel", url='https://t.me/nebulanewsbot'))
-    buttons.append(InlineKeyboardButton("BlackList Search", url='https://squirrel-network.online/knowhere'))
-    buttons.append(InlineKeyboardButton("Official API Docs", url='https://api.nebula.squirrel-network.online/apidocs'))
-    buttons.append(InlineKeyboardButton("Network SN", url='https://t.me/squirrelnetwork'))
-    menu = build_menu(buttons,3)
-    await bot.send_message(chat,msg,reply_markup=InlineKeyboardMarkup(menu))
+    buttons = [
+        InlineKeyboardButton(
+            text="📖 Command List",
+            url="https://github.com/Squirrel-Network/nebula8/wiki/Command-List",
+        ),
+        InlineKeyboardButton(
+            text="🆓 Source", url="https://github.com/Squirrel-Network/nebula10"
+        ),
+        InlineKeyboardButton("🔔 Logs Channel", url="https://t.me/nebulalogs"),
+        InlineKeyboardButton("📣 News Channel", url="https://t.me/nebulanewsbot"),
+        InlineKeyboardButton(
+            text="🚷 BlackList", url="https://squirrel-network.online/knowhere"
+        ),
+        InlineKeyboardButton(
+            text="📑 API Docs",
+            url="https://api.nebula.squirrel-network.online/apidocs",
+        ),
+        InlineKeyboardButton("🌐 Network SN", url="https://t.me/squirrelnetwork"),
+    ]
+
+    await bot.send_message(
+        update.effective_message.chat_id,
+        get_lang(update)["HELP_COMMAND"].format(f"@{bot.username}"),
+        reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
+    )
