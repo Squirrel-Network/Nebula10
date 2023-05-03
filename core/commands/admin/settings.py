@@ -7,7 +7,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 
 from core.database.repository.group import GroupRepository
-from core.decorators import check_role, delete_command, public_chat
+from core.decorators import check_role, delete_command
 from core.utilities.enums import Role
 from core.utilities.menu import build_menu
 from languages import get_lang
@@ -56,7 +56,6 @@ def get_keyboard_settings(chat_id: int) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(build_menu(buttons, 2))
 
 
-@public_chat
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):

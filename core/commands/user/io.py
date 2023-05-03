@@ -4,12 +4,11 @@
 # Copyright SquirrelNetwork
 
 from core.database.repository.superban import SuperbanRepository
-from core.decorators import delete_command, private_chat
+from core.decorators import delete_command
 from core.utilities.entities import TelegramObjects
 from core.utilities.message import message
 
 
-@private_chat
 @delete_command
 async def init(update,context):
     user = TelegramObjects(update,context).user_object()

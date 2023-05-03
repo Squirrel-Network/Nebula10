@@ -3,13 +3,8 @@
 
 # Copyright SquirrelNetwork
 
-__all__ = [
-    "private_chat",
-    "public_chat",
-    "delete_command",
-    "check_role"
-]
+__all__ = ["delete_command", "check_role"]
 
-from .chat import private_chat, public_chat
+
 from .delete import delete_command
 from .restricted import check_role
