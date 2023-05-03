@@ -33,12 +33,15 @@ def get_group_lang(update: Update) -> str | None:
 
 
 def get_lang(update: Update) -> Lang:
-    lang = get_group_lang(update) or Session.config.DEFAULT_LANGUAGE
+    lang = Session.config.DEFAULT_LANGUAGE
 
     if (
         update.effective_chat.type == "private" and 
         update.effective_user.language_code in ("it", "en")
     ):
         lang = update.effective_user.language_code
+        
+    else:
+        lang = get_group_lang(update) or lang
     
     return Session.lang[lang.lower()]
