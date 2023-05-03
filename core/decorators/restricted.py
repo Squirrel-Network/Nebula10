@@ -2,38 +2,35 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-from functools import wraps
-from core.utilities.functions import get_owner_list
 
-TITLES = ['creator', 'administrator']
-OWNER_LIST = get_owner_list()
+import functools
+import typing
 
-def admin(func):
-    @wraps(func)
-    async def wrapped(update, context, *args, **kwargs):
-        bot = context.bot
-        chat = update.effective_chat.id
-        user_id = update.effective_user.id
-        get_user = await bot.get_chat_member(chat,user_id)
-        stat = get_user.status
+from telegram import Update
+from telegram.ext import ContextTypes
 
-        if stat not in TITLES:
-            print(f"Unauthorized access denied for {user_id}.")
+from core.utilities.enums import Role
+from config import Session
+
+
+def check_role(*roles: Role):
+    def decorator(func: typing.Callable):
+        @functools.wraps(func)
+        async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE):
+            get_user = await context.bot.get_chat_member(
+                update.effective_chat.id, 
+                update.effective_user.id
+            )
+
+            if get_user.status in roles:
+                return await func(update, context)
+            
+            elif (
+                Role.OWNER in roles and 
+                update.effective_user.id in Session.owner_ids
+            ):
+                return await func(update, context)
+            
             return
-        return await func(update, context, *args, **kwargs)
-    return wrapped
-
-
-
-def owner(func):
-    @wraps(func)
-    async def wrapped(update, context):
-        if update.effective_user is not None:
-            user_id = update.effective_user.id
-            if user_id not in OWNER_LIST:
-                print("Unauthorized access denied for {}.".format(user_id))
-                return
-        else:
-            return False
-        return await func(update, context)
-    return wrapped
+        return wrapper
+    return decorator

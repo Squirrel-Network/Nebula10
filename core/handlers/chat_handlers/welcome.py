@@ -3,9 +3,16 @@
 
 # Copyright SquirrelNetwork
 
-async def new_member(update, context):
+from telegram import Update
+from telegram.ext import ContextTypes
+
+from core.utilities.functions import save_group
+
+
+async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
     bot = context.bot
     chat = update.effective_chat.id
-    for member in update.message.new_chat_members:
-        print(member)
-        await bot.send_message(chat, "Welcome {} in {}".format(member.first_name, update.message.chat.title))
+
+    save_group(update.effective_chat.id, update.effective_chat.title)
+
+    await bot.send_message(chat, "Welcome")

@@ -5,6 +5,7 @@
 
 from telegram import ChatPermissions
 
+
 #general constants
 DEFAULT_COUNT_WARN = 0
 DEFAULT_USER_SCORE = 0
@@ -30,7 +31,8 @@ PERM_FALSE = ChatPermissions(
     can_change_info=False,
     can_invite_users=False,
     can_pin_messages=False
-    )
+)
+
 PERM_TRUE = ChatPermissions(
     can_send_messages=True,
     can_send_media_messages=True,
@@ -40,7 +42,7 @@ PERM_TRUE = ChatPermissions(
     can_change_info=False,
     can_invite_users=False,
     can_pin_messages=False
-    )
+)
 
 PERM_MEDIA_TRUE = ChatPermissions(
     can_send_messages=True,
@@ -51,7 +53,7 @@ PERM_MEDIA_TRUE = ChatPermissions(
     can_change_info=False,
     can_invite_users=False,
     can_pin_messages=False
-    )
+)
 
 PERM_MEDIA_FALSE = ChatPermissions(
     can_send_messages=True,
@@ -62,4 +64,4 @@ PERM_MEDIA_FALSE = ChatPermissions(
     can_change_info=False,
     can_invite_users=False,
     can_pin_messages=False
-    )
+)

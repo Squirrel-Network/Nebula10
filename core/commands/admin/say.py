@@ -3,12 +3,14 @@
 
 # Copyright SquirrelNetwork
 
-from core.decorators import restricted
+from core.decorators import check_role, delete_command
+from core.utilities.enums import Role
 from core.utilities.message import message
 from languages import get_lang
 
 
-@restricted.admin
+@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@delete_command
 async def init(update,context):
     msg = update.message.text[4:].strip()
     

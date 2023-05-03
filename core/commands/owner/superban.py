@@ -19,7 +19,6 @@ from core.utilities.regex import Regex
 from core.utilities.strings import Strings
 
 
-@restricted.owner
 async def init(update, context):
     #Variables
     text = update.message.text
@@ -94,7 +93,7 @@ async def init(update, context):
         else:
             await message(update,context,"Attention you can not superbanned without entering an TelegramID!")
 
-@restricted.owner
+
 async def remove_superban_via_id(update,context):
     text = update.message.text
     input_user_id = text[3:].strip().split(" ", 1)
@@ -112,8 +111,6 @@ async def remove_superban_via_id(update,context):
             await message(update, context, "The user <code>{}</code> is not present in the database".format(user_id))
 
 
-
-@restricted.owner
 async def multi_superban(update,context):
         txt = update.message.text
         x = re.findall(r'\d+', txt)
@@ -130,7 +127,7 @@ async def multi_superban(update,context):
             string += "▪️ {}\n".format(a)
         await message(update,context,string)
 
-@restricted.owner
+
 async def update_superban(update, context):
     bot = context.bot
     query = update.callback_query

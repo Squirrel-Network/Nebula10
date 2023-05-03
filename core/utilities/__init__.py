@@ -2,5 +2,3 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-
-"""Import Files"""

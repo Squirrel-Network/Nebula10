@@ -10,6 +10,8 @@ from dotenv import load_dotenv
 from telegram.ext import Application
 
 from config import Config, Session
+from core.utilities.functions import get_owner_list
+from core.database.repository.user import UserRepository
 from languages import load_languages
 
 
@@ -31,14 +33,20 @@ def main() -> None:
     load_dotenv()
 
     # Load the Config
-    Session.config = Config()
+    conf = Session.config = Config()
 
     # Load languages
     Session.lang = load_languages()
 
+    # Add owner
+    UserRepository().add_owner([(conf.OWNER_ID, conf.OWNER_USERNAME.lower())])
+
+    # Get owner ids
+    Session.owner_ids = get_owner_list()
+
     """Start the bot."""
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token(Session.config.BOT_TOKEN).build()
+    application = Application.builder().token(conf.BOT_TOKEN).build()
     bot = application.add_handler
 
     # on different commands - answer in Telegram
