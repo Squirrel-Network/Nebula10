@@ -3,16 +3,20 @@
 
 # Copyright SquirrelNetwork
 
-from functools import wraps
+import functools
+import typing
 
-def init(func):
-    @wraps(func)
-    async def wrapped(update, context):
-        bot = context.bot
-        if update.message.text is not None:
-            if update.message.text.startswith("/"):
-                await bot.delete_message(update.effective_message.chat_id, update.message.message_id)
-            else:
-                print("AAA")
+from telegram import Update
+from telegram.ext import ContextTypes
+
+
+def delete_command(func: typing.Callable):
+    @functools.wraps(func)
+    async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if update.message.text and update.message.text.startswith("/"):
+            await context.bot.delete_message(
+                update.effective_message.chat_id, update.message.message_id
+            )
+
         return await func(update, context)
-    return wrapped
+    return wrapper
