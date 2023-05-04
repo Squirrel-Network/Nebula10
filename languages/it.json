@@ -47,5 +47,11 @@
     "BAN_EMPTY_ERROR": "Il testo del ban non può essere vuoto!",
     "BAN_SELF_BAN": "Non posso bannarmi da sola, usa questo comando nel modo corretto!",
     "USER_INFORMATION": "{INFORMATION} == Informazioni utente == {INFORMATION}\n\n<b>{ID_BUTTON} Id utente:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> ❌",
-    "USER_INFORMATION_SUPERBAN": "{INFORMATION} == Informazioni utente == {INFORMATION}\n\n<b>{ID_BUTTON} Id utente:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> {CHECK_MARK_BUTTON}\nLeggi di più: {URL}"
+    "USER_INFORMATION_SUPERBAN": "{INFORMATION} == Informazioni utente == {INFORMATION}\n\n<b>{ID_BUTTON} Id utente:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> {CHECK_MARK_BUTTON}\nLeggi di più: {URL}",
+    "SERVER_STATUS_SYSTEM": "<b>Stato del server:</b>\n\n{GEAR} ==== INFORMAZIONI DI SISTEMA ==== {GEAR}\nSistema: <code>{SYSTEM}</code>\nNome del nodo: <code>{NODE}</code>\nVersione: <code>{RELEASE}</code>\nVersione: <code>{VERSION}</code>\nMacchina: <code>{MACHINE}</code>\n\n",
+    "SERVER_STATUS_CPU": "{GEAR} ==== INFORMAZIONI CPU ==== {GEAR}\nL'utilizzo attuale della CPU è: <code>{CPU_PERCENT}%</code>\nFrequenza attuale: <code>{CPU_FREQ}Mhz</code>\nCore fisici: <code>{CORE}</code>\nCore totali: <code>{CORE_LOGIC}</code>\n\n",
+    "SERVER_STATUS_DISK_MESSAGE": "{GEAR} ==== INFORMAZIONI SUL DISCO ==== {GEAR}\n",
+    "SERVER_STATUS_DISK": "Dimensione totale: <code>{TOTAL}</code>\nUsati: <code>{USED}</code>\nLibero: <code>{FREE}</code>\nPercentuale corrente del disco: <code>{PERCENT}%</code>\n\n",
+    "SERVER_STATUS_MEMORY": "{GEAR} ==== INFORMAZIONI SULLA MEMORIA ==== {GEAR}\nUtilizzo attuale della memoria: <code>{MEMORY_PERCENT}%</code>\nTotale: <code>{TOTAL}</code>\n\n",
+    "SERVER_STATUS_NETWORK": "{GEAR} ==== INFORMAZIONI DI RETE ==== {GEAR}\nByte totali inviati: <code>{BYTES_SEND}</code>\nByte totali ricevuti: <code>{BYTES_RECV}</code>\nÈ in esecuzione dal <b>{RUNNING}</b>"
 }

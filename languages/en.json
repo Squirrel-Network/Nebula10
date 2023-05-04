@@ -47,5 +47,11 @@
     "BAN_EMPTY_ERROR": "The text of the ban cannot be empty!",
     "BAN_SELF_BAN": "I can't ban myself, Use this command in the correct way!",
     "USER_INFORMATION": "{INFORMATION} == User Information == {INFORMATION}\n\n<b>{ID_BUTTON} User id:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> ❌",
-    "USER_INFORMATION_SUPERBAN": "{INFORMATION} == User Information == {INFORMATION}\n\n<b>{ID_BUTTON} User id:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> {CHECK_MARK_BUTTON}\nLearn more about: {URL}"
+    "USER_INFORMATION_SUPERBAN": "{INFORMATION} == User Information == {INFORMATION}\n\n<b>{ID_BUTTON} User id:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> {CHECK_MARK_BUTTON}\nLearn more about: {URL}",
+    "SERVER_STATUS_SYSTEM": "<b>Server Status:</b>\n\n{GEAR} ==== SYSTEM INFO ==== {GEAR}\nSystem: <code>{SYSTEM}</code>\nNode Name: <code>{NODE}</code>\nRelease: <code>{RELEASE}</code>\nVersion: <code>{VERSION}</code>\nMachine: <code>{MACHINE}</code>\n\n",
+    "SERVER_STATUS_CPU": "{GEAR} ==== CPU INFO ==== {GEAR}\nCurrent CPU utilization is: <code>{CPU_PERCENT}%</code>\nCurrent Frequency: <code>{CPU_FREQ}Mhz</code>\nPhysical cores: <code>{CORE}</code>\nTotal cores: <code>{CORE_LOGIC}</code>\n\n",
+    "SERVER_STATUS_DISK_MESSAGE": "{GEAR} ==== DISK INFO ==== {GEAR}\n",
+    "SERVER_STATUS_DISK": "Total Size: <code>{TOTAL}</code>\nUsed: <code>{USED}</code>\nFree: <code>{FREE}</code>\nCurrent Disk_percent is: <code>{PERCENT}%</code>\n\n",
+    "SERVER_STATUS_MEMORY": "{GEAR} ==== MEMORY INFO ==== {GEAR}\nCurrent memory utilization: <code>{MEMORY_PERCENT}%</code>\nTotal: <code>{TOTAL}</code>\n\n",
+    "SERVER_STATUS_NETWORK": "{GEAR} ==== NETWORK INFO ==== {GEAR}\nTotal Bytes Sent: <code>{BYTES_SEND}</code>\nTotal Bytes Received: <code>{BYTES_RECV}</code>\nIt's running since <b>{RUNNING}</b>"
 }
