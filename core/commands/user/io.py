@@ -3,20 +3,31 @@
 
 # Copyright SquirrelNetwork
 
+from telegram import Update, constants
+from telegram.ext import ContextTypes
+
 from core.database.repository.superban import SuperbanRepository
 from core.decorators import delete_command
-from core.utilities.entities import TelegramObjects
-from core.utilities.message import message
+from core.utilities.text import Text
+from languages import get_lang
 
 
 @delete_command
-async def init(update,context):
-    user = TelegramObjects(update,context).user_object()
-    nickname = "@"+ user.username
+async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    lang = get_lang(update)
+    user = update.effective_message.from_user
+    params = {
+        "id": user.id,
+        "name": f"@{user.username}" if user.username else user.name,
+    }
+
+    msg = lang["USER_INFORMATION"].format_map(Text(params))
     superban = SuperbanRepository().getById(user.id)
+
     if superban:
-        URL = "https://squirrel-network.online/knowhere/?q={}".format(user.id)
-        msg = "ℹ️ == User Information ==  ℹ️\n\n<b>🆔 User id:</b> <code>{}</code>\n<b>👤 Nickname:</b> {}\n<b>🚷 Blacklist:</b> ✅\nLearn more about: {}".format(user.id, nickname or user.first_name,URL)
-    else:
-        msg = "ℹ️ == User Information ==  ℹ️\n\n<b>🆔 User id:</b> <code>{}</code>\n<b>👤 Nickname:</b> {}\n<b>🚷 Blacklist:</b> ❌".format(user.id, nickname or user.first_name)
-    await message(update,context,msg)
+        params["url"] = f"https://squirrel-network.online/knowhere/?q={user.id}"
+        msg = lang["USER_INFORMATION_SUPERBAN"].format_map(Text(params))
+
+    await context.bot.send_message(
+        update.effective_chat.id, msg, parse_mode=constants.ParseMode.HTML
+    )

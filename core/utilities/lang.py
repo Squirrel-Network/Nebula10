@@ -49,3 +49,5 @@ class Lang(typing.TypedDict):
     BAN_ERROR_AC: str
     BAN_EMPTY_ERROR: str
     BAN_SELF_BAN: str
+    USER_INFORMATION: str
+    USER_INFORMATION_SUPERBAN: str

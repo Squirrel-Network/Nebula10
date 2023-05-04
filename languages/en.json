@@ -45,5 +45,7 @@
     "BAN_ERROR_SYNTAX": "Incorrect command syntax or unrecognized user: {TEXT}",
     "BAN_ERROR_AC": "I can't <i>ban</i> an administrator or owner!",
     "BAN_EMPTY_ERROR": "The text of the ban cannot be empty!",
-    "BAN_SELF_BAN": "I can't ban myself, Use this command in the correct way!"
+    "BAN_SELF_BAN": "I can't ban myself, Use this command in the correct way!",
+    "USER_INFORMATION": "{INFORMATION} == User Information == {INFORMATION}\n\n<b>{ID_BUTTON} User id:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> ❌",
+    "USER_INFORMATION_SUPERBAN": "{INFORMATION} == User Information == {INFORMATION}\n\n<b>{ID_BUTTON} User id:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> {CHECK_MARK_BUTTON}\nLearn more about: {URL}"
 }

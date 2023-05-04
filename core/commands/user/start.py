@@ -3,7 +3,12 @@
 
 # Copyright SquirrelNetwork
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Update,
+    constants,
+)
 from telegram.ext import ContextTypes
 
 from core.decorators import delete_command
@@ -38,5 +43,5 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update.effective_message.chat_id,
         get_lang(update)["START_COMMAND"].format_map(Text(params)),
         reply_markup=InlineKeyboardMarkup(build_menu(buttons, 3)),
-        parse_mode="HTML",
+        parse_mode=constants.ParseMode.HTML,
     )
