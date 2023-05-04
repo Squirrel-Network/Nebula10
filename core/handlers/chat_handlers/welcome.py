@@ -12,7 +12,7 @@ from core.database.repository.group import GroupRepository
 
 async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
     bot = context.bot
-    chat = TelegramObjects().chat_object()
+    chat = TelegramObjects(update,context).chat_object()
 
     row = GroupRepository().getById(chat.id)
     if row:
