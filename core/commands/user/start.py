@@ -8,11 +8,15 @@ from telegram.ext import ContextTypes
 
 from core.decorators import delete_command
 from core.utilities.menu import build_menu
+from core.utilities.text import Text
 from languages import get_lang
 
 
 START_BUTTONS = (
-    ("Commands", "https://github.com/Squirrel-Network/nebula8/wiki/Command-List"),
+    (
+        "Commands",
+        "https://github.com/Squirrel-Network/nebula8/wiki/Command-List",
+    ),
     ("Dashboard", "https://nebula.squirrel-network.online"),
     ("Api", "https://api.nebula.squirrel-network.online"),
     ("Knowhere", "https://squirrel-network.online/knowhere"),
@@ -25,11 +29,14 @@ START_BUTTONS = (
 
 @delete_command
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    buttons = [InlineKeyboardButton(name, url=url) for name, url in START_BUTTONS]
+    buttons = [
+        InlineKeyboardButton(name, url=url) for name, url in START_BUTTONS
+    ]
+    params = {"name": f"@{context.bot.username}"}
 
     await context.bot.send_message(
         update.effective_message.chat_id,
-        get_lang(update)["START_COMMAND"].format(f"@{context.bot.username}"),
+        get_lang(update)["START_COMMAND"].format_map(Text(params)),
         reply_markup=InlineKeyboardMarkup(build_menu(buttons, 3)),
         parse_mode="HTML",
     )
