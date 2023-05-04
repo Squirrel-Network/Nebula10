@@ -7,18 +7,18 @@ import datetime
 import re
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-
+from core.utilities.enums import Role
 from config import Session
 from core.database.repository.superban import SuperbanRepository
 from core.database.repository.user import UserRepository
-from core.decorators import restricted
+from core.decorators import check_role
 from core.handlers.chat_handlers.logs import debug_channel, sys_loggers
 from core.utilities.menu import build_menu
 from core.utilities.message import message
 from core.utilities.regex import Regex
 from core.utilities.strings import Strings
 
-
+@check_role(Role.OWNER)
 async def init(update, context):
     #Variables
     text = update.message.text
@@ -93,7 +93,7 @@ async def init(update, context):
         else:
             await message(update,context,"Attention you can not superbanned without entering an TelegramID!")
 
-
+@check_role(Role.OWNER)
 async def remove_superban_via_id(update,context):
     text = update.message.text
     input_user_id = text[3:].strip().split(" ", 1)
@@ -110,7 +110,7 @@ async def remove_superban_via_id(update,context):
         else:
             await message(update, context, "The user <code>{}</code> is not present in the database".format(user_id))
 
-
+@check_role(Role.OWNER)
 async def multi_superban(update,context):
         txt = update.message.text
         x = re.findall(r'\d+', txt)
@@ -127,7 +127,7 @@ async def multi_superban(update,context):
             string += "▪️ {}\n".format(a)
         await message(update,context,string)
 
-
+@check_role(Role.OWNER)
 async def update_superban(update, context):
     bot = context.bot
     query = update.callback_query
