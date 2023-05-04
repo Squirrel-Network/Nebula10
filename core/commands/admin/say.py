@@ -8,6 +8,7 @@ from telegram.ext import ContextTypes
 
 from core.decorators import check_role, delete_command
 from core.utilities.enums import Role
+from core.utilities.text import Text
 from languages import get_lang
 
 
@@ -17,7 +18,10 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     command = update.message.text.split(maxsplit=1)
 
     if not len(command) > 1:
-        command.insert(1, get_lang(update)["SAY_MISSING_MESSAGE_WARNING"])
+        command.insert(
+            1,
+            get_lang(update)["SAY_MISSING_MESSAGE_WARNING"].format_map(Text()),
+        )
 
     await context.bot.send_message(
         chat_id=update.effective_chat.id,

@@ -10,6 +10,7 @@ from core.database.repository.group import GroupRepository
 from core.decorators import check_role, delete_command
 from core.utilities.enums import Role
 from core.utilities.menu import build_menu
+from core.utilities.text import Text
 from languages import get_lang
 
 
@@ -59,11 +60,14 @@ def get_keyboard_settings(chat_id: int) -> InlineKeyboardMarkup:
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    params = {
+        "name": update.effective_chat.title,
+        "id": update.effective_chat.id,
+    }
+
     await context.bot.send_message(
         update.effective_chat.id,
-        get_lang(update)["MAIN_TEXT_SETTINGS"].format(
-            update.effective_chat.title, update.effective_chat.id
-        ),
+        get_lang(update)["MAIN_TEXT_SETTINGS"].format_map(Text(params)),
         reply_markup=get_keyboard_settings(update.effective_chat.id),
         parse_mode="HTML",
     )
