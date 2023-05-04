@@ -17,8 +17,8 @@ from languages import load_languages
 
 # if version < 3.7, stop bot.
 LOGGING = logging.getLogger(__name__)
-if sys.version_info[0] < 3 or sys.version_info[1] < 7:
-    LOGGING.error("You MUST have a python version of at least 3.7! Multiple features depend on this. Bot quitting.")
+if sys.version_info[0] < 3 or sys.version_info[1] < 10:
+    LOGGING.error("You MUST have a python version of at least 3.10! Multiple features depend on this. Bot quitting.")
     quit(1)
 
 # Enable logging
