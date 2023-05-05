@@ -22,7 +22,7 @@ def get_owner_list() -> list:
 async def close_menu(update, context):
     query = update.callback_query
 
-    if query.data == 'closeMenu':
+    if query.data == 'close':
         await query.message.delete()
 
 

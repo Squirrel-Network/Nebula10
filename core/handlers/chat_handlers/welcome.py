@@ -7,11 +7,9 @@ from telegram import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     Update,
-    constants,
 )
 from telegram.ext import ContextTypes
-
-from core.database.repository.group import GroupRepository
+from core.utilities.message import message
 from core.utilities.functions import save_group
 from core.utilities.menu import build_menu
 from core.utilities.text import Text
@@ -49,15 +47,16 @@ async def welcome_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     save_group(update.effective_message.chat_id, update.effective_chat.title)
 
-    await update.message.reply_text(
-        get_lang(update)["BOT_WELCOME"].format_map(Text(params)),
-        constants.ParseMode.HTML,
-        reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
-    )
+    await message(update,context,get_lang(update)["BOT_WELCOME"].format_map(Text(params)),reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)))
 
 
 async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
     for member in update.message.new_chat_members:
+        print(member.username)
         if member.id == context.bot.id:
             # TODO: log
             await welcome_bot(update, context)
+        elif member.username is None:
+            await message(update,context,"No Username No Party")
+
+

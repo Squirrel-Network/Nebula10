@@ -36,7 +36,7 @@ def owner_command(application: Application):
             CommandHandler("ms", superban.multi_superban),
             CommandHandler("us", superban.remove_superban_via_id),
             # CallbackQuery Handler
-            CallbackQueryHandler(close_menu, pattern="closeMenu"),
+            CallbackQueryHandler(close_menu, pattern="close"),
             CallbackQueryHandler(superban.update_superban, pattern="m"),
             CallbackQueryHandler(
                 superban.update_superban, pattern="removeSuperban"

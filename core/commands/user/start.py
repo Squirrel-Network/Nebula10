@@ -7,10 +7,9 @@ from telegram import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     Update,
-    constants,
 )
 from telegram.ext import ContextTypes
-
+from core.utilities.message import message
 from core.decorators import delete_command
 from core.utilities.menu import build_menu
 from core.utilities.text import Text
@@ -38,10 +37,7 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
         InlineKeyboardButton(name, url=url) for name, url in START_BUTTONS
     ]
     params = {"name": f"@{context.bot.username}"}
-
-    await context.bot.send_message(
-        update.effective_message.chat_id,
-        get_lang(update)["START_COMMAND"].format_map(Text(params)),
-        reply_markup=InlineKeyboardMarkup(build_menu(buttons, 3)),
-        parse_mode=constants.ParseMode.HTML,
-    )
+    await message(update,context,
+                  get_lang(update)["START_COMMAND"].format_map(Text(params)),
+                  reply_markup=InlineKeyboardMarkup(build_menu(buttons, 3))
+                  )

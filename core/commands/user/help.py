@@ -35,6 +35,10 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
         InlineKeyboardButton(
             "🌐 Network SN", url="https://t.me/squirrelnetwork"
         ),
+        InlineKeyboardButton(
+            "🛠 Dashboard", url="https://nebula.squirrel-network.online"
+        ),
+        InlineKeyboardButton("Close 🗑", callback_data="close"),
     ]
     params = {"name": f"@{bot.username}"}
 
