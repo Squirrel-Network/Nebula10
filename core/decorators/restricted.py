@@ -17,7 +17,7 @@ def check_role(*roles: Role):
     def decorator(func: typing.Callable):
         @functools.wraps(func)
         async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE):
-            user = await update.message.chat.get_member(update.effective_user.id)
+            user = await update.effective_chat.get_member(update.effective_user.id)
 
             if user.status in roles:
                 return await func(update, context)

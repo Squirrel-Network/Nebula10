@@ -41,6 +41,7 @@ def owner_command(application: Application):
             CallbackQueryHandler(
                 superban.update_superban, pattern="removeSuperban"
             ),
+            CallbackQueryHandler(settings.callback_query, "settings_")
         ]
     )
 
