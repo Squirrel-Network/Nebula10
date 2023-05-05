@@ -3,7 +3,7 @@
     "START_COMMAND": "Ciao io mi chiamo {NAME} e sono uno strumento per la gestione dei gruppi con tante funzioni speciali tutte da scoprire e sono Open Source! Se vuoi vedere il mio sorgente digita: /source Se hai bisogno di aiuto digita /help",
     "HELP_COMMAND": "Ciao mi chiamo {NAME}\nHai bisogno di aiuto?",
     "GROUP_INFO": "<b>Titolo Gruppo:</b> <code>{NAME}</code>\n\n<b>Id del gruppo:</b> <code>{ID}</code>\n\n<b>Lingua del gruppo:</b> <code>{LANG}</code>\n\n<b>Limite Warn:</b> <code>{WARN}</code>\n\n<b>Totale Utenti Gruppo:</b> <code>{USER_COUNT}</code>\n\n<b>Totale Messaggi Gruppo:</b> <code>{MESSAGE}</code> Negli ultimi 30 giorni",
-    "BOT_WELCOME": "Grazie di avermi aggiunta al gruppo {NAME}\nPer funzionare correttamente ho bisogno dei privilegi di amministratore!",
+    "BOT_WELCOME": "Grazie per avermi aggiunto al gruppo {RED_HEART}\nPer favore, seleziona la tua lingua => [/lang]\n\n{SPARKLE} Ricorda di rendere amministratore per un corretto funzionamento{RED_EXCLAMATION_MARK}\n\n🆘 Hai bisogno di aiuto? => /help\n\n{GEAR} Per cambiare le impostazioni del gruppo, premi il comando [/settings]\n\n{GEAR} Per cambiare i filtri del gruppo, digita [/filters]\n\n{GEAR} Per cambiare il limite di avvertimenti del gruppo, digita [/setwarn]\n\n{GEAR} Per cambiare il tipo di benvenuto digita [/welcome] e segui le istruzioni\n\n<b>La mia versione è: {VERSION} {VERSION_NAME}</b>",
     "BAN_MESSAGE": "<a href=\"tg://user?id={USER_ID}\">{USER}</a> è stato <b>bannato</b> da {CHAT}",
     "RULES": "Ecco il regolamento del gruppo: {RULES}",
     "BAN_USER": "Ho bannato %s",
