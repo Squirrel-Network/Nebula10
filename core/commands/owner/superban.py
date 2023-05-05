@@ -5,7 +5,6 @@
 
 import datetime
 import re
-
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.utilities.enums import Role
 from config import Session
@@ -17,6 +16,8 @@ from core.utilities.menu import build_menu
 from core.utilities.message import message
 from core.utilities.regex import Regex
 from core.utilities.strings import Strings
+
+rgx = Regex().HAS_NUMBER
 
 @check_role(Role.OWNER)
 async def init(update, context):
@@ -63,7 +64,7 @@ async def init(update, context):
                     logs_text = Strings.SUPERBAN_LOG.format(default_user_first_name, id_user, default_motivation,save_date, operator_first_name, operator_username,operator_id)
                     await message(update, context, logs_text, 'HTML', 'messageid', Session.config.DEFAULT_LOG_CHANNEL, None)
             else:
-                number = re.search(Regex.HAS_NUMBER, user_id)
+                number = re.search(rgx, user_id)
                 if number is None:
                     await message(update, context, "Attention you must enter a number not letters!")
                 row = SuperbanRepository().getById(int(user_id))
@@ -98,7 +99,7 @@ async def remove_superban_via_id(update,context):
     text = update.message.text
     input_user_id = text[3:].strip().split(" ", 1)
     user_id = input_user_id[0]
-    number = re.search(Regex.HAS_NUMBER, user_id)
+    number = re.search(rgx, user_id)
     if number is None:
         await message(update, context, "Attention you must enter a number not letters!")
     else:
