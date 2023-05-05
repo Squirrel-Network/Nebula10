@@ -3,7 +3,12 @@
 
 # Copyright SquirrelNetwork
 
-from telegram.ext import filters, ExtBot, CallbackQueryHandler, CommandHandler
+from telegram.ext import (
+    Application,
+    CallbackQueryHandler,
+    CommandHandler,
+    filters,
+)
 
 from core.commands.admin import say, settings
 from core.commands.owner import server, superban, test
@@ -11,29 +16,42 @@ from core.commands.user import help, io, start
 from core.utilities.functions import close_menu
 
 
-def admin_command(bot: ExtBot):
-    bot(CommandHandler("say", say.init))
-    bot(
-        CommandHandler(
-            "settings", settings.init, filters=filters.ChatType.GROUPS
-        )  # supergroup and group
+def admin_command(application: Application):
+    application.add_handlers(
+        [
+            CommandHandler("say", say.init),
+            CommandHandler(
+                "settings", settings.init, filters=filters.ChatType.GROUPS
+            ),
+        ]
     )
 
 
-def owner_command(bot: ExtBot):
-    bot(CommandHandler("test", test.command_test))
-    bot(CommandHandler("server", server.init))
-    bot(CommandHandler("s", superban.init))
-    bot(CommandHandler("ms", superban.multi_superban))
-    bot(CommandHandler("us", superban.remove_superban_via_id))
+def owner_command(application: Application):
+    application.add_handlers(
+        [
+            CommandHandler("test", test.command_test),
+            CommandHandler("server", server.init),
+            CommandHandler("s", superban.init),
+            CommandHandler("ms", superban.multi_superban),
+            CommandHandler("us", superban.remove_superban_via_id),
+            # CallbackQuery Handler
+            CallbackQueryHandler(close_menu, pattern="closeMenu"),
+            CallbackQueryHandler(superban.update_superban, pattern="m"),
+            CallbackQueryHandler(
+                superban.update_superban, pattern="removeSuperban"
+            ),
+        ]
+    )
 
-    # CallbackQuery Handler
-    bot(CallbackQueryHandler(close_menu, pattern="closeMenu"))
-    bot(CallbackQueryHandler(superban.update_superban, pattern="m"))
-    bot(CallbackQueryHandler(superban.update_superban, pattern="removeSuperban"))
 
-
-def user_command(bot: ExtBot):
-    bot(CommandHandler("start", start.init, filters=filters.ChatType.PRIVATE))
-    bot(CommandHandler("io", io.init, filters=filters.ChatType.PRIVATE))
-    bot(CommandHandler("help", help.init))
+def user_command(application: Application):
+    application.add_handlers(
+        [
+            CommandHandler(
+                "start", start.init, filters=filters.ChatType.PRIVATE
+            ),
+            CommandHandler("io", io.init, filters=filters.ChatType.PRIVATE),
+            CommandHandler("help", help.init),
+        ]
+    )

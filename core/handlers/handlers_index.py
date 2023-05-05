@@ -3,14 +3,24 @@
 
 # Copyright SquirrelNetwork
 
-from core import handlers
-from telegram.ext import MessageHandler, filters
+from telegram import Update
+from telegram.ext import Application, ContextTypes, MessageHandler, filters
+
+from core.handlers.chat_handlers import chat_status, welcome
+from core.handlers.user_handlers import user_status
 
 
-def core_handlers(bot):
-    bot(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, handlers.chat_handlers.welcome.new_member))
-    bot(MessageHandler(filters.ALL, group_handlers))
+def core_handlers(application: Application):
+    application.add_handlers(
+        [
+            MessageHandler(
+                filters.StatusUpdate.NEW_CHAT_MEMBERS, welcome.new_member
+            ),
+            MessageHandler(filters.ALL, group_handlers),
+        ]
+    )
 
-async def group_handlers(update, context):
-    await handlers.chat_handlers.chat_status.status(update,context)
-    await handlers.user_handlers.user_status.status(update,context)
+
+async def group_handlers(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await chat_status.status(update, context)
+    await user_status.status(update, context)
