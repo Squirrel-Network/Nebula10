@@ -57,3 +57,5 @@ class Lang(typing.TypedDict):
     SERVER_STATUS_DISK: str
     SERVER_STATUS_MEMORY: str
     SERVER_STATUS_NETWORK: str
+    OPERATOR_JOIN: str
+    BLOCK_NEW_MEMBER: str

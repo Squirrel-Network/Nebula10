@@ -4,10 +4,15 @@
 # Copyright SquirrelNetwork
 
 import datetime
+import time
+
+from telegram import Update
+from telegram.ext import ContextTypes
 
 from config import Session
-from core.database.repository.user import UserRepository
 from core.database.repository.group import GroupRepository
+from core.database.repository.user import UserRepository
+from core.utilities.constants import PERM_FALSE
 
 
 def get_owner_list() -> list[int]:
@@ -15,11 +20,31 @@ def get_owner_list() -> list[int]:
         return [int(x["tg_id"]) for x in db.get_owners()]
 
 
-async def close_menu(update, context):
+async def close_menu(update: Update, _: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
 
-    if query.data == 'close':
+    if query.data == "close":
         await query.message.delete()
+
+
+async def kick_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await context.bot.ban_chat_member(
+        update.effective_chat.id,
+        update.message.from_user.id,
+        until_date=int(time.time() + 30),
+    )
+
+
+async def mute_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await context.bot.restrict_chat_member(
+        update.effective_chat.id, update.effective_user.id, PERM_FALSE
+    )
+
+
+async def ban_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await context.bot.ban_chat_member(
+        update.effective_chat.id, update.effective_chat.id
+    )
 
 
 def save_group(chat_id: int, chat_title: str):
@@ -28,7 +53,9 @@ def save_group(chat_id: int, chat_title: str):
             dictionary = {
                 "id_group": chat_id,
                 "group_name": chat_title,
-                "welcome_text": Session.config.DEFAULT_WELCOME.format("{mention}","{chat}"),
+                "welcome_text": Session.config.DEFAULT_WELCOME.format(
+                    "{mention}", "{chat}"
+                ),
                 "welcome_buttons": '{"buttons": [{"id": 0,"title": "Bot Logs","url": "https://t.me/nebulalogs"}]}',
                 "rules_text": Session.config.DEFAULT_RULES,
                 "community": 0,
@@ -46,7 +73,7 @@ def save_group(chat_id: int, chat_title: str):
                 "set_cas_ban": 1,
                 "type_no_username": 1,
                 "log_channel": Session.config.DEFAULT_LOG_CHANNEL,
-                "group_photo": 'https://naos.hersel.it/group_photo/default.jpg',
+                "group_photo": "https://naos.hersel.it/group_photo/default.jpg",
                 "total_users": 0,
                 "zip_filter": 0,
                 "targz_filter": 0,
@@ -58,10 +85,10 @@ def save_group(chat_id: int, chat_title: str):
                 "spoiler_block": 0,
                 "set_no_vocal": 0,
                 "set_antiflood": 1,
-                "ban_message": '{mention} has been <b>banned</b> from: {chat}',
+                "ban_message": "{mention} has been <b>banned</b> from: {chat}",
                 "created_at": datetime.datetime.utcnow().isoformat(),
                 "updated_at": datetime.datetime.utcnow().isoformat(),
-                "set_gh": 0
+                "set_gh": 0,
             }
-            
+
             db.add_with_dict(dictionary)
