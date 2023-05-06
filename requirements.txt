@@ -15,6 +15,7 @@ pre-commit==3.3.1
 psutil==5.9.5
 pydantic==1.10.7
 PyMySQL==1.0.3
+pymysql-pool==0.4.3
 PyPika==0.48.9
 python-dotenv==1.0.0
 python-telegram-bot==20.2

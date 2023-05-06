@@ -38,7 +38,7 @@ set if it is not set it is sent to the default channel
 """
 def telegram_loggers(update,context,msg = ""):
     chat = update.effective_message.chat_id
-    row = GroupRepository().getById([chat])
+    row = GroupRepository().get_by_id(chat)
     id_channel = Session.config.DEFAULT_LOG_CHANNEL
     if row:
         get_log_channel = row['log_channel']

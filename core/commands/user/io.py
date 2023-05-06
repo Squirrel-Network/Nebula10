@@ -22,7 +22,8 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     }
 
     msg = lang["USER_INFORMATION"].format_map(Text(params))
-    superban = SuperbanRepository().getById(user.id)
+    with SuperbanRepository() as db:
+        superban = db.get_by_id(user.id)
 
     if superban:
         params["url"] = f"https://squirrel-network.online/knowhere/?q={user.id}"

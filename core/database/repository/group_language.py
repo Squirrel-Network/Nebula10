@@ -2,14 +2,12 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+
 from core.database.db_connect import Connection
-from pypika import Query, Table
 
 
 class GroupLanguageRepository(Connection):
-    def getById(self, args=None):
-        groups = Table("groups")
-        query = Query.from_(groups).select(groups.languages).where(groups.id_group == '%s')
-        q = query.get_sql(quote_char=None)
+    def get_by_id(self, group_id: int):
+        q = "SELECT languages FROM groups WHERE id_group='%s'"
 
-        return self._select(q, args)
+        return self._select(q, (group_id,))

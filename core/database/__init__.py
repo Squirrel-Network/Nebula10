@@ -1,3 +1,8 @@
-__all__ = ["repository","db_connect"]
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-from core.database import *
+# Copyright SquirrelNetwork
+
+__all__ = ["create_pool", "Connection"]
+
+from .db_connect import create_pool, Connection

@@ -4,69 +4,58 @@
 # Copyright SquirrelNetwork
 
 import pymysql
-from sqlalchemy import create_engine
+from pymysqlpool import ConnectionPool
 
 from config import Session
+
+
+def create_pool() -> ConnectionPool:
+    return ConnectionPool(
+        name="pool",
+        host=Session.config.HOST,
+        port=Session.config.PORT,
+        user=Session.config.USER,
+        password=Session.config.PASSWORD,
+        database=Session.config.DBNAME,
+        autocommit=True,
+        charset="utf8mb4",
+        cursorclass=pymysql.cursors.DictCursor,
+    )
 
 
 class Connection:
     """
     This class handles database connection and inbound queries
     """
-    
+
     def __init__(self):
-        self.con = pymysql.connect(
-            host = Session.config.HOST,
-            port = Session.config.PORT,
-            user = Session.config.USER,
-            password = Session.config.PASSWORD,
-            db = Session.config.DBNAME,
-            autocommit=True,
-            charset = 'utf8mb4',
-            cursorclass = pymysql.cursors.DictCursor
-        )
-        self.cur = self.con.cursor()
+        self.con = Session.db_pool.get_connection()
 
-    def _select(self,sql,args=None):
-        self.cur.execute(sql,args)
-        self.sel = self.cur.fetchone()
-        self.cur.close()
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args) -> None:
+        del args
         self.con.close()
-        return self.sel
 
-    def _selectAll(self,sql,args=None):
-        self.cur.execute(sql,args)
-        self.sel = self.cur.fetchall()
-        self.cur.close()
-        self.con.close()
-        return self.sel
+    def _select(self, sql: str, args: tuple = None):
+        with self.con.cursor() as cursor:
+            cursor.execute(sql, args)
+            return cursor.fetchone()
 
-    def _insert(self,sql,args=None):
-        self.ins = self.cur.executemany(sql,args)
-        return self.ins
+    def _select_all(self, sql: str, args: tuple = None):
+        with self.con.cursor() as cursor:
+            cursor.execute(sql, args)
+            return cursor.fetchall()
 
-    def _single_insert(self,sql,args=None):
-        self.sins = self.cur.execute(sql,args)
-        return self.sins
+    def _execute_many(self, sql: str, args: list[tuple] = None):
+        with self.con.cursor() as cursor:
+            return cursor.executemany(sql, args)
 
-    def _dict_insert(self, sql, dictionary):
-        self.dins = self.cur.execute(sql, list(dictionary.values()))
-        return self.dins
+    def _execute(self, sql: str, args: tuple = None):
+        with self.con.cursor() as cursor:
+            return cursor.execute(sql, args)
 
-    def _update(self,sql, args=None):
-        self.upd = self.cur.executemany(sql,args)
-        return self.upd
-
-    def _delete(self, sql, args=None):
-        self.delete = self.cur.executemany(sql,args)
-        return self.delete
-
-
-class SqlAlchemyConnection:
-    def __init__(self):
-        self.server = '{}:{}'.format(Session.config.HOST, Session.config.PORT)
-        self.db = Session.config.DBNAME
-        self.login = Session.config.USER
-        self.passwd = Session.config.PASSWORD
-        self.engine_str = 'mysql+pymysql://{}:{}@{}/{}'.format(self.login, self.passwd, self.server, self.db)
-        self.engine = create_engine(self.engine_str)
+    def _dict_insert(self, sql: str, dictionary: dict):
+        with self.con.cursor() as cursor:
+            return cursor.execute(sql, list(dictionary.values()))
