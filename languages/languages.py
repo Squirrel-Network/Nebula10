@@ -26,10 +26,10 @@ def load_languages() -> dict[str, Lang]:
 
 def get_group_lang(update: Update) -> str | None:
     chat = update.effective_message.chat_id
-    row = GroupLanguageRepository().getById([chat])
 
-    if row:
-        return row['languages']
+    with GroupLanguageRepository() as db:
+        if (row := db.get_by_id(chat)):
+            return row['languages']
 
 
 def get_lang(update: Update) -> Lang:

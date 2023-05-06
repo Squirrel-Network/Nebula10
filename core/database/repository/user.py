@@ -2,119 +2,121 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-from core.database.db_connect import Connection
-from pypika import Query, Table
 
-users = Table("users")
-owners = Table("owner_list")
-linktree_main_text = Table("linktree_main_text")
-linktree_buttons = Table("linktree_buttons")
+from core.database.db_connect import Connection
+
 
 class UserRepository(Connection):
-    def getById(self, args=None):
-        query = Query.from_(users).select("*").where(users.tg_id == "%s")
-        q = query.get_sql(quote_char=None)
+    def get_by_id(self, user_id):
+        q = "SELECT * FROM users WHERE tg_id='%s'"
 
-        return self._select(q, args)
+        return self._select(q, (user_id,))
 
-    def getByUsername(self, args=None):
+    def get_by_username(self, username: str):
         q = "SELECT * FROM users WHERE tg_username = %s"
 
-        return self._select(q, args)
+        return self._select(q, (username,))
 
-    def getUserByGroup(self, args=None):
+    def get_user_by_group(self, user_id: int, group_id: int):
         q = "SELECT u.tg_id,u.tg_username,gr.id_group,gu.warn_count, gr.max_warn, gr.group_name FROM users u INNER JOIN group_users gu ON gu.tg_id = u.tg_id INNER JOIN groups gr ON gu.tg_group_id = gr.id_group WHERE u.tg_id = %s AND gr.id_group = %s"
-        return self._select(q, args)
 
-    def getUserByGroups(self, args=None):
+        return self._select(q, (user_id, group_id))
+
+    def get_user_by_groups(self, user_id: int):
         q = "SELECT u.tg_id,u.tg_username,gr.id_group,gu.warn_count, gr.max_warn, gr.group_name FROM users u INNER JOIN group_users gu ON gu.tg_id = u.tg_id INNER JOIN groups gr ON gu.tg_group_id = gr.id_group WHERE u.tg_id = %s"
-        return self._selectAll(q, args)
 
-    def getAll(self, args=None):
-        query = Query.from_(users).select("*").where(users.tg_id == "%s")
-        q = query.get_sql(quote_char=None)
+        return self._select_all(q, (user_id,))
 
-        return self._selectAll(q, args)
+    def getAll(self, user_id: int):
+        q = "SELECT * FROM users WHERE tg_id='%s'"
 
-    def add(self, args=None):
+        return self._select_all(q, (user_id,))
+
+    def add(self, user_id: int, username: str, created_at, updated_at):
         q = "INSERT IGNORE INTO users (tg_id, tg_username, created_at, updated_at) VALUES (%s,%s,%s,%s)"
-        return self._insert(q, args)
 
-    def add_owner(self, args=None):
+        return self._execute(q, (user_id, username, created_at, updated_at))
+
+    def add_owner(self, user_id: int, username: str):
         q = "INSERT IGNORE INTO owner_list (tg_id, tg_username) VALUES (%s,%s)"
-        return self._insert(q, args)
 
-    def remove_owner(self, args=None):
+        return self._execute(q, (user_id, username))
+
+    def remove_owner(self, user_id: int):
         q = "DELETE FROM owner_list WHERE tg_id = %s"
-        return self._delete(q, args)
 
-    def add_into_mtm(self, args=None):
+        return self._execute(q, (user_id,))
+
+    def add_into_mtm(
+        self, user_id: int, group_id: int, warn_count: int, user_score: int
+    ):
         q = "INSERT IGNORE INTO group_users (tg_id, tg_group_id, warn_count, user_score) VALUES (%s,%s,%s,%s)"
-        return self._insert(q, args)
 
-    def update(self, args=None):
+        return self._execute(q, (user_id, group_id, warn_count, user_score))
+
+    def update(self, username: str, updated_at, user_id: int):
         q = "UPDATE users SET tg_username = %s, updated_at = %s WHERE tg_id = %s"
-        return self._update(q, args)
 
-    def delete_user(self, args=None):
+        return self._execute(q, (username, updated_at, user_id))
+
+    def delete_user(self, user_id: int):
         q = "DELETE FROM users WHERE tg_id = %s"
-        return self._delete(q, args)
 
-    def updateWarn(self, args=None):
+        return self._execute(q, (user_id,))
+
+    def update_warn(self, user_id: int, group_id: int):
         q = "UPDATE group_users SET warn_count = warn_count + 1 WHERE tg_id = %s AND tg_group_id = %s"
-        return self._update(q, args)
 
-    def downWarn(self, args=None):
+        return self._execute(q, (user_id, group_id))
+
+    def down_warn(self, user_id: int, group_id: int):
         q = "UPDATE group_users SET warn_count = warn_count - 1 WHERE tg_id = %s AND tg_group_id = %s"
-        return self._update(q, args)
 
-    def removeWarn(self, args=None):
+        return self._execute(q, (user_id, group_id))
+
+    def remove_warn(self, user_id: int, group_id: int):
         q = "UPDATE group_users SET warn_count = 0 WHERE tg_id = %s AND tg_group_id = %s"
-        return self._update(q, args)
 
-    def getOwners(self):
-        query = Query.from_(owners).select("*")
-        q = query.get_sql(quote_char=None)
+        return self._execute(q, (user_id, group_id))
 
-        return self._selectAll(q)
+    def get_owners(self):
+        q = "SELECT * FROM owner_list"
 
-    def getOwnerById(self, args=None):
-        query = Query.from_(owners).select("*").where(owners.tg_id == "%s")
-        q = query.get_sql(quote_char=None)
+        return self._select_all(q)
 
-        return self._select(q, args)
-    def getLinktreeMainText(self, args=None):
-        query = Query.from_(linktree_main_text).select("*").where(linktree_main_text.user_id == "%s")
-        q = query.get_sql(quote_char=None)
+    def get_owner_by_id(self, user_id: int):
+        q = "SELECT * FROM owner_list WHERE tg_id='%s'"
 
-        return self._select(q, args)
+        return self._select(q, (user_id,))
 
-    def getLinkTreeButtons(self, args=None):
-        query = Query.from_(linktree_buttons).select("*").where(linktree_buttons.user_id == "%s")
-        q = query.get_sql(quote_char=None)
+    def get_linktree_main_text(self, user_id: int):
+        q = "SELECT * FROM linktree_main_text WHERE user_id='%s'"
 
-        return self._selectAll(q, args)
+        return self._select(q, (user_id,))
 
-    def insert_linktree_button(self, args=None):
+    def get_link_tree_buttons(self, user_id: int):
+        q = "SELECT * FROM linktree_buttons WHERE user_id='%s'"
 
+        return self._select_all(q, (user_id,))
+
+    def insert_linktree_button(
+        self, user_id: int, button_text: str, button_url: str
+    ):
         q = "INSERT INTO linktree_buttons (user_id, button_id, button_text, button_url) VALUES (%s, NULL, %s, %s)"
 
-        return self._insert(q, args)
+        return self._execute(q, (user_id, button_text, button_url))
 
-    def insert_main_text_linktree(self, args=None):
-
+    def insert_main_text_linktree(self, user_id: int, main_text: str):
         q = "INSERT INTO linktree_main_text (user_id, main_text) VALUES (%s,%s)"
 
-        return self._insert(q, args)
+        return self._execute(q, (user_id, main_text))
 
-    def update_main_text_linktree(self, args=None):
-
+    def update_main_text_linktree(self, main_text: str, user_id: int):
         q = "UPDATE linktree_main_text SET main_text = %s WHERE user_id = %s"
 
-        return self._update(q, args)
+        return self._update(q, (main_text, user_id))
 
-    def delete_linktree_button(self, args=None):
-
+    def delete_linktree_button(self, button_id: int, user_id: int):
         q = "DELETE FROM linktree_buttons WHERE button_id = %s AND user_id = %s"
 
-        return self._delete(q, args)
+        return self._execute(q, (button_id, user_id))

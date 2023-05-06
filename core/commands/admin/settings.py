@@ -38,7 +38,7 @@ BUTTONS_MENU = {
 
 def get_keyboard_settings(chat_id: int) -> InlineKeyboardMarkup:
     with GroupRepository() as db:
-        group = db.getById(chat_id)
+        group = db.get_by_id(chat_id)
 
     buttons = [
         InlineKeyboardButton(f"{'✅' if group[v[1]] else '❌'} {v[0]}", callback_data=cb)
@@ -92,7 +92,7 @@ async def settings_set_welcome(
     if not data["set_welcome"] and data["block_new_member"]:
         with GroupRepository() as db:
             db.update_group_settings(
-                GroupRepository.SET_BLOCK_N_M, [(0, update.effective_chat.id)]
+                GroupRepository.SET_BLOCK_N_M, 0, update.effective_chat.id
             )
 
 
@@ -102,7 +102,7 @@ async def settings_set_block_entry(
     with GroupRepository() as db:
         db.update_group_settings(
             GroupRepository.SET_WELCOME,
-            [(0 if not data["block_new_member"] else 1, update.effective_chat.id)],
+            0 if not data["block_new_member"] else 1, update.effective_chat.id,
         )
 
 
@@ -119,10 +119,10 @@ async def callback_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     callback_data = update.callback_query.data
 
     with GroupRepository() as db:
-        data = db.getById(chat_id)
+        data = db.get_by_id(chat_id)
         value = BUTTONS_MENU[callback_data][1]
 
-        db.update_group_settings(value, [(not data[value], chat_id)])
+        db.update_group_settings(value, not data[value], chat_id)
 
     if callback_data in SETTINGS_CALLBACK:
         await SETTINGS_CALLBACK[callback_data](update, context, data)

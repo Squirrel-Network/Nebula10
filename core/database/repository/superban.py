@@ -2,46 +2,62 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-from core.database.db_connect import Connection
-from pypika import Query, Table
 
-superban = Table("superban_table")
-whitelist = Table("whitelist_table")
-group_blacklist = Table("groups_blacklist")
+from core.database.db_connect import Connection
+
 
 class SuperbanRepository(Connection):
-    def getById(self, args=None):
-        query = Query.from_(superban).select("*").where(superban.user_id == '%s')
-        q = query.get_sql(quote_char=None)
+    def get_by_id(self, user_id: int):
+        q = "SELECT * FROM superban_table WHERE user_id='%s'"
 
-        return self._select(q, args)
+        return self._select(q, (user_id,))
 
-    def getWhitelistById(self, args=None):
-        query = Query.from_(whitelist).select("*").where(whitelist.tg_id == '%s')
-        q = query.get_sql(quote_char=None)
+    def get_whitelist_by_id(self, user_id: int):
+        q = "SELECT * FROM whitelist_table WHERE tg_id='%s'"
 
-        return self._select(q, args)
+        return self._select(q, (user_id,))
 
-    def getGroupBlacklistById(self, args=None):
-        query = Query.from_(group_blacklist).select("*").where(group_blacklist.tg_id_group == '%s')
-        q = query.get_sql(quote_char=None)
+    def get_group_blacklist_by_id(self, group_id):
+        q = "SELECT * FROM groups_blacklist WHERE tg_id_group='%s'"
 
-        return self._select(q, args)
+        return self._select(q, (group_id,))
 
-    def addWhitelist(self, args=None):
+    def add_whitelist(self, user_id, user_username):
         q = "INSERT IGNORE INTO whitelist_table(tg_id, tg_username) VALUES (%s,%s)"
-        return self._insert(q, args)
 
-    def getAll(self, args=None):
-        query = Query.from_(superban).select("user_id").where(superban.user_id == '%s')
-        q = query.get_sql(quote_char=None)
+        return self._execute(q, (user_id, user_username))
 
-        return self._selectAll(q, args)
+    def get_all(self, user_id: int):
+        q = "SELECT user_id FROM superban_table WHERE user_id='%s'"
 
-    def add(self, args=None):
+        return self._select_all(q, (user_id,))
+
+    def add(
+        self,
+        user_id: int,
+        user_first_name: str,
+        motivation_text: str,
+        user_date,
+        id_operator: int,
+        username_operator: str,
+        first_name_operator: str,
+    ):
         q = "INSERT IGNORE INTO superban_table(user_id, user_first_name, motivation_text, user_date, id_operator, username_operator, first_name_operator) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-        return self._insert(q, args)
 
-    def remove(self, args=None):
+        return self._execute(
+            q,
+            (
+                user_id,
+                user_first_name,
+                motivation_text,
+                user_date,
+                id_operator,
+                username_operator,
+                first_name_operator,
+            ),
+        )
+
+    def remove(self, user_id: int):
         q = "DELETE FROM superban_table WHERE user_id = %s"
-        return self._delete(q, args)
+
+        return self._execute(q, (user_id,))

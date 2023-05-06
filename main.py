@@ -43,7 +43,7 @@ def main() -> None:
     Session.lang = load_languages()
 
     # Add owner
-    UserRepository().add_owner([(conf.OWNER_ID, conf.OWNER_USERNAME.lower())])
+    UserRepository().add_owner(conf.OWNER_ID, conf.OWNER_USERNAME.lower())
 
     # Get owner ids
     Session.owner_ids = get_owner_list()
