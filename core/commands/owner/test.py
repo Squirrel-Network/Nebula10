@@ -5,7 +5,6 @@
 
 #from core.database.repository.group import GroupRepository
 #from core.utilities.message import message
-from core.utilities.entities import TelegramObjects
 from core.decorators import restricted
 
 
