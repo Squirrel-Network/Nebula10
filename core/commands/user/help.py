@@ -5,7 +5,7 @@
 
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
-
+from core.utilities.message import message
 from core.utilities.menu import build_menu
 from core.utilities.text import Text
 from languages import get_lang
@@ -22,9 +22,7 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
             text="🆓 Source", url="https://github.com/Squirrel-Network/nebula10"
         ),
         InlineKeyboardButton("🔔 Logs Channel", url="https://t.me/nebulalogs"),
-        InlineKeyboardButton(
-            "📣 News Channel", url="https://t.me/nebulanewsbot"
-        ),
+        InlineKeyboardButton("📣 News Channel", url="https://t.me/nebulanewsbot"),
         InlineKeyboardButton(
             text="🚷 BlackList", url="https://squirrel-network.online/knowhere"
         ),
@@ -32,9 +30,7 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
             text="📑 API Docs",
             url="https://api.nebula.squirrel-network.online/apidocs",
         ),
-        InlineKeyboardButton(
-            "🌐 Network SN", url="https://t.me/squirrelnetwork"
-        ),
+        InlineKeyboardButton("🌐 Network SN", url="https://t.me/squirrelnetwork"),
         InlineKeyboardButton(
             "🛠 Dashboard", url="https://nebula.squirrel-network.online"
         ),
@@ -42,8 +38,9 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     params = {"name": f"@{bot.username}"}
 
-    await bot.send_message(
-        update.effective_message.chat_id,
+    await message(
+        update,
+        context,
         get_lang(update)["HELP_COMMAND"].format_map(Text(params)),
         reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
     )

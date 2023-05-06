@@ -33,11 +33,12 @@ START_BUTTONS = (
 
 @delete_command
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    buttons = [
-        InlineKeyboardButton(name, url=url) for name, url in START_BUTTONS
-    ]
+    buttons = [InlineKeyboardButton(name, url=url) for name, url in START_BUTTONS]
     params = {"name": f"@{context.bot.username}"}
-    await message(update,context,
-                  get_lang(update)["START_COMMAND"].format_map(Text(params)),
-                  reply_markup=InlineKeyboardMarkup(build_menu(buttons, 3))
-                  )
+
+    await message(
+        update,
+        context,
+        get_lang(update)["START_COMMAND"].format_map(Text(params)),
+        reply_markup=InlineKeyboardMarkup(build_menu(buttons, 3)),
+    )

@@ -3,9 +3,9 @@
 
 # Copyright SquirrelNetwork
 
-from telegram import Update, constants
+from telegram import Update
 from telegram.ext import ContextTypes
-
+from core.utilities.message import message
 from core.decorators import check_role, delete_command
 from core.utilities.enums import Role
 from core.utilities.text import Text
@@ -22,10 +22,4 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
             1,
             get_lang(update)["SAY_MISSING_MESSAGE_WARNING"].format_map(Text()),
         )
-
-    await context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text=command[1],
-        parse_mode=constants.ParseMode.HTML,
-        allow_sending_without_reply=True,
-    )
+    await message(update, context, command[1], allow_sending_without_reply=True)

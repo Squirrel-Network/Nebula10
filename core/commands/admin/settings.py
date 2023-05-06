@@ -5,7 +5,7 @@
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
-
+from core.utilities.message import message
 from core.database.repository.group import GroupRepository
 from core.decorators import check_role, delete_command
 from core.utilities.constants import PERM_FALSE, PERM_TRUE
@@ -38,9 +38,7 @@ BUTTONS_MENU = {
 def get_keyboard_settings(chat_id: int) -> InlineKeyboardMarkup:
     group = GroupRepository().getById(chat_id)
     buttons = [
-        InlineKeyboardButton(
-            f"{'✅' if group[v[1]] else '❌'} {v[0]}", callback_data=cb
-        )
+        InlineKeyboardButton(f"{'✅' if group[v[1]] else '❌'} {v[0]}", callback_data=cb)
         for cb, v in BUTTONS_MENU.items()
     ]
 
@@ -68,12 +66,11 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "name": update.effective_chat.title,
         "id": update.effective_chat.id,
     }
-
-    await context.bot.send_message(
-        update.effective_chat.id,
+    await message(
+        update,
+        context,
         get_lang(update)["MAIN_TEXT_SETTINGS"].format_map(Text(params)),
         reply_markup=get_keyboard_settings(update.effective_chat.id),
-        parse_mode="HTML",
     )
 
 
@@ -118,9 +115,7 @@ async def callback_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     data = GroupRepository().getById(chat_id)
     value = BUTTONS_MENU[callback_data][1]
 
-    GroupRepository().update_group_settings(
-        value, [(not data[value], chat_id)]
-    )
+    GroupRepository().update_group_settings(value, [(not data[value], chat_id)])
 
     if callback_data in SETTINGS_CALLBACK:
         await SETTINGS_CALLBACK[callback_data](update, context, data)
