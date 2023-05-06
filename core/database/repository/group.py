@@ -47,11 +47,10 @@ class GroupRepository(Connection):
     UPDATED_AT = "updated_at"
     SET_GH = "set_gh"
 
-    def getById(self, args=None):
-        query = Query.from_(groups).select("*").where(groups.id_group == '%s')
-        q = query.get_sql(quote_char=None)
+    def getById(self, chat_id: int):
+        query = "SELECT * FROM groups WHERE id_group='%s'"
 
-        return self._select(q, args)
+        return self._select(query, (chat_id,))
 
     def getAllById(self, args=None):
         query = Query.from_(groups).select("*").where(groups.id_group == '%s')

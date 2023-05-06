@@ -5,12 +5,13 @@
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
-from core.utilities.message import message
-from core.database.repository.group import GroupRepository
+
+from core.database.repository import GroupRepository
 from core.decorators import check_role, delete_command
 from core.utilities.constants import PERM_FALSE, PERM_TRUE
 from core.utilities.enums import Role
 from core.utilities.menu import build_menu
+from core.utilities.message import message
 from core.utilities.text import Text
 from languages import get_lang
 
@@ -36,7 +37,9 @@ BUTTONS_MENU = {
 
 
 def get_keyboard_settings(chat_id: int) -> InlineKeyboardMarkup:
-    group = GroupRepository().getById(chat_id)
+    with GroupRepository() as db:
+        group = db.getById(chat_id)
+
     buttons = [
         InlineKeyboardButton(f"{'✅' if group[v[1]] else '❌'} {v[0]}", callback_data=cb)
         for cb, v in BUTTONS_MENU.items()
@@ -87,18 +90,20 @@ async def settings_set_welcome(
     update: Update, _: ContextTypes.DEFAULT_TYPE, data: dict
 ):
     if not data["set_welcome"] and data["block_new_member"]:
-        GroupRepository().update_group_settings(
-            GroupRepository.SET_BLOCK_N_M, [(0, update.effective_chat.id)]
-        )
+        with GroupRepository() as db:
+            db.update_group_settings(
+                GroupRepository.SET_BLOCK_N_M, [(0, update.effective_chat.id)]
+            )
 
 
 async def settings_set_block_entry(
     update: Update, _: ContextTypes.DEFAULT_TYPE, data: dict
 ):
-    GroupRepository().update_group_settings(
-        GroupRepository.SET_WELCOME,
-        [(0 if not data["block_new_member"] else 1, update.effective_chat.id)],
-    )
+    with GroupRepository() as db:
+        db.update_group_settings(
+            GroupRepository.SET_WELCOME,
+            [(0 if not data["block_new_member"] else 1, update.effective_chat.id)],
+        )
 
 
 SETTINGS_CALLBACK = {
@@ -112,10 +117,12 @@ SETTINGS_CALLBACK = {
 async def callback_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
     callback_data = update.callback_query.data
-    data = GroupRepository().getById(chat_id)
-    value = BUTTONS_MENU[callback_data][1]
 
-    GroupRepository().update_group_settings(value, [(not data[value], chat_id)])
+    with GroupRepository() as db:
+        data = db.getById(chat_id)
+        value = BUTTONS_MENU[callback_data][1]
+
+        db.update_group_settings(value, [(not data[value], chat_id)])
 
     if callback_data in SETTINGS_CALLBACK:
         await SETTINGS_CALLBACK[callback_data](update, context, data)

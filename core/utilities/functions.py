@@ -10,13 +10,9 @@ from core.database.repository.user import UserRepository
 from core.database.repository.group import GroupRepository
 
 
-def get_owner_list() -> list:
-    rows = UserRepository().getOwners()
-    arr_owners = []
-    for a in rows:
-        owners = int(a['tg_id'])
-        arr_owners.append(owners)
-    return arr_owners
+def get_owner_list() -> list[int]:
+    with UserRepository() as db:
+        return [int(x["tg_id"]) for x in db.getOwners()]
 
 
 async def close_menu(update, context):

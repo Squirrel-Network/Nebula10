@@ -10,12 +10,13 @@ from dotenv import load_dotenv
 from telegram.ext import Application
 
 from config import Config, Session
-from core.utilities.functions import get_owner_list
+from core.database import create_pool
 from core.database.repository.user import UserRepository
+from core.utilities.functions import get_owner_list
 from languages import load_languages
 
 
-# if version < 3.7, stop bot.
+# if version < 3.10, stop bot.
 LOGGING = logging.getLogger(__name__)
 if sys.version_info[0] < 3 or sys.version_info[1] < 10:
     LOGGING.error("You MUST have a python version of at least 3.10! Multiple features depend on this. Bot quitting.")
@@ -34,6 +35,9 @@ def main() -> None:
 
     # Load the Config
     conf = Session.config = Config()
+
+    # Load pool
+    Session.db_pool = create_pool()
 
     # Load languages
     Session.lang = load_languages()

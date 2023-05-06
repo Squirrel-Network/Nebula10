@@ -1,10 +1,20 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
 __all__ = [
-    "community",
-    "dashboard",
-    "group",
-    "user",
-    "group_language",
-    "superban"
+    "CommunityRepository",
+    "DashboardRepository",
+    "GroupRepository",
+    "GroupLanguageRepository",
+    "SuperbanRepository",
+    "UserRepository",
 ]
 
-from core.database.repository import *
+from .community import CommunityRepository
+from .dashboard import DashboardRepository
+from .group import GroupRepository
+from .group_language import GroupLanguageRepository
+from .superban import SuperbanRepository
+from .user import UserRepository
