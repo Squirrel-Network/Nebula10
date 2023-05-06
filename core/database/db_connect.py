@@ -3,8 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-import typing
-
 import pymysql
 from pymysqlpool import ConnectionPool
 
