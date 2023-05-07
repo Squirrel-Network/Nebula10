@@ -34,8 +34,8 @@ class DashboardRepository(Connection):
         group_id: int,
         enable: int,
         role: str,
-        created_at,
-        updated_at,
+        created_at: str,
+        updated_at: str,
     ):
         q = "INSERT INTO nebula_dashboard (tg_id, tg_username, tg_group_id, enable, role, created_at, updated_at) VALUES (%s,%s,%s,%s,%s,%s,%s)"
 
@@ -53,7 +53,7 @@ class DashboardRepository(Connection):
         )
 
     def update(
-        self, username: str, role: str, updated_at, user_id: int, group_id: int
+        self, username: str, role: str, updated_at: str, user_id: int, group_id: int
     ):
         q = "UPDATE nebula_dashboard SET tg_username = %s, role = %s, updated_at = %s WHERE tg_id = %s AND tg_group_id = %s"
 

@@ -3,14 +3,20 @@
 
 # Copyright SquirrelNetwork
 
-import re
+import json
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, User
 from telegram.ext import ContextTypes
 
 from config import Session
-from core.database.repository import GroupRepository
-from core.utilities.functions import ban_user, kick_user, mute_user, save_group
+from core.database.repository import GroupRepository, SuperbanRepository
+from core.utilities.functions import (
+    ban_user,
+    kick_user,
+    mute_user,
+    save_group,
+    save_user,
+)
 from core.utilities.menu import build_menu
 from core.utilities.message import message
 from core.utilities.regex import Regex
@@ -27,27 +33,11 @@ NO_USERNAME_ACTION = {
 }
 
 
-def has_arabic_character(data: str) -> bool:
-    return bool(re.search(Regex.HAS_ARABIC, data))
-
-
-def has_cirillic_character(data: str) -> bool:
-    return bool(re.search(Regex.HAS_CIRILLIC, data))
-
-
-def has_chinese_character(string) -> bool:
-    return bool(re.search(Regex.HAS_CHINESE, string))
-
-
-def has_zoophile(data: str):
-    return bool(re.search(Regex.HAS_ZOOPHILE, data))
-
-
 CHECK_NAME = (
-    (has_arabic_character, "FILTER_NAME", "set_arabic_filter"),
-    (has_cirillic_character, "FILTER_NAME", "set_cirillic_filter"),
-    (has_chinese_character, "FILTER_NAME", "set_chinese_filter"),
-    (has_zoophile, "BAN_ZOOPHILE", "zoophile_filter"),
+    (Regex.has_arabic_character, "FILTER_NAME", "set_arabic_filter"),
+    (Regex.has_cirillic_character, "FILTER_NAME", "set_cirillic_filter"),
+    (Regex.has_chinese_character, "FILTER_NAME", "set_chinese_filter"),
+    (Regex.has_zoophile, "BAN_ZOOPHILE", "zoophile_filter"),
 )
 
 
@@ -55,6 +45,11 @@ def check_name(name: str, data: dict) -> str | None:
     for func, text, db in CHECK_NAME:
         if func(name) and data[db]:
             return text
+
+
+def is_in_blacklist(user_id: int) -> bool:
+    with SuperbanRepository() as db:
+        return bool(db.get_by_id(user_id))
 
 
 async def welcome_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -95,6 +90,34 @@ async def welcome_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def welcome_user(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+    member: User,
+    data: dict,
+):
+    buttons = [
+        InlineKeyboardButton(x["title"], url=x["url"])
+        for x in json.loads(data["welcome_buttons"])["buttons"]
+    ]
+    params = {
+        "first_name": member.first_name,
+        "chat": update.effective_chat.title,
+        "username": f"@{member.username}"
+        if member.username
+        else member.first_name,
+        "mention": f'<a href="tg://user?id={member.id}">{member.first_name}</a>',
+        "user_id": member.id,
+    }
+
+    await message(
+        update,
+        context,
+        data["welcome_text"].format_map(Text(params)),
+        reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
+    )
+
+
 async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with GroupRepository() as db:
         data = db.get_by_id(update.effective_chat.id)
@@ -106,6 +129,17 @@ async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if member.id == context.bot.id:
             # TODO: log
             await welcome_bot(update, context)
+
+        elif is_in_blacklist(member.id):
+            await ban_user(chat_id, member.id, context)
+
+            params = {"id": member.id, "name": member.first_name}
+
+            await message(
+                update,
+                context,
+                lang["USER_ALREADY_BAN"].format_map(Text(params)),
+            )
 
         elif member.id in Session.owner_ids:
             params = {"id": member.id, "name": member.name}
@@ -123,11 +157,12 @@ async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
             not member.username
             and (action := data["type_no_username"]) in NO_USERNAME_ACTION
         ):
-            call = NO_USERNAME_ACTION.get(action, None)
-            if exe := call[0]:
-                await exe(chat_id, member.id, context)
+            value = NO_USERNAME_ACTION.get(action, None)
+            
+            if call := value[0]:
+                await call(chat_id, member.id, context)
 
-            if mess := call[1]:
+            if mess := value[1]:
                 params = {"user": member.name, "action": mess}
 
                 await message(
@@ -158,5 +193,18 @@ async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await message(update, context, lang[text].format_map(Text(params)))
 
         else:
-            # TODO: save user
-            print("TODO")
+            save_user(member, update.effective_chat)
+
+            if not data:
+                params = {
+                    "username": update.effective_chat.username,
+                    "name": update.effective_chat.title,
+                }
+                message(
+                    update,
+                    context,
+                    Session.config.DEFAULT_WELCOME.format_map(Text(params)),
+                )
+
+            else:
+                await welcome_user(update, context, member, data)

@@ -39,7 +39,7 @@ class Config(BaseSettings):
     REPO: str = "https://github.com/Squirrel-Network/nebula10"
 
     # Telegram settings
-    DEFAULT_WELCOME: str = "Welcome {} to the {} group"
+    DEFAULT_WELCOME: str = "Welcome {USERNAME} to the {NAME} group"
     DEFAULT_RULES: str = "https://github.com/Squirrel-Network/GroupRules"
     DEFAULT_LOG_CHANNEL: str
     DEFAULT_STAFF_GROUP: str

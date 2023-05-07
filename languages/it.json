@@ -58,5 +58,6 @@
     "BLOCK_NEW_MEMBER": "<b>#Gestore Automatico:</b> Espulsione Utente per protezione del gruppo",
     "NEW_MEMBER_WITHOUT_PHOTO": "<a href=\"tg://user?id={ID}\">{NAME}</a> imposta una foto del profilo! Sei stato espulso per motivi di sicurezza!",
     "FILTER_NAME": "Attivato filtro non-Latino per l'utente <a href=\"tg://user?id={ID}\">{NAME}</a>",
-    "BAN_ZOOPHILE": "Il sistema automatico di Nebula ha intercettato uno <b>zoofilo!</b>\nHo bannato l'utente <a href=\"tg://user?id={ID}\">{NAME}</a>"
+    "BAN_ZOOPHILE": "Il sistema automatico di Nebula ha intercettato uno <b>zoofilo!</b>\nHo bannato l'utente <a href=\"tg://user?id={ID}\">{NAME}</a>",
+    "USER_ALREADY_BAN": "{NO_PEDESTRIANS} Ho super-bannato <a href=\"tg://user?id={ID}\">{NAME}</a> [{ID}]\n\n"
 }

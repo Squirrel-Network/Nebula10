@@ -17,12 +17,12 @@ class SuperbanRepository(Connection):
 
         return self._select(q, (user_id,))
 
-    def get_group_blacklist_by_id(self, group_id):
+    def get_group_blacklist_by_id(self, group_id: int):
         q = "SELECT * FROM groups_blacklist WHERE tg_id_group='%s'"
 
         return self._select(q, (group_id,))
 
-    def add_whitelist(self, user_id, user_username):
+    def add_whitelist(self, user_id: int, user_username: str):
         q = "INSERT IGNORE INTO whitelist_table(tg_id, tg_username) VALUES (%s,%s)"
 
         return self._execute(q, (user_id, user_username))
@@ -37,7 +37,7 @@ class SuperbanRepository(Connection):
         user_id: int,
         user_first_name: str,
         motivation_text: str,
-        user_date,
+        user_date: str,
         id_operator: int,
         username_operator: str,
         first_name_operator: str,

@@ -27,12 +27,12 @@ class UserRepository(Connection):
 
         return self._select_all(q, (user_id,))
 
-    def getAll(self, user_id: int):
+    def get_all(self, user_id: int):
         q = "SELECT * FROM users WHERE tg_id='%s'"
 
         return self._select_all(q, (user_id,))
 
-    def add(self, user_id: int, username: str, created_at, updated_at):
+    def add(self, user_id: int, username: str, created_at: str, updated_at: str):
         q = "INSERT IGNORE INTO users (tg_id, tg_username, created_at, updated_at) VALUES (%s,%s,%s,%s)"
 
         return self._execute(q, (user_id, username, created_at, updated_at))

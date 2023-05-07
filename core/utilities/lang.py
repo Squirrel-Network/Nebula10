@@ -62,3 +62,4 @@ class Lang(typing.TypedDict):
     NEW_MEMBER_WITHOUT_PHOTO: str
     FILTER_NAME: str
     BAN_ZOOPHILE: str
+    USER_ALREADY_BAN: str

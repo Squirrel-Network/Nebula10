@@ -6,7 +6,7 @@
 import datetime
 import time
 
-from telegram import Update
+from telegram import Update, User, Chat
 from telegram.ext import ContextTypes
 
 from config import Session
@@ -92,3 +92,17 @@ def save_group(chat_id: int, chat_title: str):
             }
 
             db.add_with_dict(dictionary)
+
+
+def save_user(member: User, chat: Chat):
+    with UserRepository() as db:
+        data = db.get_by_id(member.id)
+
+        current_time = datetime.datetime.utcnow().isoformat()
+
+        if data:
+            db.update(member.username, current_time, member.id)
+        else:
+            db.add(member.id, member.username, current_time, current_time)
+
+        db.add_into_mtm(member.id, chat.id, 0, 0)

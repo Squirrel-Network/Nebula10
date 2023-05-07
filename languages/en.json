@@ -58,5 +58,6 @@
     "BLOCK_NEW_MEMBER": "<b>#Automatic Handler:</b> Kick User for group protection",
     "NEW_MEMBER_WITHOUT_PHOTO": "<a href=\"tg://user?id={ID}\">{NAME}</a> set a profile picture! You were kicked for safety!",
     "FILTER_NAME": "Non-Latin filter activated for the user <a href=\"tg://user?id={ID}\">{NAME}</a>",
-    "BAN_ZOOPHILE": "Nebula's automatic system intercepted a <b>zoophile!</b>\nI banned user <a href=\"tg://user?id={ID}\">{NAME}</a>"
+    "BAN_ZOOPHILE": "Nebula's automatic system intercepted a <b>zoophile!</b>\nI banned user <a href=\"tg://user?id={ID}\">{NAME}</a>",
+    "USER_ALREADY_BAN": "{NO_PEDESTRIANS} I got superbanned <a href=\"tg://user?id={ID}\">{NAME}</a> [{ID}]\n\n"
 }
