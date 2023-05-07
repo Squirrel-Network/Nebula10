@@ -55,5 +55,8 @@
     "SERVER_STATUS_MEMORY": "{GEAR} ==== INFORMAZIONI SULLA MEMORIA ==== {GEAR}\nUtilizzo attuale della memoria: <code>{MEMORY_PERCENT}%</code>\nTotale: <code>{TOTAL}</code>\n\n",
     "SERVER_STATUS_NETWORK": "{GEAR} ==== INFORMAZIONI DI RETE ==== {GEAR}\nByte totali inviati: <code>{BYTES_SENT}</code>\nByte totali ricevuti: <code>{BYTES_RECV}</code>\nÈ in esecuzione dal <b>{RUNNING}</b>",
     "OPERATOR_JOIN": "Il gestore del bot <a href=\"tg://user?id={ID}\">{NAME}</a> si è appena unito al gruppo",
-    "BLOCK_NEW_MEMBER": "<b>#Gestore Automatico:</b> Espulsione Utente per protezione del gruppo"
+    "BLOCK_NEW_MEMBER": "<b>#Gestore Automatico:</b> Espulsione Utente per protezione del gruppo",
+    "NEW_MEMBER_WITHOUT_PHOTO": "<a href=\"tg://user?id={ID}\">{NAME}</a> imposta una foto del profilo! Sei stato espulso per motivi di sicurezza!",
+    "FILTER_NAME": "Attivato filtro non-Latino per l'utente <a href=\"tg://user?id={ID}\">{NAME}</a>",
+    "BAN_ZOOPHILE": "Il sistema automatico di Nebula ha intercettato uno <b>zoofilo!</b>\nHo bannato l'utente <a href=\"tg://user?id={ID}\">{NAME}</a>"
 }

@@ -27,23 +27,23 @@ async def close_menu(update: Update, _: ContextTypes.DEFAULT_TYPE):
         await query.message.delete()
 
 
-async def kick_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def kick_user(chat_id: int, user_id: int, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.ban_chat_member(
-        update.effective_chat.id,
-        update.message.from_user.id,
+        chat_id,
+        user_id,
         until_date=int(time.time() + 30),
     )
 
 
-async def mute_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def mute_user(chat_id: int, user_id: int, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.restrict_chat_member(
-        update.effective_chat.id, update.effective_user.id, PERM_FALSE
+        chat_id, user_id, PERM_FALSE
     )
 
 
-async def ban_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def ban_user(chat_id: int, user_id: int, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.ban_chat_member(
-        update.effective_chat.id, update.effective_chat.id
+        chat_id, user_id
     )
 
 

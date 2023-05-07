@@ -59,3 +59,6 @@ class Lang(typing.TypedDict):
     SERVER_STATUS_NETWORK: str
     OPERATOR_JOIN: str
     BLOCK_NEW_MEMBER: str
+    NEW_MEMBER_WITHOUT_PHOTO: str
+    FILTER_NAME: str
+    BAN_ZOOPHILE: str

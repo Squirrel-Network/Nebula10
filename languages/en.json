@@ -55,5 +55,8 @@
     "SERVER_STATUS_MEMORY": "{GEAR} ==== MEMORY INFO ==== {GEAR}\nCurrent memory utilization: <code>{MEMORY_PERCENT}%</code>\nTotal: <code>{TOTAL}</code>\n\n",
     "SERVER_STATUS_NETWORK": "{GEAR} ==== NETWORK INFO ==== {GEAR}\nTotal Bytes Sent: <code>{BYTES_SENT}</code>\nTotal Bytes Received: <code>{BYTES_RECV}</code>\nIt's running since <b>{RUNNING}</b>",
     "OPERATOR_JOIN": "The bot operator <a href=\"tg://user?id={ID}\">{NAME}</a> has just joined the group",
-    "BLOCK_NEW_MEMBER": "<b>#Automatic Handler:</b> Kick User for group protection"
+    "BLOCK_NEW_MEMBER": "<b>#Automatic Handler:</b> Kick User for group protection",
+    "NEW_MEMBER_WITHOUT_PHOTO": "<a href=\"tg://user?id={ID}\">{NAME}</a> set a profile picture! You were kicked for safety!",
+    "FILTER_NAME": "Non-Latin filter activated for the user <a href=\"tg://user?id={ID}\">{NAME}</a>",
+    "BAN_ZOOPHILE": "Nebula's automatic system intercepted a <b>zoophile!</b>\nI banned user <a href=\"tg://user?id={ID}\">{NAME}</a>"
 }
