@@ -107,7 +107,7 @@ async def welcome_user(
         if member.username
         else member.first_name,
         "mention": f'<a href="tg://user?id={member.id}">{member.first_name}</a>',
-        "user_id": member.id,
+        "userid": member.id,
     }
 
     await message(

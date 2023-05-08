@@ -15,18 +15,18 @@ class Regex:
     HAS_ZOOPHILE: str = "[ζ]"
     HAS_URL: str = "((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*"
 
-    @staticmethod
-    def has_arabic_character(data: str) -> bool:
-        return bool(re.search(Regex.HAS_ARABIC, data))
+    @classmethod
+    def has_arabic_character(cls, data: str) -> bool:
+        return bool(re.search(cls.HAS_ARABIC, data))
 
-    @staticmethod
-    def has_cirillic_character(data: str) -> bool:
-        return bool(re.search(Regex.HAS_CIRILLIC, data))
+    @classmethod
+    def has_cirillic_character(cls, data: str) -> bool:
+        return bool(re.search(cls.HAS_CIRILLIC, data))
 
-    @staticmethod
-    def has_chinese_character(string) -> bool:
-        return bool(re.search(Regex.HAS_CHINESE, string))
+    @classmethod
+    def has_chinese_character(cls, data: str) -> bool:
+        return bool(re.search(cls.HAS_CHINESE, data))
 
-    @staticmethod
-    def has_zoophile(data: str) -> bool:
-        return bool(re.search(Regex.HAS_ZOOPHILE, data))
+    @classmethod
+    def has_zoophile(cls, data: str) -> bool:
+        return bool(re.search(cls.HAS_ZOOPHILE, data))
