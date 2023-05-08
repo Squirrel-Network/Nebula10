@@ -63,3 +63,5 @@ class Lang(typing.TypedDict):
     FILTER_NAME: str
     BAN_ZOOPHILE: str
     USER_ALREADY_BAN: str
+    SUPERBAN_REPLY: str
+    SUPERBAN_ERROR: str

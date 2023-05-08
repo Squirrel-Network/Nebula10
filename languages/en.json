@@ -59,5 +59,7 @@
     "NEW_MEMBER_WITHOUT_PHOTO": "<a href=\"tg://user?id={ID}\">{NAME}</a> set a profile picture! You were kicked for safety!",
     "FILTER_NAME": "Non-Latin filter activated for the user <a href=\"tg://user?id={ID}\">{NAME}</a>",
     "BAN_ZOOPHILE": "Nebula's automatic system intercepted a <b>zoophile!</b>\nI banned user <a href=\"tg://user?id={ID}\">{NAME}</a>",
-    "USER_ALREADY_BAN": "{NO_PEDESTRIANS} I got superbanned <a href=\"tg://user?id={ID}\">{NAME}</a> [{ID}]\n\n"
+    "USER_ALREADY_BAN": "{NO_PEDESTRIANS} I got superbanned <a href=\"tg://user?id={ID}\">{NAME}</a> [{ID}]\n\n",
+    "SUPERBAN_REPLY": "Select a reason for the Superban",
+    "SUPERBAN_ERROR": "Superban cannot be completed. The user may have already been blacklisted or is on the whitelist."
 }
