@@ -200,7 +200,7 @@ async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     "username": update.effective_chat.username,
                     "name": update.effective_chat.title,
                 }
-                message(
+                await message(
                     update,
                     context,
                     Session.config.DEFAULT_WELCOME.format_map(Text(params)),
