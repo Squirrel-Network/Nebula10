@@ -66,3 +66,8 @@ class Lang(typing.TypedDict):
     SUPERBAN_REPLY: str
     SUPERBAN_ERROR: str
     SUPERBAN_ERROR_NO_ID: str
+    SUPERBAN_ERROR_USERNAME: str
+    SUPERBAN_USERNAME: str
+    SUPERBAN_ERROR_ID: str
+    SUPERBAN_ID: str
+    SUPERBAN_ALREADY_EXIST: str

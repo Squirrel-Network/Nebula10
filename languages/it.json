@@ -62,5 +62,10 @@
     "USER_ALREADY_BAN": "{NO_PEDESTRIANS} Ho super-bannato <a href=\"tg://user?id={ID}\">{NAME}</a> [{ID}]\n\n",
     "SUPERBAN_REPLY": "Seleziona la ragione per il Superban",
     "SUPERBAN_ERROR": "Impossibile completare il Superban.\nL'utente potrebbe essere già stato blacklistato o è in whitelist.",
-    "SUPERBAN_ERROR_NO_ID": "Attenzione non puoi Superbannare un utente senza inserire il suo ID"
+    "SUPERBAN_ERROR_NO_ID": "Attenzione non puoi Superbannare un utente senza inserire il suo ID",
+    "SUPERBAN_ERROR_USERNAME": "Attenzione, non posso Superbannare questo utente tramite Username! Usa il superban tramite ID, ad esempio: <code>/s 123456789</code> e se vuoi inserire anche la ragione, digita come nell'esempio: <code>/s 123456789 Ragione</code>",
+    "SUPERBAN_USERNAME": "{NO_PEDESTRIANS} Hai appena Superbannato <a href=\"tg://user?id={ID}\">{ID}</a> tramite username\n\n{SCROLL} Per il seguente motivo: <b>{REASON}</b>\n\n{RIGHT_ARROW} Vai su: https://squirrel-network.online/knowhere/?q={ID} per cercare gli utenti in lista nera",
+    "SUPERBAN_ERROR_ID": "Attenzione, non è possibile Superbannare senza inserire un TelegramID!",
+    "SUPERBAN_ID": "{NO_PEDESTRIANS} Hai appena Superbannato <a href=\"tg://user?id={ID}\">{ID}</a> tramite TelegramID\n\n{SCROLL} Per il seguente motivo: <b>{REASON}</b>\n\n{RIGHT_ARROW} Vai su: https://squirrel-network.online/knowhere/?q={ID} per cercare gli utenti in lista nera",
+    "SUPERBAN_ALREADY_EXIST": "L'utente <code>{ID}</code> è già presente nel database"
 }

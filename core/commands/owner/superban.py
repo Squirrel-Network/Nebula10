@@ -83,7 +83,7 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
             lang["SUPERBAN_REPLY"],
             reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
         )
-    
+
     text = update.message.text.split()
 
     if len(text) == 1:
@@ -91,6 +91,71 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     user_id = text[1]
     motivation = text[2] if len(text) >= 3 else "Other"
+    save_date = datetime.datetime.utcnow().isoformat()
+
+    operator_id = update.message.from_user.id
+    operator_username = f"@{update.message.from_user.username}"
+    operator_first_name = update.message.from_user.first_name
+
+    if user_id.startswith("@"):
+        with UserRepository() as db:
+            data = db.get_by_username(user_id)
+
+        if not data:
+            return await message(
+                update, context, lang["SUPERBAN_ERROR_USERNAME"]
+            )
+
+        with SuperbanRepository() as db:
+            db.add(
+                data["tg_id"],
+                f"NB{data['tg_id']}",
+                motivation,
+                save_date,
+                operator_id,
+                operator_username,
+                operator_first_name,
+            )
+
+        params = {"id": data["tg_id"], "reason": motivation}
+
+        await message(
+            update, context, lang["SUPERBAN_USERNAME"].format_map(Text(params))
+        )
+
+        # TODO: log
+    elif user_id.isdigit():
+        with SuperbanRepository() as db:
+            data = db.get_by_id(int(user_id))
+
+            if data:
+                params = {"id": user_id}
+
+                return await message(
+                    update,
+                    context,
+                    lang["SUPERBAN_ALREADY_EXIST"].format_map(Text(params)),
+                )
+
+            db.add(
+                user_id,
+                f"NB{user_id}",
+                motivation,
+                save_date,
+                operator_id,
+                operator_username,
+                operator_first_name,
+            )
+
+        params = {"id": user_id, "reason": motivation}
+
+        await message(
+            update, context, lang["SUPERBAN_ID"].format_map(Text(params))
+        )
+
+        # TODO: log
+    else:
+        await message(update, context, lang["SUPERBAN_ERROR_ID"])
 
 
 @check_role(Role.OWNER)

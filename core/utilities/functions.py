@@ -101,8 +101,8 @@ def save_user(member: User, chat: Chat):
         current_time = datetime.datetime.utcnow().isoformat()
 
         if data:
-            db.update(member.username, current_time, member.id)
+            db.update(f"@{member.username}", current_time, member.id)
         else:
-            db.add(member.id, member.username, current_time, current_time)
+            db.add(member.id, f"@{member.username}", current_time, current_time)
 
         db.add_into_mtm(member.id, chat.id, 0, 0)
