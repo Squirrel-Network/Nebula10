@@ -79,10 +79,18 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if check_user(reply.from_user.id, context.bot.id):
             return await reply.reply_text(lang["SUPERBAN_ERROR"])
 
-        await reply.reply_text(
+        return await reply.reply_text(
             lang["SUPERBAN_REPLY"],
             reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
         )
+    
+    text = update.message.text.split()
+
+    if len(text) == 1:
+        return await message(update, context, lang["SUPERBAN_ERROR_NO_ID"])
+
+    user_id = text[1]
+    motivation = text[2] if len(text) >= 3 else "Other"
 
 
 @check_role(Role.OWNER)

@@ -65,3 +65,4 @@ class Lang(typing.TypedDict):
     USER_ALREADY_BAN: str
     SUPERBAN_REPLY: str
     SUPERBAN_ERROR: str
+    SUPERBAN_ERROR_NO_ID: str

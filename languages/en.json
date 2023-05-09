@@ -61,5 +61,6 @@
     "BAN_ZOOPHILE": "Nebula's automatic system intercepted a <b>zoophile!</b>\nI banned user <a href=\"tg://user?id={ID}\">{NAME}</a>",
     "USER_ALREADY_BAN": "{NO_PEDESTRIANS} I got superbanned <a href=\"tg://user?id={ID}\">{NAME}</a> [{ID}]\n\n",
     "SUPERBAN_REPLY": "Select a reason for the Superban",
-    "SUPERBAN_ERROR": "Superban cannot be completed. The user may have already been blacklisted or is on the whitelist."
+    "SUPERBAN_ERROR": "Superban cannot be completed. The user may have already been blacklisted or is on the whitelist.",
+    "SUPERBAN_ERROR_NO_ID": "Attention you can not superbanned without entering an TelegramID!"
 }

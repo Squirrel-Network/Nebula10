@@ -61,5 +61,6 @@
     "BAN_ZOOPHILE": "Il sistema automatico di Nebula ha intercettato uno <b>zoofilo!</b>\nHo bannato l'utente <a href=\"tg://user?id={ID}\">{NAME}</a>",
     "USER_ALREADY_BAN": "{NO_PEDESTRIANS} Ho super-bannato <a href=\"tg://user?id={ID}\">{NAME}</a> [{ID}]\n\n",
     "SUPERBAN_REPLY": "Seleziona la ragione per il Superban",
-    "SUPERBAN_ERROR": "Impossibile completare il Superban.\nL'utente potrebbe essere già stato blacklistato o è in whitelist."
+    "SUPERBAN_ERROR": "Impossibile completare il Superban.\nL'utente potrebbe essere già stato blacklistato o è in whitelist.",
+    "SUPERBAN_ERROR_NO_ID": "Attenzione non puoi Superbannare un utente senza inserire il suo ID"
 }

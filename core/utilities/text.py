@@ -7,12 +7,8 @@ from core.utilities import emoji
 
 
 class Text(dict):
-    def __missing__(self, key: str) -> str:
-        value = self.get(key.lower(), None)
-
-        if value:
+    def __getitem__(self, key: str) -> str:
+        if value := self.get(key.lower(), None):
             return value
-        elif key in dir(emoji):
-            return getattr(emoji, key)
         
-        return f"{{{key}}}"
+        return getattr(emoji, key, f"{{{key}}}")
