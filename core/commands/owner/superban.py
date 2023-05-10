@@ -5,7 +5,7 @@
 
 import datetime
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, constants
 from telegram.ext import ContextTypes
 
 from config import Session
@@ -161,4 +161,55 @@ async def multi_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 @check_role(Role.OWNER)
 async def update_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    pass
+    lang = get_lang(update)
+    query = update.callback_query
+
+    if query.data == "superban|remove":
+        # TODO: remove superban
+        pass
+    else:
+        motivation = query.data.split("|", 1)[1].replace("_", "")
+        user = query.message.reply_to_message.from_user
+        operator = query.from_user
+        save_date = datetime.datetime.utcnow().isoformat()
+
+        with SuperbanRepository() as db:
+            if db.get_whitelist_by_id(user.id):
+                params = {"name": user.first_name}
+
+                await message(
+                    update, context, lang["SUPERBAN_WHITELIST"].format_map(Text(params))
+                )
+            elif db.get_by_id(user.id):
+                params = {"id": user.id}
+
+                await message(
+                    update,
+                    context,
+                    lang["SUPERBAN_ALREADY_EXIST"].format_map(Text(params)),
+                )
+            else:
+                db.add(
+                    user.id,
+                    user.first_name,
+                    motivation,
+                    save_date,
+                    operator.id,
+                    f"@{operator.username}",
+                    operator.first_name,
+                )
+
+                params = {"id": user.id, "reason": motivation}
+                chat_id = update.message.chat_id
+
+                await context.bot.ban_chat_member(chat_id, user.id)
+                await query.edit_message_text(
+                    lang["SUPERBAN_ID"].format_map(Text(params)),
+                    parse_mode=constants.ParseMode.HTML,
+                )
+
+                await context.bot.delete_message(
+                    chat_id, query.message.reply_to_message.message_id
+                )
+
+                # TODO: log

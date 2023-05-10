@@ -71,3 +71,4 @@ class Lang(typing.TypedDict):
     SUPERBAN_ERROR_ID: str
     SUPERBAN_ID: str
     SUPERBAN_ALREADY_EXIST: str
+    SUPERBAN_WHITELIST: str

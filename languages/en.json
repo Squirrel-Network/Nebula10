@@ -67,5 +67,6 @@
     "SUPERBAN_USERNAME": "{NO_PEDESTRIANS} You got Super Banned <a href=\"tg://user?id={ID}\">{ID}</a> via Username\n\n{SCROLL} For the following reason: <b>{REASON}</b>\n\n{RIGHT_ARROW} Go to: https://squirrel-network.online/knowhere/?q={ID} to search for blacklisted users",
     "SUPERBAN_ERROR_ID": "Attention you can not superbanned without entering an TelegramID!",
     "SUPERBAN_ID": "{NO_PEDESTRIANS} You got Super Banned <a href=\"tg://user?id={ID}\">{ID}</a> via TelegramID\n\n{SCROLL} For the following reason: <b>{REASON}</b>\n\n{RIGHT_ARROW} Go to: https://squirrel-network.online/knowhere/?q={ID} to search for blacklisted users",
-    "SUPERBAN_ALREADY_EXIST": "The user <code>{ID}</code> is already present in the database"
+    "SUPERBAN_ALREADY_EXIST": "The user <code>{ID}</code> is already present in the database",
+    "SUPERBAN_WHITELIST": "User {NAME} is whitelisted you cannot blacklist!"
 }

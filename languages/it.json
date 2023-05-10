@@ -67,5 +67,6 @@
     "SUPERBAN_USERNAME": "{NO_PEDESTRIANS} Hai appena Superbannato <a href=\"tg://user?id={ID}\">{ID}</a> tramite username\n\n{SCROLL} Per il seguente motivo: <b>{REASON}</b>\n\n{RIGHT_ARROW} Vai su: https://squirrel-network.online/knowhere/?q={ID} per cercare gli utenti in lista nera",
     "SUPERBAN_ERROR_ID": "Attenzione, non è possibile Superbannare senza inserire un TelegramID!",
     "SUPERBAN_ID": "{NO_PEDESTRIANS} Hai appena Superbannato <a href=\"tg://user?id={ID}\">{ID}</a> tramite TelegramID\n\n{SCROLL} Per il seguente motivo: <b>{REASON}</b>\n\n{RIGHT_ARROW} Vai su: https://squirrel-network.online/knowhere/?q={ID} per cercare gli utenti in lista nera",
-    "SUPERBAN_ALREADY_EXIST": "L'utente <code>{ID}</code> è già presente nel database"
+    "SUPERBAN_ALREADY_EXIST": "L'utente <code>{ID}</code> è già presente nel database",
+    "SUPERBAN_WHITELIST": "L'utente {NAME} è nella whitelist, non lo puoi bannare!"
 }
