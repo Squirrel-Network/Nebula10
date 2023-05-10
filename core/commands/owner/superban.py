@@ -200,7 +200,7 @@ async def update_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 )
 
                 params = {"id": user.id, "reason": motivation}
-                chat_id = update.message.chat_id
+                chat_id = query.message.chat_id
 
                 await context.bot.ban_chat_member(chat_id, user.id)
                 await query.edit_message_text(
