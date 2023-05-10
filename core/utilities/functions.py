@@ -36,15 +36,11 @@ async def kick_user(chat_id: int, user_id: int, context: ContextTypes.DEFAULT_TY
 
 
 async def mute_user(chat_id: int, user_id: int, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.restrict_chat_member(
-        chat_id, user_id, PERM_FALSE
-    )
+    await context.bot.restrict_chat_member(chat_id, user_id, PERM_FALSE)
 
 
 async def ban_user(chat_id: int, user_id: int, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.ban_chat_member(
-        chat_id, user_id
-    )
+    await context.bot.ban_chat_member(chat_id, user_id)
 
 
 def save_group(chat_id: int, chat_title: str):

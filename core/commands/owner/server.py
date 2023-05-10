@@ -89,9 +89,9 @@ def get_message(update: Update) -> str:
             {
                 "bytes_sent": get_size(net_io.bytes_sent),
                 "bytes_recv": get_size(net_io.bytes_recv),
-                "running": datetime.datetime.fromtimestamp(
-                    psutil.boot_time()
-                ).strftime("%A %d. %B %Y"),
+                "running": datetime.datetime.fromtimestamp(psutil.boot_time()).strftime(
+                    "%A %d. %B %Y"
+                ),
             }
         )
     )

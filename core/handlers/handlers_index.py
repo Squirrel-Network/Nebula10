@@ -13,9 +13,7 @@ from core.handlers.user_handlers import user_status
 def core_handlers(application: Application):
     application.add_handlers(
         [
-            MessageHandler(
-                filters.StatusUpdate.NEW_CHAT_MEMBERS, welcome.new_member
-            ),
+            MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, welcome.new_member),
             MessageHandler(filters.ALL, group_handlers),
         ]
     )

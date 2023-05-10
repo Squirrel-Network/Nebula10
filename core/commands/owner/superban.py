@@ -25,12 +25,7 @@ def check_user(user_id: int, bot_id: int) -> bool:
         blacklist = db.get_by_id(user_id)
         whitelist = db.get_whitelist_by_id(user_id)
 
-    return (
-        blacklist
-        or whitelist
-        or user_id in Session.owner_ids
-        or user_id == bot_id
-    )
+    return blacklist or whitelist or user_id in Session.owner_ids or user_id == bot_id
 
 
 @check_role(Role.OWNER)
@@ -102,9 +97,7 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
             data = db.get_by_username(user_id)
 
         if not data:
-            return await message(
-                update, context, lang["SUPERBAN_ERROR_USERNAME"]
-            )
+            return await message(update, context, lang["SUPERBAN_ERROR_USERNAME"])
 
         with SuperbanRepository() as db:
             db.add(
@@ -149,9 +142,7 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         params = {"id": user_id, "reason": motivation}
 
-        await message(
-            update, context, lang["SUPERBAN_ID"].format_map(Text(params))
-        )
+        await message(update, context, lang["SUPERBAN_ID"].format_map(Text(params)))
 
         # TODO: log
     else:
@@ -159,9 +150,7 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 @check_role(Role.OWNER)
-async def remove_superban_via_id(
-    update: Update, context: ContextTypes.DEFAULT_TYPE
-):
+async def remove_superban_via_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
     pass
 
 

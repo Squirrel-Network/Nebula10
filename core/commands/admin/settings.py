@@ -102,7 +102,8 @@ async def settings_set_block_entry(
     with GroupRepository() as db:
         db.update_group_settings(
             GroupRepository.SET_WELCOME,
-            0 if not data["block_new_member"] else 1, update.effective_chat.id,
+            0 if not data["block_new_member"] else 1,
+            update.effective_chat.id,
         )
 
 

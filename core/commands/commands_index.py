@@ -20,9 +20,7 @@ def admin_command(application: Application):
     application.add_handlers(
         [
             CommandHandler("say", say.init),
-            CommandHandler(
-                "settings", settings.init, filters=filters.ChatType.GROUPS
-            ),
+            CommandHandler("settings", settings.init, filters=filters.ChatType.GROUPS),
         ]
     )
 
@@ -38,10 +36,8 @@ def owner_command(application: Application):
             # CallbackQuery Handler
             CallbackQueryHandler(close_menu, pattern="close"),
             CallbackQueryHandler(superban.update_superban, pattern="m"),
-            CallbackQueryHandler(
-                superban.update_superban, pattern="removeSuperban"
-            ),
-            CallbackQueryHandler(settings.callback_query, "settings_")
+            CallbackQueryHandler(superban.update_superban, pattern="removeSuperban"),
+            CallbackQueryHandler(settings.callback_query, "settings_"),
         ]
     )
 
@@ -49,9 +45,7 @@ def owner_command(application: Application):
 def user_command(application: Application):
     application.add_handlers(
         [
-            CommandHandler(
-                "start", start.init, filters=filters.ChatType.PRIVATE
-            ),
+            CommandHandler("start", start.init, filters=filters.ChatType.PRIVATE),
             CommandHandler("io", io.init, filters=filters.ChatType.PRIVATE),
             CommandHandler("help", help.init),
         ]

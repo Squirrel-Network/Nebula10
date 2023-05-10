@@ -19,7 +19,9 @@ from languages import load_languages
 # if version < 3.10, stop bot.
 LOGGING = logging.getLogger(__name__)
 if sys.version_info[0] < 3 or sys.version_info[1] < 10:
-    LOGGING.error("You MUST have a python version of at least 3.10! Multiple features depend on this. Bot quitting.")
+    LOGGING.error(
+        "You MUST have a python version of at least 3.10! Multiple features depend on this. Bot quitting."
+    )
     quit(1)
 
 # Enable logging
@@ -54,12 +56,14 @@ def main() -> None:
 
     # on different commands - answer in Telegram
     from core.commands import commands_index
+
     commands_index.user_command(application)
     commands_index.admin_command(application)
     commands_index.owner_command(application)
 
     # Handlers
     from core.handlers import handlers_index
+
     handlers_index.core_handlers(application)
 
     # Run the bot until the user presses Ctrl-C
