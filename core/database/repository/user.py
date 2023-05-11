@@ -99,9 +99,7 @@ class UserRepository(Connection):
 
         return self._select_all(q, (user_id,))
 
-    def insert_linktree_button(
-        self, user_id: int, button_text: str, button_url: str
-    ):
+    def insert_linktree_button(self, user_id: int, button_text: str, button_url: str):
         q = "INSERT INTO linktree_buttons (user_id, button_id, button_text, button_url) VALUES (%s, NULL, %s, %s)"
 
         return self._execute(q, (user_id, button_text, button_url))

@@ -4,175 +4,212 @@
 # Copyright SquirrelNetwork
 
 import datetime
-import re
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from core.utilities.enums import Role
+
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, constants
+from telegram.ext import ContextTypes
+
 from config import Session
 from core.database.repository.superban import SuperbanRepository
 from core.database.repository.user import UserRepository
 from core.decorators import check_role
 from core.handlers.chat_handlers.logs import debug_channel, sys_loggers
+from core.utilities.enums import Role
 from core.utilities.menu import build_menu
 from core.utilities.message import message
-from core.utilities.regex import Regex
-from core.utilities.strings import Strings
+from core.utilities.text import Text
+from languages import get_lang
 
-rgx = Regex().HAS_NUMBER
+
+def check_user(user_id: int, bot_id: int) -> bool:
+    with SuperbanRepository() as db:
+        blacklist = db.get_by_id(user_id)
+        whitelist = db.get_whitelist_by_id(user_id)
+
+    return blacklist or whitelist or user_id in Session.owner_ids or user_id == bot_id
+
 
 @check_role(Role.OWNER)
-async def init(update, context):
-    #Variables
-    text = update.message.text
+async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    lang = get_lang(update)
+
+    if reply := update.message.reply_to_message:
+        buttons = [
+            InlineKeyboardButton(
+                "{INBOX_TRAY} Spam".format_map(Text()),
+                callback_data="superban|spam",
+            ),
+            InlineKeyboardButton(
+                "{WARNING} Scam".format_map(Text()),
+                callback_data="superban|scam",
+            ),
+            InlineKeyboardButton(
+                "{ROBOT} Userbot".format_map(Text()),
+                callback_data="superban|userbot",
+            ),
+            InlineKeyboardButton(
+                "{NO_ONE_UNDER_EIGHTEEN} Porn".format_map(Text()),
+                callback_data="superban|porn",
+            ),
+            InlineKeyboardButton(
+                "{POLICE_OFFICER} Illegal Content".format_map(Text()),
+                callback_data="superban|illegal_content",
+            ),
+            InlineKeyboardButton(
+                "{SOS_BUTTON} Harrasment".format_map(Text()),
+                callback_data="superban|harrasment",
+            ),
+            InlineKeyboardButton(
+                "{MEMO} Other".format_map(Text()),
+                callback_data="superban|other",
+            ),
+            InlineKeyboardButton(
+                "{CROSS_MARK} Remove Superban".format_map(Text()),
+                callback_data="superban|remove",
+            ),
+            InlineKeyboardButton(
+                "{WASTEBASKET} Close".format_map(Text()), callback_data="close"
+            ),
+        ]
+
+        if check_user(reply.from_user.id, context.bot.id):
+            return await reply.reply_text(lang["SUPERBAN_ERROR"])
+
+        return await reply.reply_text(
+            lang["SUPERBAN_REPLY"],
+            reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
+        )
+
+    text = update.message.text.split()
+
+    if len(text) == 1:
+        return await message(update, context, lang["SUPERBAN_ERROR_NO_ID"])
+
+    user_id = text[1]
+    motivation = text[2] if len(text) >= 3 else "Other"
+    save_date = datetime.datetime.utcnow().isoformat()
+
     operator_id = update.message.from_user.id
-    operator_username = "@"+update.message.from_user.username
+    operator_username = f"@{update.message.from_user.username}"
     operator_first_name = update.message.from_user.first_name
-    save_date = datetime.datetime.utcnow().isoformat()
-    #Build a Keyboard Buttons
-    buttons = []
-    buttons.append(InlineKeyboardButton('Spam', callback_data='mSpam'))
-    buttons.append(InlineKeyboardButton('Scam', callback_data='mScam'))
-    buttons.append(InlineKeyboardButton('Userbot', callback_data='mUserbot'))
-    buttons.append(InlineKeyboardButton('Porn', callback_data='mPorn'))
-    buttons.append(InlineKeyboardButton('Other', callback_data='mOther'))
-    buttons.append(InlineKeyboardButton('Illegal Content', callback_data='mIllegal_Content'))
-    buttons.append(InlineKeyboardButton('Harrasment', callback_data='mHarrasment'))
-    buttons.append(InlineKeyboardButton('Remove Superban', callback_data='removeSuperban'))
-    buttons.append(InlineKeyboardButton('Close', callback_data='closeMenu'))
-    menu = build_menu(buttons,2)
-    # Superban in response to a user
-    if update.message.reply_to_message:
-        await update.message.reply_to_message.reply_text("Select a reason for the Superban", reply_markup=InlineKeyboardMarkup(menu))
-    # Superban via id with optional motivation, format: /s 123456789 or /s 123456789 reason
+
+    if user_id.startswith("@"):
+        with UserRepository() as db:
+            data = db.get_by_username(user_id)
+
+        if not data:
+            return await message(update, context, lang["SUPERBAN_ERROR_USERNAME"])
+
+        with SuperbanRepository() as db:
+            db.add(
+                data["tg_id"],
+                f"NB{data['tg_id']}",
+                motivation,
+                save_date,
+                operator_id,
+                operator_username,
+                operator_first_name,
+            )
+
+        params = {"id": data["tg_id"], "reason": motivation}
+
+        await message(
+            update, context, lang["SUPERBAN_USERNAME"].format_map(Text(params))
+        )
+
+        # TODO: log
+    elif user_id.isdigit():
+        with SuperbanRepository() as db:
+            data = db.get_by_id(int(user_id))
+
+            if data:
+                params = {"id": user_id}
+
+                return await message(
+                    update,
+                    context,
+                    lang["SUPERBAN_ALREADY_EXIST"].format_map(Text(params)),
+                )
+
+            db.add(
+                user_id,
+                f"NB{user_id}",
+                motivation,
+                save_date,
+                operator_id,
+                operator_username,
+                operator_first_name,
+            )
+
+        params = {"id": user_id, "reason": motivation}
+
+        await message(update, context, lang["SUPERBAN_ID"].format_map(Text(params)))
+
+        # TODO: log
     else:
-        input_user_id = text[2:].strip().split(" ", 1)
-        user_id = input_user_id[0]
-        if user_id != "":
-            if user_id.startswith('@'):
-                user = UserRepository().getByUsername(user_id)
-                if user is None:
-                    await message(update, context, "Attention I can not Superbanned this user via Username!\nuse the superban via id example: <code>/s 123456789</code> and if you want to insert also the reason type as in example: <code>/s 123456789 Reason</code>")
-                else:
-                    id_user = user['tg_id']
-                    default_user_first_name = "NB{}".format(id_user)
-                    default_motivation = "Other"
-                    data = [(id_user, default_user_first_name, default_motivation, save_date, operator_id,operator_username, operator_first_name)]
-                    SuperbanRepository().add(data)
-                    msg = '🚷 You got Super Banned <a href="tg://user?id={}">{}</a> via Username\n\n📜 For the following reason: <b>{}</b>\n\n➡️ Go to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(id_user, id_user, default_motivation, id_user)
-                    await message(update, context, msg)
+        await message(update, context, lang["SUPERBAN_ERROR_ID"])
 
-                    # Log in Telegram Channel
-                    logs_text = Strings.SUPERBAN_LOG.format(default_user_first_name, id_user, default_motivation,save_date, operator_first_name, operator_username,operator_id)
-                    await message(update, context, logs_text, 'HTML', 'messageid', Session.config.DEFAULT_LOG_CHANNEL, None)
-            else:
-                number = re.search(rgx, user_id)
-                if number is None:
-                    await message(update, context, "Attention you must enter a number not letters!")
-                row = SuperbanRepository().getById(int(user_id))
-                if row:
-                    await message(update,context,"The user <code>{}</code> is already present in the database".format(user_id))
-                else:
-                    motivation_input = ""
-                    if len(input_user_id) > 1:
-                        motivation_input = input_user_id[1]
-                        default_motivation = motivation_input
-                    else:
-                        default_motivation = "Other"
-                    default_user_first_name = "NB{}".format(user_id)
-                    data = [(user_id,default_user_first_name,default_motivation,save_date,operator_id,operator_username,operator_first_name)]
-                    SuperbanRepository().add(data)
-                    msg = '🚷 You got Super Banned <a href="tg://user?id={}">{}</a> via TelegramID\n\n📜 For the following reason: <b>{}</b>\n\n➡️ Go to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user_id,user_id,default_motivation,user_id)
-                    await message(update,context,msg)
-
-                    #Log in Telegram Channel
-                    logs_text = Strings.SUPERBAN_LOG.format(default_user_first_name,user_id,default_motivation,save_date,operator_first_name,operator_username,operator_id)
-                    await message(update, context, logs_text, 'HTML', 'messageid', Session.config.DEFAULT_LOG_CHANNEL, None)
-
-                    #Log in Debug Channel
-                    formatter = "Superban eseguito da: {}[<code>{}</code>] verso l'utente: [<code>{}</code>]".format(operator_username,operator_id,user_id)
-                    sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
-                    debug_channel(update, context, "[DEBUG_LOGGER] {}".format(formatter))
-        else:
-            await message(update,context,"Attention you can not superbanned without entering an TelegramID!")
 
 @check_role(Role.OWNER)
-async def remove_superban_via_id(update,context):
-    text = update.message.text
-    input_user_id = text[3:].strip().split(" ", 1)
-    user_id = input_user_id[0]
-    number = re.search(rgx, user_id)
-    if number is None:
-        await message(update, context, "Attention you must enter a number not letters!")
-    else:
-        row = SuperbanRepository().getById(int(user_id))
-        if row:
-            data = [(user_id)]
-            SuperbanRepository().remove(data)
-            await message(update, context,"I removed the user with TelegramID: [<code>{}</code>] from the database".format(user_id))
-        else:
-            await message(update, context, "The user <code>{}</code> is not present in the database".format(user_id))
+async def remove_superban_via_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    pass
+
 
 @check_role(Role.OWNER)
-async def multi_superban(update,context):
-        txt = update.message.text
-        x = re.findall(r'\d+', txt)
-        string = "MultiSuperban eseguito! dei seguenti id:\n"
-        for a in x:
-            save_date = datetime.datetime.utcnow().isoformat()
-            default_motivation = "MultiSuperban"
-            default_user_first_name = "NB{}".format(a)
-            operator_id = update.message.from_user.id
-            operator_username = "@"+update.message.from_user.username
-            operator_first_name = update.message.from_user.first_name
-            data = [(a,default_user_first_name,default_motivation,save_date,operator_id,operator_username,operator_first_name)]
-            SuperbanRepository().add(data)
-            string += "▪️ {}\n".format(a)
-        await message(update,context,string)
+async def multi_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    pass
+
 
 @check_role(Role.OWNER)
-async def update_superban(update, context):
-    bot = context.bot
+async def update_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    lang = get_lang(update)
     query = update.callback_query
-    save_date = datetime.datetime.utcnow().isoformat()
-    if query.data.startswith("m"):
-        #Variables
-        chat_id = query.message.chat_id
-        operator_id = query.from_user.id
-        operator_username = "@"+query.from_user.username
-        operator_first_name = query.from_user.first_name
-        user = query.message.reply_to_message.from_user
-        motivation = query.data[1:]
-        row = SuperbanRepository().getById(user.id)
-        whitelist = SuperbanRepository().getWhitelistById(user.id)
-        if whitelist:
-            text_w = "user {} is whitelisted you cannot blacklist!".format(user.first_name)
-            await query.edit_message_text(text_w, parse_mode='HTML')
-        elif row:
-            text = "Attention already <b>SuperBanned</b> user {} [<code>{}</code>]!".format(user.first_name,user.id)
-            await query.edit_message_text(text, parse_mode='HTML')
-        else:
-            data = [(user.id,user.first_name,motivation,save_date,operator_id,operator_username,operator_first_name)]
-            SuperbanRepository().add(data)
-            #Ban the User
-            await bot.ban_chat_member(chat_id, user.id)
-            #Edit Message Text after push the button
-            msg = '🚷 Got <b>SuperBanned</b> <a href="tg://user?id={}">{}</a>\n\n📝 For the following reason: <b>{}</b>\n\n➡ Go to: https://squirrel-network.online/knowhere?q={} to search for blacklisted users'.format(user.id,user.first_name,motivation,user.id)
-            await query.edit_message_text(msg, parse_mode='HTML')
-            await bot.delete_message(chat_id, query.message.reply_to_message.message_id)
-            #Telegram Logs
-            logs_text = Strings.SUPERBAN_LOG.format(user.first_name,user.id,motivation,save_date,operator_first_name,operator_username,operator_id)
-            await message(update, context, logs_text, 'HTML', 'messageid', Session.config.DEFAULT_LOG_CHANNEL, None)
-            #System Logs
-            formatter = "Superban eseguito dall'operatore: {}<code>[{}]</code>\nVerso l'utente: {} [<code>{}</code>]\nNella chat: [<code>{}</code>]".format(operator_username,operator_id,user.first_name,user.id,chat_id)
-            sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
-            debug_channel(update, context, "[DEBUG_LOGGER]\n{}".format(formatter))
 
-    if query.data == "removeSuperban":
+    if query.data == "superban|remove":
+        # TODO: remove superban
+        pass
+    else:
+        motivation = query.data.split("|", 1)[1].replace("_", "")
         user = query.message.reply_to_message.from_user
-        row = SuperbanRepository().getById(user.id)
-        if row:
-            data = [(user.id)]
-            SuperbanRepository().remove(data)
-            msg = "I removed the superban to user {} [<code>{}</code>]".format(user.first_name,user.id)
-            await query.edit_message_text(msg,parse_mode='HTML')
-        else:
-            await query.edit_message_text("Attention this user not super banned!!!",parse_mode='HTML')
+        operator = query.from_user
+        save_date = datetime.datetime.utcnow().isoformat()
+
+        with SuperbanRepository() as db:
+            if db.get_whitelist_by_id(user.id):
+                params = {"name": user.first_name}
+
+                await message(
+                    update, context, lang["SUPERBAN_WHITELIST"].format_map(Text(params))
+                )
+            elif db.get_by_id(user.id):
+                params = {"id": user.id}
+
+                await message(
+                    update,
+                    context,
+                    lang["SUPERBAN_ALREADY_EXIST"].format_map(Text(params)),
+                )
+            else:
+                db.add(
+                    user.id,
+                    user.first_name,
+                    motivation,
+                    save_date,
+                    operator.id,
+                    f"@{operator.username}",
+                    operator.first_name,
+                )
+
+                params = {"id": user.id, "reason": motivation}
+                chat_id = query.message.chat_id
+
+                await context.bot.ban_chat_member(chat_id, user.id)
+                await query.edit_message_text(
+                    lang["SUPERBAN_ID"].format_map(Text(params)),
+                    parse_mode=constants.ParseMode.HTML,
+                )
+
+                await context.bot.delete_message(
+                    chat_id, query.message.reply_to_message.message_id
+                )
+
+                # TODO: log

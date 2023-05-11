@@ -57,6 +57,4 @@ class DashboardRepository(Connection):
     ):
         q = "UPDATE nebula_dashboard SET tg_username = %s, role = %s, updated_at = %s WHERE tg_id = %s AND tg_group_id = %s"
 
-        return self._execute(
-            q, (username, role, updated_at, user_id, group_id)
-        )
+        return self._execute(q, (username, role, updated_at, user_id, group_id))

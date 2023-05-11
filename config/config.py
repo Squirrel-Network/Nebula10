@@ -18,7 +18,7 @@ LIST_ENV = (
     ("DEFAULT_LOG_CHANNEL", "TG_DEFAULT_LOG_CHANNEL"),
     ("DEFAULT_STAFF_GROUP", "TG_DEFAULT_STAFF_GROUP"),
     ("OWNER_ID", "TG_OWNER_ID"),
-    ("OWNER_USERNAME","TG_OWNER_USERNAME"),
+    ("OWNER_USERNAME", "TG_OWNER_USERNAME"),
 )
 
 
@@ -47,7 +47,4 @@ class Config(BaseSettings):
     OWNER_USERNAME: str
 
     class Config:
-        fields = {
-            name: {"env": env} 
-            for name, env in LIST_ENV
-        }
+        fields = {name: {"env": env} for name, env in LIST_ENV}

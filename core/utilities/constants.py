@@ -6,7 +6,7 @@
 from telegram import ChatPermissions
 
 
-#general constants
+# general constants
 DEFAULT_COUNT_WARN = 0
 DEFAULT_USER_SCORE = 0
 DEFAULT_MAX_WARN = 3
@@ -21,7 +21,7 @@ FOUR_HOUR = 14400.0
 ONE_HOUR = 3600.0
 ONE_MINUTE = 60.0
 
-#these constants change and disrupt an entire group
+# these constants change and disrupt an entire group
 PERM_FALSE = ChatPermissions(
     can_send_messages=False,
     can_send_media_messages=False,
@@ -30,7 +30,7 @@ PERM_FALSE = ChatPermissions(
     can_add_web_page_previews=False,
     can_change_info=False,
     can_invite_users=False,
-    can_pin_messages=False
+    can_pin_messages=False,
 )
 
 PERM_TRUE = ChatPermissions(
@@ -41,7 +41,7 @@ PERM_TRUE = ChatPermissions(
     can_add_web_page_previews=True,
     can_change_info=False,
     can_invite_users=False,
-    can_pin_messages=False
+    can_pin_messages=False,
 )
 
 PERM_MEDIA_TRUE = ChatPermissions(
@@ -52,7 +52,7 @@ PERM_MEDIA_TRUE = ChatPermissions(
     can_add_web_page_previews=True,
     can_change_info=False,
     can_invite_users=False,
-    can_pin_messages=False
+    can_pin_messages=False,
 )
 
 PERM_MEDIA_FALSE = ChatPermissions(
@@ -63,5 +63,5 @@ PERM_MEDIA_FALSE = ChatPermissions(
     can_add_web_page_previews=True,
     can_change_info=False,
     can_invite_users=False,
-    can_pin_messages=False
+    can_pin_messages=False,
 )

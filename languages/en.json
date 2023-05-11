@@ -59,5 +59,14 @@
     "NEW_MEMBER_WITHOUT_PHOTO": "<a href=\"tg://user?id={ID}\">{NAME}</a> set a profile picture! You were kicked for safety!",
     "FILTER_NAME": "Non-Latin filter activated for the user <a href=\"tg://user?id={ID}\">{NAME}</a>",
     "BAN_ZOOPHILE": "Nebula's automatic system intercepted a <b>zoophile!</b>\nI banned user <a href=\"tg://user?id={ID}\">{NAME}</a>",
-    "USER_ALREADY_BAN": "{NO_PEDESTRIANS} I got superbanned <a href=\"tg://user?id={ID}\">{NAME}</a> [{ID}]\n\n"
+    "USER_ALREADY_BAN": "{NO_PEDESTRIANS} I got superbanned <a href=\"tg://user?id={ID}\">{NAME}</a> [{ID}]\n\n",
+    "SUPERBAN_REPLY": "Select a reason for the Superban",
+    "SUPERBAN_ERROR": "Superban cannot be completed. The user may have already been blacklisted or is on the whitelist.",
+    "SUPERBAN_ERROR_NO_ID": "Attention you can not superbanned without entering an TelegramID!",
+    "SUPERBAN_ERROR_USERNAME": "Attention I can not Superbanned this user via Username!\nuse the superban via id example: <code>/s 123456789</code> and if you want to insert also the reason type as in example: <code>/s 123456789 Reason</code>",
+    "SUPERBAN_USERNAME": "{NO_PEDESTRIANS} You got Super Banned <a href=\"tg://user?id={ID}\">{ID}</a> via Username\n\n{SCROLL} For the following reason: <b>{REASON}</b>\n\n{RIGHT_ARROW} Go to: https://squirrel-network.online/knowhere/?q={ID} to search for blacklisted users",
+    "SUPERBAN_ERROR_ID": "Attention you can not superbanned without entering an TelegramID!",
+    "SUPERBAN_ID": "{NO_PEDESTRIANS} You got Super Banned <a href=\"tg://user?id={ID}\">{ID}</a> via TelegramID\n\n{SCROLL} For the following reason: <b>{REASON}</b>\n\n{RIGHT_ARROW} Go to: https://squirrel-network.online/knowhere/?q={ID} to search for blacklisted users",
+    "SUPERBAN_ALREADY_EXIST": "The user <code>{ID}</code> is already present in the database",
+    "SUPERBAN_WHITELIST": "User {NAME} is whitelisted you cannot blacklist!"
 }

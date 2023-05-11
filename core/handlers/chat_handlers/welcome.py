@@ -103,9 +103,7 @@ async def welcome_user(
     params = {
         "first_name": member.first_name,
         "chat": update.effective_chat.title,
-        "username": f"@{member.username}"
-        if member.username
-        else member.first_name,
+        "username": f"@{member.username}" if member.username else member.first_name,
         "mention": f'<a href="tg://user?id={member.id}">{member.first_name}</a>',
         "userid": member.id,
     }
@@ -158,7 +156,7 @@ async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
             and (action := data["type_no_username"]) in NO_USERNAME_ACTION
         ):
             value = NO_USERNAME_ACTION.get(action, None)
-            
+
             if call := value[0]:
                 await call(chat_id, member.id, context)
 
@@ -168,9 +166,7 @@ async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await message(
                     update,
                     context,
-                    lang["KICKED_USER_MESSAGE_NO_USERNAME"].format_map(
-                        Text(params)
-                    ),
+                    lang["KICKED_USER_MESSAGE_NO_USERNAME"].format_map(Text(params)),
                 )
 
         elif (
