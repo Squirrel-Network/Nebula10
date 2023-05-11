@@ -3,49 +3,63 @@
 
 # Copyright SquirrelNetwork
 
-import logging
 import sys
 
 from dotenv import load_dotenv
+from loguru import logger
 from telegram.ext import Application
 
 from config import Config, Session
 from core.database import create_pool
-from core.database.repository.user import UserRepository
+from core.database.repository import SuperbanRepository, UserRepository
 from core.utilities.functions import get_owner_list
 from languages import load_languages
 
 
 # if version < 3.10, stop bot.
-LOGGING = logging.getLogger(__name__)
 if sys.version_info[0] < 3 or sys.version_info[1] < 10:
-    LOGGING.error(
+    logger.error(
         "You MUST have a python version of at least 3.10! Multiple features depend on this. Bot quitting."
     )
     quit(1)
 
-# Enable logging
-logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
-)
-logger = logging.getLogger(__name__)
+
+FMT = "<green>[{time}]</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
 
 
 def main() -> None:
+    # Configure loguru
+    logger.configure(
+        handlers=[
+            {"sink": sys.stdout, "format": FMT},
+            {"sink": "file.log", "format": FMT},
+        ]
+    )
+
+    logger.info("Application started")
+
     # Load .env file
+    logger.info("Load .env file")
     load_dotenv()
 
     # Load the Config
     conf = Session.config = Config()
 
     # Load pool
+    logger.info("Start database (pool)")
     Session.db_pool = create_pool()
 
     # Load languages
+    logger.info("Load langueages")
     Session.lang = load_languages()
 
     # Add owner
-    UserRepository().add_owner(conf.OWNER_ID, conf.OWNER_USERNAME.lower())
+    logger.info("Add owner in database if not exist")
+    with UserRepository() as db:
+        db.add_owner(conf.OWNER_ID, conf.OWNER_USERNAME.lower())
+
+    with SuperbanRepository() as db:
+        db.add_whitelist(conf.OWNER_ID, conf.OWNER_USERNAME.lower())
 
     # Get owner ids
     Session.owner_ids = get_owner_list()
