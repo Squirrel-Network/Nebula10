@@ -5,15 +5,20 @@
 
 import datetime
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, constants
+from telegram import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Update,
+    constants,
+)
 from telegram.ext import ContextTypes
 
 from config import Session
 from core.database.repository.superban import SuperbanRepository
 from core.database.repository.user import UserRepository
 from core.decorators import check_role
-from core.handlers.chat_handlers.logs import debug_channel, sys_loggers
 from core.utilities.enums import Role
+from core.utilities.logs import sys_loggers, telegram_loggers
 from core.utilities.menu import build_menu
 from core.utilities.message import message
 from core.utilities.text import Text
@@ -26,6 +31,47 @@ def check_user(user_id: int, bot_id: int) -> bool:
         whitelist = db.get_whitelist_by_id(user_id)
 
     return blacklist or whitelist or user_id in Session.owner_ids or user_id == bot_id
+
+
+async def new_superban(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+    user_id: int,
+    first_name: str,
+    motivation: str,
+    save_date: str,
+    operator_id: int,
+    operator_username: str,
+    operator_first_name: str,
+    lang: dict[str, str],
+):
+    with SuperbanRepository() as db:
+        db.add(
+            user_id,
+            first_name,
+            motivation,
+            save_date,
+            operator_id,
+            operator_username,
+            operator_first_name,
+        )
+
+    params = {"id": user_id, "reason": motivation}
+
+    await message(update, context, lang["SUPERBAN"].format_map(Text(params)))
+
+    params = {
+        "name": first_name,
+        "id": user_id,
+        "reason": motivation,
+        "date": save_date,
+        "operator_name": operator_first_name,
+        "operator_username": operator_username,
+        "operator_id": operator_id,
+    }
+    await telegram_loggers(
+        update, context, lang["SUPERBAN_LOG"].format_map(Text(params))
+    )
 
 
 @check_role(Role.OWNER)
@@ -99,24 +145,19 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not data:
             return await message(update, context, lang["SUPERBAN_ERROR_USERNAME"])
 
-        with SuperbanRepository() as db:
-            db.add(
-                data["tg_id"],
-                f"NB{data['tg_id']}",
-                motivation,
-                save_date,
-                operator_id,
-                operator_username,
-                operator_first_name,
-            )
-
-        params = {"id": data["tg_id"], "reason": motivation}
-
-        await message(
-            update, context, lang["SUPERBAN_USERNAME"].format_map(Text(params))
+        await new_superban(
+            update,
+            context,
+            data["tg_id"],
+            f"NB{data['tg_id']}",
+            motivation,
+            save_date,
+            operator_id,
+            operator_username,
+            operator_first_name,
+            lang,
         )
 
-        # TODO: log
     elif user_id.isdigit():
         with SuperbanRepository() as db:
             data = db.get_by_id(int(user_id))
@@ -130,21 +171,19 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     lang["SUPERBAN_ALREADY_EXIST"].format_map(Text(params)),
                 )
 
-            db.add(
-                user_id,
-                f"NB{user_id}",
-                motivation,
-                save_date,
-                operator_id,
-                operator_username,
-                operator_first_name,
-            )
+        await new_superban(
+            update,
+            context,
+            user_id,
+            f"NB{user_id}",
+            motivation,
+            save_date,
+            operator_id,
+            operator_username,
+            operator_first_name,
+            lang,
+        )
 
-        params = {"id": user_id, "reason": motivation}
-
-        await message(update, context, lang["SUPERBAN_ID"].format_map(Text(params)))
-
-        # TODO: log
     else:
         await message(update, context, lang["SUPERBAN_ERROR_ID"])
 
@@ -178,7 +217,9 @@ async def update_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 params = {"name": user.first_name}
 
                 await message(
-                    update, context, lang["SUPERBAN_WHITELIST"].format_map(Text(params))
+                    update,
+                    context,
+                    lang["SUPERBAN_WHITELIST"].format_map(Text(params)),
                 )
             elif db.get_by_id(user.id):
                 params = {"id": user.id}
