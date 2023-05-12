@@ -12,6 +12,7 @@ from telegram import (
     constants,
 )
 from telegram.ext import ContextTypes
+from loguru import logger
 
 from config import Session
 from core.database.repository.superban import SuperbanRepository
@@ -245,7 +246,7 @@ async def update_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
                 await context.bot.ban_chat_member(chat_id, user.id)
                 await query.edit_message_text(
-                    lang["SUPERBAN_ID"].format_map(Text(params)),
+                    lang["SUPERBAN"].format_map(Text(params)),
                     parse_mode=constants.ParseMode.HTML,
                 )
 

@@ -68,5 +68,7 @@
     "SUPERBAN": "{NO_PEDESTRIANS} You got Super Banned <a href=\"tg://user?id={ID}\">{ID}</a> via TelegramID\n\n{SCROLL} For the following reason: <b>{REASON}</b>\n\n{RIGHT_ARROW} Go to: https://squirrel-network.online/knowhere/?q={ID} to search for blacklisted users",
     "SUPERBAN_ALREADY_EXIST": "The user <code>{ID}</code> is already present in the database",
     "SUPERBAN_WHITELIST": "User {NAME} is whitelisted you cannot blacklist!",
-    "SUPERBAN_LOG": "<b>{NO_PEDESTRIANS} #Log User Superbanned!</b>\n{BUST_IN_SILHOUETTE} User: {NAME} [<code>{ID}</code>]\n{SCROLL} Reason: {REASON}\n{ONE_O_CLOCK} Datetime: <code>{DATE}</code>\n{WOMAN_POLICE_OFFICER} Operator: {OPERATOR_NAME}\n{OPERATOR_USERNAME} [<code>{OPERATOR_ID}</code>]"
+    "SUPERBAN_LOG": "<b>{NO_PEDESTRIANS} #Log User Superbanned!</b>\n{BUST_IN_SILHOUETTE} User: {NAME} [<code>{ID}</code>]\n{SCROLL} Reason: {REASON}\n{ONE_O_CLOCK} Datetime: <code>{DATE}</code>\n{WOMAN_POLICE_OFFICER} Operator: {OPERATOR_NAME}\n{OPERATOR_USERNAME} [<code>{OPERATOR_ID}</code>]",
+    "SUPERBAN_REMOVE": "I removed the superban to user {NAME} [<code>{ID}</code>]",
+    "SUPERBAN_REMOVE_ERROR": "Attention this user not super banned!!!"
 }

@@ -72,3 +72,5 @@ class Lang(typing.TypedDict):
     SUPERBAN_ALREADY_EXIST: str
     SUPERBAN_WHITELIST: str
     SUPERBAN_LOG: str
+    SUPERBAN_REMOVE: str
+    SUPERBAN_REMOVE_ERROR: str
