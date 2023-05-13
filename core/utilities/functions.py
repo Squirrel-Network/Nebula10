@@ -6,25 +6,20 @@
 import datetime
 import time
 
-from telegram import Update, User, Chat
+from telegram import User, Chat, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
 from config import Session
 from core.database.repository.group import GroupRepository
 from core.database.repository.user import UserRepository
 from core.utilities.constants import PERM_FALSE
+from core.utilities.menu import build_menu
+from core.utilities.constants import BUTTONS_MENU
 
 
 def get_owner_list() -> list[int]:
     with UserRepository() as db:
         return [int(x["tg_id"]) for x in db.get_owners()]
-
-
-async def close_menu(update: Update, _: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-
-    if query.data == "close":
-        await query.message.delete()
 
 
 async def kick_user(chat_id: int, user_id: int, context: ContextTypes.DEFAULT_TYPE):
@@ -102,3 +97,29 @@ def save_user(member: User, chat: Chat):
             db.add(member.id, f"@{member.username}", current_time, current_time)
 
         db.add_into_mtm(member.id, chat.id, 0, 0)
+
+
+def get_keyboard_settings(chat_id: int) -> InlineKeyboardMarkup:
+    with GroupRepository() as db:
+        group = db.get_by_id(chat_id)
+
+    buttons = [
+        InlineKeyboardButton(f"{'✅' if group[v[1]] else '❌'} {v[0]}", callback_data=cb)
+        for cb, v in BUTTONS_MENU.items()
+    ]
+
+    buttons.extend(
+        [
+            InlineKeyboardButton("Languages 🌍", callback_data="lang"),
+            InlineKeyboardButton(
+                "Commands",
+                url="https://github.com/Squirrel-Network/nebula8/wiki/Command-List",
+            ),
+            InlineKeyboardButton(
+                "Dashboard", url="https://nebula.squirrel-network.online"
+            ),
+            InlineKeyboardButton("Close 🗑", callback_data="close"),
+        ]
+    )
+
+    return InlineKeyboardMarkup(build_menu(buttons, 2))

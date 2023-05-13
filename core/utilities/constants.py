@@ -65,3 +65,22 @@ PERM_MEDIA_FALSE = ChatPermissions(
     can_invite_users=False,
     can_pin_messages=False,
 )
+
+BUTTONS_MENU = {
+    "settings_set_welcome": ("Welcome 👋🏻", "set_welcome"),
+    "settings_set_silence": ("Silence 🤫", "set_silence"),
+    "settings_set_block_entry": ("Deny All Entry 🚷", "block_new_member"),
+    "settings_set_antiflood": ("AntiFlood 🚫", "set_antiflood"),
+    "settings_user_photo": (
+        "No User Photo Entry ⛔️",
+        "set_user_profile_picture",
+    ),
+    "settings_arabic": ("No Arabic Entry ⛔️", "set_arabic_filter"),
+    "settings_cirillic": ("No Russian Entry ⛔️", "set_cirillic_filter"),
+    "settings_chinese": ("No Chinese Entry ⛔️", "set_chinese_filter"),
+    "settings_zoophile": ("No ZooPhile Entry ⛔️", "zoophile_filter"),
+    "settings_novocal": ("Block Vocal ⛔️", "set_no_vocal"),
+    "settings_channel_block": ("Block Channel 📢", "sender_chat_block"),
+    "settings_spoiler_block": ("Block Spoiler 🚫", "spoiler_block"),
+    "settings_set_group_help": ("Live with GH 🤖", "set_gh"),
+}

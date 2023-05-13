@@ -13,7 +13,6 @@ from telegram.ext import (
 from core.commands.admin import say, settings
 from core.commands.owner import server, superban, test
 from core.commands.user import help, io, start
-from core.utilities.functions import close_menu
 
 
 def admin_command(application: Application):
@@ -33,10 +32,6 @@ def owner_command(application: Application):
             CommandHandler("s", superban.init),
             CommandHandler("ms", superban.multi_superban),
             CommandHandler("us", superban.remove_superban_via_id),
-            # CallbackQuery Handler
-            CallbackQueryHandler(close_menu, pattern="close"),
-            CallbackQueryHandler(superban.update_superban, pattern="superban|"),
-            CallbackQueryHandler(settings.callback_query, "settings_"),
         ]
     )
 

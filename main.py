@@ -70,10 +70,14 @@ def main() -> None:
 
     # on different commands - answer in Telegram
     from core.commands import commands_index
+    from core.callback_query import callback_query_index
 
     commands_index.user_command(application)
     commands_index.admin_command(application)
     commands_index.owner_command(application)
+    callback_query_index.user_callback(application)
+    callback_query_index.admin_callback(application)
+    callback_query_index.owner_callback(application)
 
     # Handlers
     from core.handlers import handlers_index
