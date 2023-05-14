@@ -1,5 +1,6 @@
 {
     "LANG_DEFAULT": "it",
+    "LANG_FLAG": "{FLAG_ITALY}",
     "START_COMMAND": "Ciao io mi chiamo {NAME} e sono uno strumento per la gestione dei gruppi con tante funzioni speciali tutte da scoprire e sono Open Source! Se vuoi vedere il mio sorgente digita: /source Se hai bisogno di aiuto digita /help",
     "HELP_COMMAND": "Ciao mi chiamo {NAME}\nHai bisogno di aiuto?",
     "GROUP_INFO": "<b>Titolo Gruppo:</b> <code>{NAME}</code>\n\n<b>Id del gruppo:</b> <code>{ID}</code>\n\n<b>Lingua del gruppo:</b> <code>{LANG}</code>\n\n<b>Limite Warn:</b> <code>{WARN}</code>\n\n<b>Totale Utenti Gruppo:</b> <code>{USER_COUNT}</code>\n\n<b>Totale Messaggi Gruppo:</b> <code>{MESSAGE}</code> Negli ultimi 30 giorni",
@@ -70,5 +71,6 @@
     "SUPERBAN_WHITELIST": "L'utente {NAME} è nella whitelist, non lo puoi bannare!",
     "SUPERBAN_LOG": "<b>{NO_PEDESTRIANS} #Utente Superbannato!</b>\n{BUST_IN_SILHOUETTE} Utente: {NAME} [<code>{ID}</code>]\n{SCROLL} Motivo: {REASON}\n{ONE_O_CLOCK} Data e ora: <code>{DATE}</code>\n{WOMAN_POLICE_OFFICER} Operatore: {OPERATOR_NAME}\n{OPERATOR_USERNAME} [<code>{OPERATOR_ID}</code>]",
     "SUPERBAN_REMOVE": "Rimosso il superban all'utente {NAME} [<code>{ID}</code>]",
-    "SUPERBAN_REMOVE_ERROR": "Spiacente, questo utente non è stato super bannato!!!"
+    "SUPERBAN_REMOVE_ERROR": "Spiacente, questo utente non è stato super bannato!!!",
+    "SELECT_LANG": "Perfavore seleziona la tua lingua di preferenza"
 }

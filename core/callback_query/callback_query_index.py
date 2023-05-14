@@ -7,7 +7,7 @@ from telegram.ext import Application, CallbackQueryHandler
 
 from core.callback_query.user import close
 from core.callback_query.owner import superban
-from core.callback_query.admin import settings
+from core.callback_query.admin import settings, languages
 
 
 def owner_callback(application: Application):
@@ -15,7 +15,9 @@ def owner_callback(application: Application):
 
 
 def admin_callback(application: Application):
-    application.add_handlers([CallbackQueryHandler(settings.init, "settings|")])
+    application.add_handler(CallbackQueryHandler(settings.init, "settings|"))
+    application.add_handler(CallbackQueryHandler(languages.init, "^lang$"))
+    application.add_handler(CallbackQueryHandler(languages.change_lang, "lang|"))
 
 
 def user_callback(application: Application):

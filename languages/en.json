@@ -1,5 +1,6 @@
 {
     "LANG_DEFAULT": "en",
+    "LANG_FLAG": "{FLAG_ENGLAND}",
     "START_COMMAND": "Hi, my name is {NAME} and I am a tool for managing groups with many special functions to be discovered and I am Open Source! If you want to see my source type: /source If you need help, type /help",
     "HELP_COMMAND": "Hi my name is {NAME}\nDo You need Help?",
     "GROUP_INFO": "<b>Group Title:</b> <code>{NAME}</code>\n\n<b>Group Id:</b> <code>{ID}</code>\n\n<b>Group's Language:</b> <code>{LANG}</code>\n\n<b>Warn Limit:</b> <code>{WARN}</code>\n\n<b>Total Group Users:</b> <code>{USER_COUNT}</code>\n\n<b>Total Group Messages:</b> <code>{MESSAGE}</code> In the last 30 days",
@@ -70,5 +71,6 @@
     "SUPERBAN_WHITELIST": "User {NAME} is whitelisted you cannot blacklist!",
     "SUPERBAN_LOG": "<b>{NO_PEDESTRIANS} #Log User Superbanned!</b>\n{BUST_IN_SILHOUETTE} User: {NAME} [<code>{ID}</code>]\n{SCROLL} Reason: {REASON}\n{ONE_O_CLOCK} Datetime: <code>{DATE}</code>\n{WOMAN_POLICE_OFFICER} Operator: {OPERATOR_NAME}\n{OPERATOR_USERNAME} [<code>{OPERATOR_ID}</code>]",
     "SUPERBAN_REMOVE": "I removed the superban to user {NAME} [<code>{ID}</code>]",
-    "SUPERBAN_REMOVE_ERROR": "Attention this user not super banned!!!"
+    "SUPERBAN_REMOVE_ERROR": "Attention this user not super banned!!!",
+    "SELECT_LANG": "Please select your preferred language"
 }

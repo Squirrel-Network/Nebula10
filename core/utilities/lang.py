@@ -3,6 +3,7 @@ import typing
 
 class Lang(typing.TypedDict):
     LANG_DEFAULT: str
+    LANG_FLAG: str
     START_COMMAND: str
     HELP_COMMAND: str
     GROUP_INFO: str
@@ -74,3 +75,4 @@ class Lang(typing.TypedDict):
     SUPERBAN_LOG: str
     SUPERBAN_REMOVE: str
     SUPERBAN_REMOVE_ERROR: str
+    SELECT_LANG: str
