@@ -45,9 +45,9 @@ async def settings_set_block_entry(
 
 
 SETTINGS_CALLBACK = {
-    "settings_set_silence": settings_set_silence,
-    "settings_set_welcome": settings_set_welcome,
-    "settings_set_block_entry": settings_set_block_entry,
+    "settings|set_silence": settings_set_silence,
+    "settings|set_welcome": settings_set_welcome,
+    "settings|set_block_entry": settings_set_block_entry,
 }
 
 

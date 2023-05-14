@@ -15,7 +15,7 @@ def owner_callback(application: Application):
 
 
 def admin_callback(application: Application):
-    application.add_handlers([CallbackQueryHandler(settings.init, "settings_")])
+    application.add_handlers([CallbackQueryHandler(settings.init, "settings|")])
 
 
 def user_callback(application: Application):

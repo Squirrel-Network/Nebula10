@@ -67,20 +67,20 @@ PERM_MEDIA_FALSE = ChatPermissions(
 )
 
 BUTTONS_MENU = {
-    "settings_set_welcome": ("Welcome 👋🏻", "set_welcome"),
-    "settings_set_silence": ("Silence 🤫", "set_silence"),
-    "settings_set_block_entry": ("Deny All Entry 🚷", "block_new_member"),
-    "settings_set_antiflood": ("AntiFlood 🚫", "set_antiflood"),
-    "settings_user_photo": (
+    "settings|set_welcome": ("Welcome 👋🏻", "set_welcome"),
+    "settings|set_silence": ("Silence 🤫", "set_silence"),
+    "settings|set_block_entry": ("Deny All Entry 🚷", "block_new_member"),
+    "settings|set_antiflood": ("AntiFlood 🚫", "set_antiflood"),
+    "settings|user_photo": (
         "No User Photo Entry ⛔️",
         "set_user_profile_picture",
     ),
-    "settings_arabic": ("No Arabic Entry ⛔️", "set_arabic_filter"),
-    "settings_cirillic": ("No Russian Entry ⛔️", "set_cirillic_filter"),
-    "settings_chinese": ("No Chinese Entry ⛔️", "set_chinese_filter"),
-    "settings_zoophile": ("No ZooPhile Entry ⛔️", "zoophile_filter"),
-    "settings_novocal": ("Block Vocal ⛔️", "set_no_vocal"),
-    "settings_channel_block": ("Block Channel 📢", "sender_chat_block"),
-    "settings_spoiler_block": ("Block Spoiler 🚫", "spoiler_block"),
-    "settings_set_group_help": ("Live with GH 🤖", "set_gh"),
+    "settings|arabic": ("No Arabic Entry ⛔️", "set_arabic_filter"),
+    "settings|cirillic": ("No Russian Entry ⛔️", "set_cirillic_filter"),
+    "settings|chinese": ("No Chinese Entry ⛔️", "set_chinese_filter"),
+    "settings|zoophile": ("No ZooPhile Entry ⛔️", "zoophile_filter"),
+    "settings|novocal": ("Block Vocal ⛔️", "set_no_vocal"),
+    "settings|channel_block": ("Block Channel 📢", "sender_chat_block"),
+    "settings|spoiler_block": ("Block Spoiler 🚫", "spoiler_block"),
+    "settings|set_group_help": ("Live with GH 🤖", "set_gh"),
 }
