@@ -76,3 +76,4 @@ class Lang(typing.TypedDict):
     SUPERBAN_REMOVE: str
     SUPERBAN_REMOVE_ERROR: str
     SELECT_LANG: str
+    LANG_SELECTED: str

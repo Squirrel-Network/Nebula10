@@ -72,5 +72,6 @@
     "SUPERBAN_LOG": "<b>{NO_PEDESTRIANS} #Log User Superbanned!</b>\n{BUST_IN_SILHOUETTE} User: {NAME} [<code>{ID}</code>]\n{SCROLL} Reason: {REASON}\n{ONE_O_CLOCK} Datetime: <code>{DATE}</code>\n{WOMAN_POLICE_OFFICER} Operator: {OPERATOR_NAME}\n{OPERATOR_USERNAME} [<code>{OPERATOR_ID}</code>]",
     "SUPERBAN_REMOVE": "I removed the superban to user {NAME} [<code>{ID}</code>]",
     "SUPERBAN_REMOVE_ERROR": "Attention this user not super banned!!!",
-    "SELECT_LANG": "Please select your preferred language"
+    "SELECT_LANG": "Please select your preferred language",
+    "LANG_SELECTED": "You have selected the English language for your group"
 }

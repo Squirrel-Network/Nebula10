@@ -7,6 +7,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 
 from config import Session
+from core.database.repository import GroupRepository
 from core.decorators import callback_query_regex, check_role
 from core.utilities.enums import Role
 from core.utilities.menu import build_menu
@@ -31,7 +32,13 @@ async def init(update: Update, _: ContextTypes.DEFAULT_TYPE):
 
 
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex("lang|")
+@callback_query_regex("^lang\|([a-zA-Z]+)$")
 async def change_lang(update: Update, _: ContextTypes.DEFAULT_TYPE):
-    # TODO: change lang
-    pass
+    lang = update.callback_query.data.split("|")[1].upper()
+
+    with GroupRepository() as db:
+        db.update_group_settings(
+            GroupRepository.SET_LANGUAGE, lang, update.effective_chat.id
+        )
+
+    await update.callback_query.edit_message_text(get_lang(update)["LANG_SELECTED"])
