@@ -7,11 +7,10 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 from core.database.repository import GroupRepository
-from core.decorators import check_role
-from core.utilities.constants import PERM_FALSE, PERM_TRUE
+from core.decorators import callback_query_regex, check_role
+from core.utilities.constants import BUTTONS_MENU, PERM_FALSE, PERM_TRUE
 from core.utilities.enums import Role
 from core.utilities.functions import get_keyboard_settings
-from core.utilities.constants import BUTTONS_MENU
 
 
 async def settings_set_silence(
@@ -52,6 +51,7 @@ SETTINGS_CALLBACK = {
 
 
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@callback_query_regex("settings|")
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
     callback_data = update.callback_query.data

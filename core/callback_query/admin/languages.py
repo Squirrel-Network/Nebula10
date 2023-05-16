@@ -3,18 +3,19 @@
 
 # Copyright SquirrelNetwork
 
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 
-from core.decorators import check_role
-from core.utilities.enums import Role
 from config import Session
+from core.decorators import callback_query_regex, check_role
+from core.utilities.enums import Role
 from core.utilities.menu import build_menu
-from languages import get_lang
 from core.utilities.text import Text
+from languages import get_lang
 
 
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@callback_query_regex("^lang$")
 async def init(update: Update, _: ContextTypes.DEFAULT_TYPE):
     lang = [(lang, value["LANG_FLAG"]) for lang, value in Session.lang.items()]
 
@@ -30,6 +31,7 @@ async def init(update: Update, _: ContextTypes.DEFAULT_TYPE):
 
 
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@callback_query_regex("lang|")
 async def change_lang(update: Update, _: ContextTypes.DEFAULT_TYPE):
     # TODO: change lang
     pass

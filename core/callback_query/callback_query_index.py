@@ -11,14 +11,14 @@ from core.callback_query.admin import settings, languages
 
 
 def owner_callback(application: Application):
-    application.add_handlers([CallbackQueryHandler(superban.init, "superban|")])
+    application.add_handlers([CallbackQueryHandler(superban.init)], group=1)
 
 
 def admin_callback(application: Application):
-    application.add_handler(CallbackQueryHandler(settings.init, "settings|"))
-    application.add_handler(CallbackQueryHandler(languages.init, "^lang$"))
-    application.add_handler(CallbackQueryHandler(languages.change_lang, "lang|"))
+    application.add_handler(CallbackQueryHandler(settings.init), group=2)
+    application.add_handler(CallbackQueryHandler(languages.init), group=3)
+    application.add_handler(CallbackQueryHandler(languages.change_lang), group=4)
 
 
 def user_callback(application: Application):
-    application.add_handlers([CallbackQueryHandler(close.init, "close")])
+    application.add_handlers([CallbackQueryHandler(close.init)], group=5)

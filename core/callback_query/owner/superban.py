@@ -9,7 +9,7 @@ from telegram import Update, constants
 from telegram.ext import ContextTypes
 
 from core.database.repository.superban import SuperbanRepository
-from core.decorators import check_role
+from core.decorators import callback_query_regex, check_role
 from core.utilities.enums import Role
 from core.utilities.message import message
 from core.utilities.text import Text
@@ -17,6 +17,7 @@ from languages import get_lang
 
 
 @check_role(Role.OWNER)
+@callback_query_regex("superban|")
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     lang = get_lang(update)
     query = update.callback_query
