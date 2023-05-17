@@ -191,7 +191,23 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 @check_role(Role.OWNER)
 async def remove_superban_via_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    pass
+    text = update.effective_message.text.split()
+    lang = get_lang(update)
+
+    if len(text) == 1:
+        return await message(update, context, lang["SUPERBAN_ERROR_NO_ID"])
+
+    if not text[1].isnumeric():
+        return await message(update, context, lang["SUPERBAN_ERROR_ID"])
+
+    with SuperbanRepository() as db:
+        if not db.get_by_id(text[1]):
+            return await message(update, context, lang["SUPERBAN_REMOVE_ERROR"])
+
+        db.remove(text[1])
+
+        params = {"id": text[1]}
+        await message(update, context, lang["SUPERBAN_REMOVE"].format_map(Text(params)))
 
 
 @check_role(Role.OWNER)
