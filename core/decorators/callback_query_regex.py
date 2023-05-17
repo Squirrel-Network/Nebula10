@@ -15,9 +15,7 @@ def callback_query_regex(data: str):
     def decorator(func: typing.Callable):
         @functools.wraps(func)
         async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE):
-            match = re.compile(data).match(update.callback_query.data)
-
-            if match and match.group():
+            if any(re.findall(data, update.callback_query.data)):
                 return await func(update, context)
             return
 
