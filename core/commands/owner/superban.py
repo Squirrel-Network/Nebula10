@@ -108,13 +108,6 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "{MEMO} Other".format_map(Text()),
                 callback_data="superban|other",
             ),
-            InlineKeyboardButton(
-                "{CROSS_MARK} Remove Superban".format_map(Text()),
-                callback_data="superban|remove",
-            ),
-            InlineKeyboardButton(
-                "{WASTEBASKET} Close".format_map(Text()), callback_data="close"
-            ),
         ]
 
         if check_user(reply.from_user.id, context.bot.id):
@@ -122,7 +115,15 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         return await reply.reply_text(
             lang["SUPERBAN_REPLY"],
-            reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
+            reply_markup=InlineKeyboardMarkup(
+                build_menu(
+                    buttons,
+                    2,
+                    footer_buttons=InlineKeyboardButton(
+                        "{WASTEBASKET} Close".format_map(Text()), callback_data="close"
+                    ),
+                )
+            ),
         )
 
     text = update.message.text.split()
