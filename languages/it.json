@@ -73,5 +73,6 @@
     "SUPERBAN_REMOVE": "Ho rimosso l'utente con TelegramID: [<code>{ID}</code>] dal database",
     "SUPERBAN_REMOVE_ERROR": "Spiacente, questo utente non è stato super bannato!!!",
     "SELECT_LANG": "Perfavore seleziona la tua lingua di preferenza",
-    "LANG_SELECTED": "Hai selezionato la lingua italiana per il tuo gruppo"
+    "LANG_SELECTED": "Hai selezionato la lingua italiana per il tuo gruppo",
+    "SUPERBAN_MULTI": "MultiSuperban eseguito! dei seguenti id:\n"
 }

@@ -57,6 +57,11 @@ class SuperbanRepository(Connection):
             ),
         )
 
+    def adds(self, params: list[tuple]):
+        q = "INSERT IGNORE INTO superban_table(user_id, user_first_name, motivation_text, user_date, id_operator, username_operator, first_name_operator) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+
+        return self._execute_many(q, params)
+
     def remove(self, user_id: int):
         q = "DELETE FROM superban_table WHERE user_id = %s"
 

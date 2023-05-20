@@ -72,9 +72,14 @@ async def new_superban(
     await telegram_loggers(
         update, context, lang["SUPERBAN_LOG"].format_map(Text(params))
     )
+    sys_loggers(
+        f"Superban executed by: {operator_username}[<code>{operator_id}</code>] towards the user: [<code>{user_id}</code>].",
+        "warning",
+    )
 
 
 @check_role(Role.OWNER)
+@logger.catch
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     lang = get_lang(update)
 
@@ -190,6 +195,7 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 @check_role(Role.OWNER)
+@logger.catch
 async def remove_superban_via_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.effective_message.text.split()
     lang = get_lang(update)
@@ -211,5 +217,32 @@ async def remove_superban_via_id(update: Update, context: ContextTypes.DEFAULT_T
 
 
 @check_role(Role.OWNER)
+@logger.catch
 async def multi_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    pass
+    lang = get_lang(update)
+    motivation = "MultiSuperban"
+    save_date = datetime.datetime.utcnow().isoformat()
+    operator_id = update.message.from_user.id
+    operator_username = "@" + update.message.from_user.username
+    operator_first_name = update.message.from_user.first_name
+
+    users = [
+        (
+            x,
+            f"NB{x}",
+            motivation,
+            save_date,
+            operator_id,
+            operator_username,
+            operator_first_name,
+        )
+        for x in update.message.text.split()[1:]
+        if x.isdigit()
+    ]
+
+    with SuperbanRepository() as db:
+        db.adds(users)
+
+    ids_string = [f"{{BLACK_SMALL_SQUARE}} {x[0]}".format_map(Text()) for x in users]
+
+    await message(update, context, lang["SUPERBAN_MULTI"] + "\n".join(ids_string))
