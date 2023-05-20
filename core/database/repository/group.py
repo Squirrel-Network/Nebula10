@@ -154,6 +154,7 @@ class GroupRepository(Connection):
         q = "UPDATE groups SET @record = %s WHERE id_group = %s".replace(
             "@record", record
         )
+        print(q)
 
         return self._execute(q, (value, group_id))
 

@@ -8,17 +8,17 @@ from core.database.db_connect import Connection
 
 class SuperbanRepository(Connection):
     def get_by_id(self, user_id: int):
-        q = "SELECT * FROM superban_table WHERE user_id='%s'"
+        q = "SELECT * FROM superban_table WHERE user_id=%s"
 
         return self._select(q, (user_id,))
 
     def get_whitelist_by_id(self, user_id: int):
-        q = "SELECT * FROM whitelist_table WHERE tg_id='%s'"
+        q = "SELECT * FROM whitelist_table WHERE tg_id=%s"
 
         return self._select(q, (user_id,))
 
     def get_group_blacklist_by_id(self, group_id: int):
-        q = "SELECT * FROM groups_blacklist WHERE tg_id_group='%s'"
+        q = "SELECT * FROM groups_blacklist WHERE tg_id_group=%s"
 
         return self._select(q, (group_id,))
 
@@ -28,7 +28,7 @@ class SuperbanRepository(Connection):
         return self._execute(q, (user_id, user_username))
 
     def get_all(self, user_id: int):
-        q = "SELECT user_id FROM superban_table WHERE user_id='%s'"
+        q = "SELECT user_id FROM superban_table WHERE user_id=%s"
 
         return self._select_all(q, (user_id,))
 
