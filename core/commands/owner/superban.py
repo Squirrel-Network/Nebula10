@@ -236,7 +236,7 @@ async def multi_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
             operator_username,
             operator_first_name,
         )
-        for x in update.message.text.split()[1:]
+        for x in update.message.text[4:].split(", ")
         if x.isdigit()
     ]
 

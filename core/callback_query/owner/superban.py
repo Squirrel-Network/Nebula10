@@ -7,10 +7,12 @@ import datetime
 
 from telegram import Update, constants
 from telegram.ext import ContextTypes
+from loguru import logger
 
 from core.database.repository.superban import SuperbanRepository
 from core.decorators import callback_query_regex, check_role
 from core.utilities.enums import Role
+from core.utilities.logs import sys_loggers, telegram_loggers
 from core.utilities.message import message
 from core.utilities.text import Text
 from languages import get_lang
@@ -18,6 +20,7 @@ from languages import get_lang
 
 @check_role(Role.OWNER)
 @callback_query_regex("superban|")
+@logger.catch
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     lang = get_lang(update)
     query = update.callback_query
@@ -68,4 +71,20 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 chat_id, query.message.reply_to_message.message_id
             )
 
-            # TODO: log
+            params = {
+                "name": user.first_name,
+                "id": user.id,
+                "reason": motivation,
+                "date": save_date,
+                "operator_name": operator.first_name,
+                "operator_username": f"@{operator.username}",
+                "operator_id": operator.id,
+            }
+            await telegram_loggers(
+                update, context, lang["SUPERBAN_LOG"].format_map(Text(params))
+            )
+
+            sys_loggers(
+                f"Superban executed by: {operator.username}[<code>{operator.id}</code>] towards the user: [<code>{user.id}</code>].",
+                "warning",
+            )
