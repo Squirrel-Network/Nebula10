@@ -3,9 +3,10 @@
 
 # Copyright SquirrelNetwork
 
-__all__ = ["callback_query_regex", "delete_command", "check_role"]
+__all__ = ["callback_query_regex", "delete_command", "on_update", "check_role"]
 
 
 from .callback_query_regex import callback_query_regex
 from .delete import delete_command
+from .on_update import on_update
 from .restricted import check_role
