@@ -3,14 +3,17 @@
 
 # Copyright SquirrelNetwork
 
-from telegram import ChatPermissions
+from telegram import ChatPermissions, constants
 
 
 # general constants
 DEFAULT_COUNT_WARN = 0
 DEFAULT_USER_SCORE = 0
 DEFAULT_MAX_WARN = 3
-SERVICE_ACCOUNT = 777000
+SERVICE_ACCOUNT = constants.ChatID.SERVICE_CHAT
+SUPERGROUP = constants.ChatType.SUPERGROUP
+GROUP = constants.ChatType.GROUP
+CHANNEL = constants.ChatType.CHANNEL
 
 # constants for time management
 # DAILY == 24h  ; TWELVE_HOUR == 12h ; EIGHT_HOUR == 8h ; FOUR_HOUR == 4h ; ONE_HOUR == 1h
@@ -66,6 +69,7 @@ PERM_MEDIA_FALSE = ChatPermissions(
     can_pin_messages=False,
 )
 
+# Settings Buttons Menu
 BUTTONS_MENU = {
     "settings|set_welcome": ("Welcome 👋🏻", "set_welcome"),
     "settings|set_silence": ("Silence 🤫", "set_silence"),
