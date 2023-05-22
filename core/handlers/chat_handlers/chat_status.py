@@ -9,8 +9,8 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 from core.database.repository.group import GroupRepository
-from core.utilities import constants as CONST
 from core.decorators import on_update
+from core.utilities import constants as CONST
 from core.utilities.telegram_update import TelegramUpdate
 
 # from core.handlers.chat_handlers.logs import debug_channel
@@ -19,7 +19,7 @@ from core.utilities.telegram_update import TelegramUpdate
 @on_update
 async def status(update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE):
     chat = update.chat
-    msg_update = update.update.effective_message
+    msg_update = update.message
     group_members_count = await chat.get_member_count()
 
     """

@@ -3,14 +3,22 @@
 
 # Copyright SquirrelNetwork
 
-import dataclasses
-
-from telegram import Update, Chat, User
+from telegram import Chat, Update, User
 
 
-@dataclasses.dataclass
-class TelegramUpdate:
-    update: Update
-    chat: Chat | None
-    user: User | None
-    user_reply: User | None
+class TelegramUpdate(Update):
+    @property
+    def chat(self) -> Chat | None:
+        return self.effective_chat
+
+    @property
+    def user(self) -> User | None:
+        return self.effective_user
+
+    @property
+    def user_reply(self) -> User | None:
+        return (
+            self.message.reply_to_message.from_user
+            if self.message.reply_to_message
+            else None
+        )

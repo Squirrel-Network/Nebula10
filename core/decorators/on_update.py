@@ -15,15 +15,14 @@ from core.utilities.telegram_update import TelegramUpdate
 def on_update(func: typing.Callable):
     @functools.wraps(func)
     async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        u = TelegramUpdate(
-            update,
-            update.effective_chat,
-            update.effective_user,
-            update.message.reply_to_message.from_user
-            if update.message.reply_to_message
-            else None,
+        up = TelegramUpdate(
+            **{
+                x: getattr(update, x, None)
+                for x in update.__slots__
+                if not x.startswith("_")
+            }
         )
 
-        return await func(u, context)
+        return await func(up, context)
 
     return wrapper
