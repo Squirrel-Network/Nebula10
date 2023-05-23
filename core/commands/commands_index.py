@@ -29,9 +29,9 @@ def owner_command(application: Application):
         [
             CommandHandler("test", test.command_test),
             CommandHandler("server", server.init),
-            CommandHandler("s", superban.init),
-            CommandHandler("ms", superban.multi_superban),
-            CommandHandler("us", superban.remove_superban_via_id),
+            CommandHandler("bl", superban.init),
+            CommandHandler("mbl", superban.multi_superban),
+            CommandHandler("ubl", superban.remove_superban_via_id),
         ]
     )
 

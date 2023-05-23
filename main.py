@@ -8,7 +8,9 @@ import sys
 from dotenv import load_dotenv
 from loguru import logger
 from telegram.ext import Application
-
+from core.commands import commands_index
+from core.callback_query import callback_query_index
+from core.handlers import handlers_index
 from config import Config, Session
 from core.database import create_pool
 from core.database.repository import SuperbanRepository, UserRepository
@@ -69,9 +71,6 @@ def main() -> None:
     application = Application.builder().token(conf.BOT_TOKEN).build()
 
     # on different commands - answer in Telegram
-    from core.commands import commands_index
-    from core.callback_query import callback_query_index
-
     commands_index.user_command(application)
     commands_index.admin_command(application)
     commands_index.owner_command(application)
@@ -80,8 +79,6 @@ def main() -> None:
     callback_query_index.owner_callback(application)
 
     # Handlers
-    from core.handlers import handlers_index
-
     handlers_index.core_handlers(application)
 
     # Run the bot until the user presses Ctrl-C

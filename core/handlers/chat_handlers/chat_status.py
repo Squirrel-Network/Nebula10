@@ -17,7 +17,8 @@ from core.utilities.telegram_update import TelegramUpdate
 
 
 @on_update
-async def status(update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE):
+async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
+    bot = context.bot
     chat = update.chat
     msg_update = update.message
     group_members_count = await chat.get_member_count()
@@ -40,6 +41,20 @@ async def status(update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE):
             record_members = GroupRepository.SET_GROUP_MEMBERS_COUNT
             db.update_group_settings(record_members, group_members_count, chat.id)
 
+    """
+     When a chat room changes group image it is saved to the webserver
+     like this: example.com/group_photo/-100123456789.jpg (url variable)
+    """
+    if update.effective_message.new_chat_photo:
+        if chat.type == CONST.SUPERGROUP or chat.type == CONST.GROUP:
+            file_id = update.message.new_chat_photo[2].file_id
+            newfile = await bot.get_file(file_id)
+            #TODO AttributeError: 'File' object has no attribute 'download'
+            #newfile.download('/var/www/naos.hersel.it/group_photo/{}.jpg'.format(chat.id))
+            url = "https://naos.hersel.it/group_photo/{}.jpg".format(chat.id)
+            print(url)
+            print(newfile)
+
     print("CHAT:\n {}".format(chat))
 
 
@@ -48,8 +63,6 @@ this function has the task of saving
 in the database the updates
 for the calculation of messages
 """
-
-
 async def check_updates(update: Update):
     user = update.effective_message.from_user
     chat = update.effective_chat
