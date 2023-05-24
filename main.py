@@ -8,12 +8,13 @@ import sys
 from dotenv import load_dotenv
 from loguru import logger
 from telegram.ext import Application
-from core.commands import commands_index
-from core.callback_query import callback_query_index
-from core.handlers import handlers_index
+
 from config import Config, Session
+from core.callback_query import callback_query_index
+from core.commands import commands_index
 from core.database import create_pool
 from core.database.repository import SuperbanRepository, UserRepository
+from core.handlers import handlers_index
 from core.utilities.functions import get_owner_list
 from languages import load_languages
 

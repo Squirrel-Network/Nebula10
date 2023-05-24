@@ -5,13 +5,9 @@
 
 import datetime
 
-from telegram import (
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    Update,
-)
-from telegram.ext import ContextTypes
 from loguru import logger
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram.ext import ContextTypes
 
 from config import Session
 from core.database.repository.superban import SuperbanRepository
@@ -236,7 +232,7 @@ async def multi_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
             operator_username,
             operator_first_name,
         )
-        for x in update.message.text[4:].split(",")
+        for x in update.message.text.split(maxsplit=1)[1].split(",")
         if x.isdigit()
     ]
 
