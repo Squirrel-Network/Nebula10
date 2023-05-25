@@ -5,6 +5,7 @@ class Lang(typing.TypedDict):
     BLOCK_NEW_MEMBER: str
     BAN_ZOOPHILE: str
     BOT_WELCOME: str
+    ERROR_MESSAGE_REPLY: str
     FILTER_NAME: str
     HELP_COMMAND: str
     KICKED_USER_MESSAGE_NO_USERNAME: str
@@ -39,3 +40,5 @@ class Lang(typing.TypedDict):
     USER_INFORMATION: str
     USER_INFORMATION_SUPERBAN: str
     START_COMMAND: str
+    OWNER_ALREADY_EXIST: str
+    OWNER_ADD: str

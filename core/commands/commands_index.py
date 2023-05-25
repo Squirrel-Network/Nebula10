@@ -3,15 +3,10 @@
 
 # Copyright SquirrelNetwork
 
-from telegram.ext import (
-    Application,
-    CallbackQueryHandler,
-    CommandHandler,
-    filters,
-)
+from telegram.ext import Application, CommandHandler, filters
 
 from core.commands.admin import say, settings
-from core.commands.owner import server, superban, test
+from core.commands.owner import add_owner, server, superban, test
 from core.commands.user import help, io, start
 
 
@@ -32,6 +27,7 @@ def owner_command(application: Application):
             CommandHandler("bl", superban.init),
             CommandHandler("mbl", superban.multi_superban),
             CommandHandler("ubl", superban.remove_superban_via_id),
+            CommandHandler("owner", add_owner.init),
         ]
     )
 

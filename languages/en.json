@@ -2,7 +2,7 @@
     "BAN_ZOOPHILE": "Nebula's automatic system intercepted a <b>zoophile!</b>\nI banned user <a href=\"tg://user?id={ID}\">{NAME}</a>",
     "BLOCK_NEW_MEMBER": "<b>#Automatic Handler:</b> Kick User for group protection",
     "BOT_WELCOME": "Thanks for adding me to the group {RED_HEART}\nPlease select your language => [/lang]\n\n{SPARKLE} Remember to make me administrator to work properly{RED_EXCLAMATION_MARK}\n\n🆘 Need Help? => /help\n\n{GEAR} To change the group settings, press the [/settings] command\n\n{GEAR} To change the filters in the group, type [/filters]\n\n{GEAR} To change the warn limit in the group, type [/setwarn]\n\n{GEAR} To change welcome type [/welcome] and follow the instructions\n\n<b>My Version is: {VERSION} {VERSION_NAME}</b>",
-    "DELETE_MESSAGE": "You must use this command in response to a message!",
+    "ERROR_MESSAGE_REPLY": "Error! This command should be used in response to the user!",
     "FILTER_NAME": "Non-Latin filter activated for the user <a href=\"tg://user?id={ID}\">{NAME}</a>",
     "HELP_COMMAND": "Hi my name is {NAME}\nDo You need Help?",
     "LANG_DEFAULT": "en",
@@ -35,5 +35,7 @@
     "SUPERBAN_WHITELIST": "User {NAME} is whitelisted you cannot blacklist!",
     "USER_ALREADY_BAN": "{NO_PEDESTRIANS} I got superbanned <a href=\"tg://user?id={ID}\">{NAME}</a> [{ID}]\n\n",
     "USER_INFORMATION": "{INFORMATION} == User Information == {INFORMATION}\n\n<b>{ID_BUTTON} User id:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> ❌",
-    "USER_INFORMATION_SUPERBAN": "{INFORMATION} == User Information == {INFORMATION}\n\n<b>{ID_BUTTON} User id:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> {CHECK_MARK_BUTTON}\nLearn more about: {URL}"
+    "USER_INFORMATION_SUPERBAN": "{INFORMATION} == User Information == {INFORMATION}\n\n<b>{ID_BUTTON} User id:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> {CHECK_MARK_BUTTON}\nLearn more about: {URL}",
+    "OWNER_ALREADY_EXIST": "{USERNAME} This owner already exists in the database",
+    "OWNER_ADD": "You have entered {USERNAME} [<code>{ID}</code>] a new owner in the database!"
 }
