@@ -16,7 +16,7 @@ from core.utilities.text import Text
 from languages import get_lang
 
 
-def get_size(bytes: int, suffix="B"):
+def get_size(num_bytes: int, suffix="B"):
     """
     Scale bytes to its proper format
     e.g:
@@ -26,9 +26,9 @@ def get_size(bytes: int, suffix="B"):
 
     factor = 1024
     for unit in ["", "K", "M", "G", "T", "P"]:
-        if bytes < factor:
-            return f"{bytes:.2f}{unit}{suffix}"
-        bytes /= factor
+        if num_bytes < factor:
+            return f"{num_bytes:.2f}{unit}{suffix}"
+        num_bytes /= factor
 
 
 def get_message(update: Update) -> str:

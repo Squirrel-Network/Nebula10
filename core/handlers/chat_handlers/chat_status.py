@@ -22,10 +22,7 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     msg_update = update.message
     group_members_count = await chat.get_member_count()
 
-    """
-    This feature changes the chat title
-    on the database when it is changed
-    """
+    # This feature changes the chat title on the database when it is changed
     if msg_update.new_chat_title is not None:
         with GroupRepository() as db:
             record_title = GroupRepository.SET_GROUP_NAME
@@ -38,19 +35,13 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
             ),
         )
 
-    """
-    This function saves the number
-    of users in the group in the database
-    """
+    # This function saves the number of users in the group in the database
     if group_members_count > 0:
         with GroupRepository() as db:
             record_members = GroupRepository.SET_GROUP_MEMBERS_COUNT
             db.update_group_settings(record_members, group_members_count, chat.id)
 
-    """
-     When a chat room changes group image it is saved to the webserver
-     like this: example.com/group_photo/-100123456789.jpg (url variable)
-    """
+    # When a chat room changes group image it is saved to the webserver like this: example.com/group_photo/-100123456789.jpg (url variable)
     if update.effective_message.new_chat_photo:
         if chat.type == CONST.SUPERGROUP or chat.type == CONST.GROUP:
             record_photo = GroupRepository().SET_GROUP_PHOTO
@@ -73,13 +64,7 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     print("CHAT:\n {}".format(chat))
 
 
-"""
-this function has the task of saving
-in the database the updates
-for the calculation of messages
-"""
-
-
+# this function has the task of saving in the database the updates for the calculation of messages
 async def check_updates(update: Update):
     user = update.effective_message.from_user
     chat = update.effective_chat

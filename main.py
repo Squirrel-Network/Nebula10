@@ -66,7 +66,7 @@ def main() -> None:
     # Get owner ids
     Session.owner_ids = get_owner_list()
 
-    """Start the bot."""
+    # Start the bot.
     # Create the Application and pass it your bot's token.
     application = Application.builder().token(conf.BOT_TOKEN).build()
 

@@ -5,7 +5,6 @@
 
 # from core.database.repository.group import GroupRepository
 # from core.utilities.message import message
-from core.decorators import restricted
 
 
 async def command_test(update, context):

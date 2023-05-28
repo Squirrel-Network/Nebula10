@@ -7,7 +7,7 @@ from telegram.ext import Application, CommandHandler, filters
 
 from core.commands.admin import say, settings
 from core.commands.owner import add_owner, server, superban, test
-from core.commands.user import help, io, start
+from core.commands.user import help_command, io, start
 
 
 def admin_command(application: Application):
@@ -37,6 +37,6 @@ def user_command(application: Application):
         [
             CommandHandler("start", start.init, filters=filters.ChatType.PRIVATE),
             CommandHandler("io", io.init, filters=filters.ChatType.PRIVATE),
-            CommandHandler("help", help.init),
+            CommandHandler("help", help_command.init),
         ]
     )
