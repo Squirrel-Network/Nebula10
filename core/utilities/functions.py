@@ -6,15 +6,14 @@
 import datetime
 import time
 
-from telegram import User, Chat, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Chat, InlineKeyboardButton, InlineKeyboardMarkup, User
 from telegram.ext import ContextTypes
 
 from config import Session
 from core.database.repository.group import GroupRepository
 from core.database.repository.user import UserRepository
-from core.utilities.constants import PERM_FALSE
+from core.utilities.constants import BUTTONS_MENU, PERM_FALSE
 from core.utilities.menu import build_menu
-from core.utilities.constants import BUTTONS_MENU
 
 
 def get_owner_list() -> list[int]:

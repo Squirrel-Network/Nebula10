@@ -7,8 +7,8 @@ from telegram import Update
 from telegram.ext import Application, ContextTypes, MessageHandler, filters
 
 from core.handlers.chat_handlers import chat_status, welcome
-from core.handlers.user_handlers import user_status
 from core.handlers.chat_handlers.chat_status import check_updates
+from core.handlers.user_handlers import user_status
 
 
 def core_handlers(application: Application):

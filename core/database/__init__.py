@@ -5,4 +5,4 @@
 
 __all__ = ["create_pool", "Connection"]
 
-from .db_connect import create_pool, Connection
+from .db_connect import Connection, create_pool

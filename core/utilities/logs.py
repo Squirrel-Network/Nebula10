@@ -11,7 +11,6 @@ from config import Session
 from core.database.repository import GroupRepository
 from core.utilities.message import message
 
-
 LOGGER = {
     "trace": logger.trace,
     "debug": logger.debug,

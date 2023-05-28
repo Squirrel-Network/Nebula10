@@ -5,9 +5,9 @@
 
 import datetime
 
+from loguru import logger
 from telegram import Update, constants
 from telegram.ext import ContextTypes
-from loguru import logger
 
 from core.database.repository.superban import SuperbanRepository
 from core.decorators import callback_query_regex, check_role

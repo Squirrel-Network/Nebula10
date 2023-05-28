@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-from typing import Union, List
+from typing import List, Union
+
 from telegram import InlineKeyboardButton
 
 # Build Menu 2.0

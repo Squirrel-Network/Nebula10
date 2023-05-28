@@ -9,8 +9,8 @@ import typing
 from telegram import Update
 from telegram.ext import ContextTypes
 
-from core.utilities.enums import Role
 from config import Session
+from core.utilities.enums import Role
 
 
 def check_role(*roles: Role):

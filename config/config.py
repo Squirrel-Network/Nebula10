@@ -5,7 +5,6 @@
 
 from pydantic import BaseSettings
 
-
 LIST_ENV = (
     ("HOST", "MYSQL_HOST"),
     ("PORT", "MYSQL_PORT"),

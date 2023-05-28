@@ -5,7 +5,6 @@
 
 from telegram import ChatPermissions, constants
 
-
 # general constants
 DEFAULT_COUNT_WARN = 0
 DEFAULT_USER_SCORE = 0

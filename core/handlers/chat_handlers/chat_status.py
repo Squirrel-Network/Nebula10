@@ -10,9 +10,9 @@ from telegram.ext import ContextTypes
 
 from core.database.repository.group import GroupRepository
 from core.decorators import on_update
+from core.handlers.chat_handlers.logs import debug_channel
 from core.utilities import constants as CONST
 from core.utilities.telegram_update import TelegramUpdate
-from core.handlers.chat_handlers.logs import debug_channel
 
 
 @on_update

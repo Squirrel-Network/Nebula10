@@ -3,18 +3,14 @@
 
 # Copyright SquirrelNetwork
 
-from telegram import (
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    Update,
-)
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
-from core.utilities.message import message
+
 from core.decorators import delete_command
 from core.utilities.menu import build_menu
+from core.utilities.message import message
 from core.utilities.text import Text
 from languages import get_lang
-
 
 START_BUTTONS = (
     (

@@ -5,7 +5,7 @@
 
 import asyncio
 from time import time
-from typing import Callable, List, Dict, Any
+from typing import Any, Callable, Dict, List
 
 """
 =============

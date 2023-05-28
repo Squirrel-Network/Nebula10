@@ -18,7 +18,6 @@ from core.handlers import handlers_index
 from core.utilities.functions import get_owner_list
 from languages import load_languages
 
-
 # if version < 3.10, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 10:
     logger.error(

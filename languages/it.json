@@ -37,5 +37,6 @@
     "USER_INFORMATION": "{INFORMATION} == Informazioni utente == {INFORMATION}\n\n<b>{ID_BUTTON} Id utente:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> ❌",
     "USER_INFORMATION_SUPERBAN": "{INFORMATION} == Informazioni utente == {INFORMATION}\n\n<b>{ID_BUTTON} Id utente:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> {CHECK_MARK_BUTTON}\nLeggi di più: {URL}",
     "OWNER_ALREADY_EXIST": "{USERNAME} Questo owner esiste già nel database",
-    "OWNER_ADD": "Hai inserito {USERNAME} [<code>{ID}</code>] come nuovo owner nel database!"
+    "OWNER_ADD": "Hai inserito {USERNAME} [<code>{ID}</code>] come nuovo owner nel database!",
+    "OWNER_REMOVE": "Hai rimosso il proprietario {NAME} [<code>{ID}</code>] dal database."
 }

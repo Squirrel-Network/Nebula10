@@ -7,7 +7,6 @@
 from config import Session
 from core.utilities.message import message
 
-
 SET_CHANNEL_DEBUG = True
 
 

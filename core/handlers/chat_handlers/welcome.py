@@ -23,7 +23,6 @@ from core.utilities.regex import Regex
 from core.utilities.text import Text
 from languages import get_lang
 
-
 NO_USERNAME_ACTION = {
     1: (kick_user, "Kick"),
     2: (None, "Message"),

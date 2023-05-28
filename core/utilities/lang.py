@@ -42,3 +42,4 @@ class Lang(typing.TypedDict):
     START_COMMAND: str
     OWNER_ALREADY_EXIST: str
     OWNER_ADD: str
+    OWNER_REMOVE: str
