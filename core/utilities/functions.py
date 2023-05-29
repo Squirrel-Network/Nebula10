@@ -122,3 +122,15 @@ def get_keyboard_settings(chat_id: int) -> InlineKeyboardMarkup:
     )
 
     return InlineKeyboardMarkup(build_menu(buttons, 2))
+
+
+# Check Badwords in chat
+def check_group_badwords(update, chat):
+    bad_word = update.effective_message.text or update.effective_message.caption
+    if bad_word is not None:
+        with GroupRepository() as db:
+            row = db.get_group_badwords(int(chat),str(bad_word))
+        if row:
+            return True
+        else:
+            return False

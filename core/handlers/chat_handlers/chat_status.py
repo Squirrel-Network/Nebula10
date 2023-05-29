@@ -13,12 +13,15 @@ from core.decorators import on_update
 from core.handlers.chat_handlers.logs import debug_channel
 from core.utilities import constants as CONST
 from core.utilities.telegram_update import TelegramUpdate
+from core.utilities.functions import check_group_badwords
+from core.utilities.message import message
 
 
 @on_update
 async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     bot = context.bot
     chat = update.chat
+    user = update.effective_message.from_user
     msg_update = update.message
     group_members_count = await chat.get_member_count()
 
@@ -60,6 +63,10 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
                     chat.id, url
                 ),
             )
+    #This function checks the badwords of the group
+    if check_group_badwords(update, chat.id) == True:
+        await bot.delete_message(update.effective_message.chat_id, update.message.message_id)
+        await message(update, context,"<b>#Automatic handler:</b>\n<code>{}</code> You used a forbidden word!".format(user.id))
 
     print("CHAT:\n {}".format(chat))
 

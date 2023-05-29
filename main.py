@@ -52,7 +52,7 @@ def main() -> None:
     Session.db_pool = create_pool()
 
     # Load languages
-    logger.info("Load langueages")
+    logger.info("Load languages")
     Session.lang = load_languages()
 
     # Add owner
