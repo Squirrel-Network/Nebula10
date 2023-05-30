@@ -4,8 +4,10 @@
 # Copyright SquirrelNetwork
 
 import sys
+import threading
 
 from dotenv import load_dotenv
+from flask import Flask
 from loguru import logger
 from telegram.ext import Application
 
@@ -16,6 +18,7 @@ from core.database import create_pool
 from core.database.repository import SuperbanRepository, UserRepository
 from core.handlers import handlers_index
 from core.utilities.functions import get_owner_list
+from core.webapp import routes
 from languages import load_languages
 
 # if version < 3.10, stop bot.
@@ -80,6 +83,14 @@ def main() -> None:
 
     # Handlers
     handlers_index.core_handlers(application)
+
+    # webapp
+    app = Flask(__name__, template_folder="core/webapp/static")
+    app.register_blueprint(routes.home.home)
+
+    threading.Thread(
+        target=lambda: app.run("localhost", debug=conf.DEBUG), daemon=True
+    ).start()
 
     # Run the bot until the user presses Ctrl-C
     application.run_polling()
