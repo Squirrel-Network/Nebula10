@@ -16,13 +16,16 @@ FILTERS_KEY = [
     GroupRepository.DOCX_FILTER,
     GroupRepository.APK_FILTER,
 ]
-home = Blueprint("filters", __name__)
+filters = Blueprint("filters", __name__)
 
 
-@home.route("/<group_id>", methods=["GET"])
+@filters.route("/<group_id>", methods=["GET"])
 def index(group_id: int):
     with GroupRepository() as db:
         data = db.get_by_id(group_id)
+
+    if not data:
+        return "Error!"
 
     print(request.args)
 

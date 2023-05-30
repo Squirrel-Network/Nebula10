@@ -16,7 +16,7 @@ async def command_test(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     InlineKeyboardButton(
                         "Open WebApp",
                         web_app=WebAppInfo(
-                            f"https://webapp.nebula.squirrel-network.online/{update.message.chat_id}"
+                            f"https://webapp.nebula.squirrel-network.online/filters/{update.message.chat_id}"
                         ),
                     )
                 ]

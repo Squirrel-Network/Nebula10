@@ -87,6 +87,7 @@ def main() -> None:
     # webapp
     app = Flask(__name__, template_folder="core/webapp/static")
     app.register_blueprint(routes.home.home)
+    app.register_blueprint(routes.filters.filters, url_prefix="/filters")
 
     threading.Thread(
         target=lambda: app.run(debug=conf.DEBUG, port=4045), daemon=True

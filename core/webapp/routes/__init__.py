@@ -3,6 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-__all__ = ("home",)
+__all__ = ("filters", "home")
 
-from . import home
+from . import filters, home
