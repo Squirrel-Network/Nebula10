@@ -16,7 +16,7 @@ async def command_test(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     InlineKeyboardButton(
                         "Open WebApp",
                         web_app=WebAppInfo(
-                            "https://python-telegram-bot.org/static/webappbot"
+                            "https://webapp.nebula.squirrel-network.online/"
                         ),
                     )
                 ]
