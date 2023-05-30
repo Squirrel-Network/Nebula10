@@ -46,7 +46,7 @@ class GroupRepository(Connection):
     SET_GH = "set_gh"
 
     def get_by_id(self, chat_id: int):
-        q = "SELECT * FROM groups WHERE id_group='%s'"
+        q = "SELECT * FROM groups WHERE id_group=%s"
 
         return self._select(q, (chat_id,))
 
