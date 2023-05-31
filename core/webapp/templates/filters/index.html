@@ -20,19 +20,23 @@
 				<fieldset>
 					<legend class="h1">Filters</legend>
 
-					<table>
+					<table class="w-100">
 						<tbody>
 							<tr>
-								<th><label for="test">Test</label></th>
-								<td><input type="checkbox" id="test"></td>
+								<th scope="row"><label for="test" class="form-label">Test</label></th>
+								<td><input type="checkbox" id="test" class="form-check-input"></td>
 							</tr>
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="2">
+									<input type="hidden" name="vaidation">
+									<input class="btn btn-primary w-100" type="submit">
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 				</fieldset>
-
-				<input type="hidden" name="vaidation">
-
-				<button class="btn btn-primary">Salva</button>
 			</form>
 		</main>
 	</body>
