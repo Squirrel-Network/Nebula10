@@ -36,6 +36,8 @@ class Config(BaseSettings):
     VERSION: str = "10.0.0"
     VERSION_NAME: str = "Lucario"
     REPO: str = "https://github.com/Squirrel-Network/nebula10"
+    WEBAPP_URL: str = "https://webapp.nebula.squirrel-network.online"
+    WEBAPP_PORT: int = 4045
 
     # Telegram settings
     DEFAULT_WELCOME: str = "Welcome {USERNAME} to the {NAME} group"
