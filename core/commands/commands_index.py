@@ -5,16 +5,19 @@
 
 from telegram.ext import Application, CommandHandler, filters
 
-from core.commands.admin import say, settings
-from core.commands.owner import add_owner, server, superban, test
-from core.commands.user import help_command, io, start
+from core.commands import admin, owner, user
 
 
 def admin_command(application: Application):
     application.add_handlers(
         [
-            CommandHandler("say", say.init),
-            CommandHandler("settings", settings.init, filters=filters.ChatType.GROUPS),
+            CommandHandler(
+                "filters", admin.filters.init, filters=filters.ChatType.GROUPS
+            ),
+            CommandHandler("say", admin.say.init),
+            CommandHandler(
+                "settings", admin.settings.init, filters=filters.ChatType.GROUPS
+            ),
         ]
     )
 
@@ -22,13 +25,13 @@ def admin_command(application: Application):
 def owner_command(application: Application):
     application.add_handlers(
         [
-            CommandHandler("test", test.command_test),
-            CommandHandler("testdue", test.command_test_due),
-            CommandHandler("server", server.init),
-            CommandHandler("bl", superban.init),
-            CommandHandler("mbl", superban.multi_superban),
-            CommandHandler("ubl", superban.remove_superban_via_id),
-            CommandHandler("owner", add_owner.init),
+            CommandHandler("test", owner.test.command_test),
+            CommandHandler("testdue", owner.test.command_test_due),
+            CommandHandler("server", owner.server.init),
+            CommandHandler("bl", owner.superban.init),
+            CommandHandler("mbl", owner.superban.multi_superban),
+            CommandHandler("ubl", owner.superban.remove_superban_via_id),
+            CommandHandler("owner", owner.add_owner.init),
         ]
     )
 
@@ -36,8 +39,8 @@ def owner_command(application: Application):
 def user_command(application: Application):
     application.add_handlers(
         [
-            CommandHandler("start", start.init, filters=filters.ChatType.PRIVATE),
-            CommandHandler("io", io.init, filters=filters.ChatType.PRIVATE),
-            CommandHandler("help", help_command.init),
+            CommandHandler("start", user.start.init, filters=filters.ChatType.PRIVATE),
+            CommandHandler("io", user.io.init, filters=filters.ChatType.PRIVATE),
+            CommandHandler("help", user.help_command.init),
         ]
     )
