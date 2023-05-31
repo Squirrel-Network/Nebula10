@@ -6,6 +6,7 @@ class Lang(typing.TypedDict):
     BAN_ZOOPHILE: str
     BOT_WELCOME: str
     ERROR_MESSAGE_REPLY: str
+    FILTERS_COMMAND: str
     FILTER_NAME: str
     HELP_COMMAND: str
     KICKED_USER_MESSAGE_NO_USERNAME: str
@@ -13,6 +14,7 @@ class Lang(typing.TypedDict):
     LANG_FLAG: str
     LANG_SELECTED: str
     MAIN_TEXT_SETTINGS: str
+    MESSAGE_DM_FILTERS: str
     NEW_MEMBER_WITHOUT_PHOTO: str
     OPERATOR_JOIN: str
     RULES: str
