@@ -23,6 +23,7 @@ def owner_command(application: Application):
     application.add_handlers(
         [
             CommandHandler("test", test.command_test),
+            CommandHandler("testdue", test.command_test_due),
             CommandHandler("server", server.init),
             CommandHandler("bl", superban.init),
             CommandHandler("mbl", superban.multi_superban),
