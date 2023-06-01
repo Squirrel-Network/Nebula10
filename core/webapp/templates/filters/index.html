@@ -22,10 +22,12 @@
 
 					<table class="w-100">
 						<tbody>
-							<tr>
-								<th scope="row"><label for="test" class="form-label">Test</label></th>
-								<td><input type="checkbox" id="test" class="form-check-input"></td>
-							</tr>
+							{% for filter, value in filters.items() %}
+								<tr>
+									<th scope="row"><label for="{{filter}}" class="form-label">{{filter}}</label></th>
+									<td><input type="checkbox" id="{{filter}}" class="form-check-input" checked="{{value}}"></td>
+								</tr>
+							{% endfor %}
 						</tbody>
 						<tfoot>
 							<tr>
