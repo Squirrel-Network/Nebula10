@@ -7,3 +7,15 @@ button.btn-primary {
 	background-color: var(--tg-theme-button-color);
 	color: var(--tg-theme-button-text-color);
 }
+
+tbody > tr:hover {
+	background-color: var(--tg-theme-secondary-bg-color);
+}
+
+thead {
+	color: var(--tg-theme-hint-color);
+}
+
+label {
+	cursor: pointer;
+}

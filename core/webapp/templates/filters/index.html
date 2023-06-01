@@ -14,25 +14,36 @@
 
 		<link rel="stylesheet" href="{{ url_for('static', filename='filters/css/style.css') }}">
 	</head>
-	<body>
+	<body class="user-select-none">
 		<main class="container-fluid">
 			<form action="https://webapp.nebula.squirrel-network.online" method="POST">
 				<fieldset>
 					<legend class="h1">Filters</legend>
 
 					<table class="w-100">
+						<thead>
+							<tr>
+								<td colspan="2">
+									Enable or disable filters for the group.
+								</td>
+							</tr>
+						</thead>
 						<tbody>
 							{% for filter, value in filters.items() %}
 								<tr>
-									<th scope="row"><label for="{{filter}}" class="form-label">{{filter}}</label></th>
-									<td><input type="checkbox" id="{{filter}}" class="form-check-input" checked="{{value}}"></td>
+									<td class="p-2"><label for="{{filter}}" class="link-underline link-offset-2">{{filter}}</label></td>
+									<td class="p-2">
+										<div class="form-check form-switch">
+											<input type="checkbox" id="{{filter}}" role="switch" class="form-check-input float-end" checked="{{value}}">
+										</div>
+									</td>
 								</tr>
 							{% endfor %}
 						</tbody>
 						<tfoot>
 							<tr>
 								<td colspan="2">
-									<input type="hidden" name="vaidation">
+									<input type="hidden" name="validation">
 									<input class="btn btn-primary w-100" type="submit">
 								</td>
 							</tr>
