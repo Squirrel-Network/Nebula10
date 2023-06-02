@@ -77,6 +77,7 @@ def main() -> None:
     commands_index.user_command(application)
     commands_index.admin_command(application)
     commands_index.owner_command(application)
+    # Callback Query Handlers
     callback_query_index.user_callback(application)
     callback_query_index.admin_callback(application)
     callback_query_index.owner_callback(application)
