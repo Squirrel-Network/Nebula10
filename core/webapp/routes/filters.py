@@ -6,6 +6,7 @@
 from flask import Blueprint, render_template, request
 
 from core.database.repository import GroupRepository
+from core.webapp.utils.token_jwt import decode_jwt
 
 FILTERS_KEY = [
     GroupRepository.EXE_FILTER,
@@ -19,15 +20,18 @@ FILTERS_KEY = [
 filters = Blueprint("filters", __name__)
 
 
-@filters.route("/<group_id>", methods=["GET"])
-def index(group_id: int):
+@filters.route("/<token>", methods=["GET"])
+def index(token: str):
+    token_verify = decode_jwt(token)
+
+    if not token_verify:
+        return "Error!"
+
     with GroupRepository() as db:
-        data = db.get_by_id(group_id)
+        data = db.get_by_id(token_verify.group_id)
 
     if not data:
         return "Error!"
-
-    print(request.args)
 
     return render_template(
         "filters/index.html",

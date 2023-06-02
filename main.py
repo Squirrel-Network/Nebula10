@@ -85,7 +85,11 @@ def main() -> None:
     handlers_index.core_handlers(application)
 
     # webapp
-    app = Flask(__name__, template_folder="core/webapp/templates")
+    app = Flask(
+        __name__,
+        template_folder="core/webapp/templates",
+        static_folder="core/webapp/static",
+    )
     app.register_blueprint(routes.home.home)
     app.register_blueprint(routes.filters.filters, url_prefix="/filters")
 

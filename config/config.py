@@ -12,6 +12,7 @@ LIST_ENV = (
     ("PASSWORD", "MYSQL_PASSWORD"),
     ("DBNAME", "MYSQL_DBNAME"),
     ("BOT_TOKEN", "TOKEN"),
+    ("TOKEN_SECRET", "TOKEN_SECRET"),
     ("DEFAULT_WELCOME", "TG_DEFAULT_WELCOME"),
     ("DEFAULT_RULES", "TG_DEFAULT_RULES"),
     ("DEFAULT_LOG_CHANNEL", "TG_DEFAULT_LOG_CHANNEL"),
@@ -36,8 +37,12 @@ class Config(BaseSettings):
     VERSION: str = "10.0.0"
     VERSION_NAME: str = "Lucario"
     REPO: str = "https://github.com/Squirrel-Network/nebula10"
+
+    # Webapp
     WEBAPP_URL: str = "https://webapp.nebula.squirrel-network.online"
     WEBAPP_PORT: int = 4045
+    TOKEN_SECRET: str
+    JWT_TOKEN_EXPIRES: int = 300
 
     # Telegram settings
     DEFAULT_WELCOME: str = "Welcome {USERNAME} to the {NAME} group"
