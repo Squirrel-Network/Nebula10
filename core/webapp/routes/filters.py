@@ -3,10 +3,11 @@
 
 # Copyright SquirrelNetwork
 
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template
 
 from core.database.repository import GroupRepository
-from core.utilities.token_jwt import decode_jwt
+from core.utilities.token_jwt import TokenJwt
+from core.webapp.utils.auth import auth_required
 
 FILTERS_KEY = [
     GroupRepository.EXE_FILTER,
@@ -21,14 +22,10 @@ filters = Blueprint("filters", __name__)
 
 
 @filters.route("/<token>", methods=["GET"])
-def index(token: str):
-    token_verify = decode_jwt(token)
-
-    if not token_verify:
-        return "Error!"
-
+@auth_required
+def index(token: TokenJwt):
     with GroupRepository() as db:
-        data = db.get_by_id(token_verify.group_id)
+        data = db.get_by_id(token.group_id)
 
     if not data:
         return "Error!"

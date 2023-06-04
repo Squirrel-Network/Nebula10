@@ -40,7 +40,7 @@ class Config(BaseSettings):
 
     # Webapp
     WEBAPP_URL: str = "https://webapp.nebula.squirrel-network.online"
-    WEBAPP_PORT: int = 4045
+    WEBAPP_PORT: int = 4046
     TOKEN_SECRET: str
     JWT_TOKEN_EXPIRES: int = 300
 
