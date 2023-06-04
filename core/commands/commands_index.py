@@ -18,6 +18,7 @@ def admin_command(application: Application):
             CommandHandler(
                 "settings", admin.settings.init, filters=filters.ChatType.GROUPS
             ),
+            CommandHandler("usearch", admin.usearch.init),
         ]
     )
 
@@ -26,7 +27,6 @@ def owner_command(application: Application):
     application.add_handlers(
         [
             CommandHandler("test", owner.test.command_test),
-            CommandHandler("testdue", owner.test.command_test_due),
             CommandHandler("server", owner.server.init),
             CommandHandler("bl", owner.superban.init),
             CommandHandler("mbl", owner.superban.multi_superban),
