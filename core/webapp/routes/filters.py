@@ -6,7 +6,7 @@
 from flask import Blueprint, render_template, request
 
 from core.database.repository import GroupRepository
-from core.webapp.utils.token_jwt import decode_jwt
+from core.utilities.token_jwt import decode_jwt
 
 FILTERS_KEY = [
     GroupRepository.EXE_FILTER,
