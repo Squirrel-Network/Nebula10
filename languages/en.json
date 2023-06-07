@@ -40,5 +40,6 @@
     "USER_INFORMATION_SUPERBAN": "{INFORMATION} == User Information == {INFORMATION}\n\n<b>{ID_BUTTON} User id:</b> <code>{ID}</code>\n<b>{BUST_IN_SILHOUETTE} Nickname:</b> {NAME}\n<b>{NO_PEDESTRIANS} Blacklist:</b> {CHECK_MARK_BUTTON}\nLearn more about: {URL}",
     "OWNER_ALREADY_EXIST": "{USERNAME} This owner already exists in the database",
     "OWNER_ADD": "You have entered {USERNAME} [<code>{ID}</code>] a new owner in the database!",
-    "OWNER_REMOVE": "You have removed owner {NAME} [<code>{ID}</code>] from the database"
+    "OWNER_REMOVE": "You have removed owner {NAME} [<code>{ID}</code>] from the database",
+    "USEARCH_MSG": "➡\uFE0F The bot sent you a private message, use our public user search!\n\nDo you have a bot too? you can use our API for free: https://api.nebula.squirrel-network.online/v1/users/1080544251"
 }
