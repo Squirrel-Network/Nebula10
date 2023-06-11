@@ -39,7 +39,8 @@ class Config(BaseSettings):
     REPO: str = "https://github.com/Squirrel-Network/nebula10"
 
     # Webapp
-    WEBAPP_URL: str = "https://nebula.squirrel-network.online"
+    WEBAPP_URL: str = "https://webapp.nebula.squirrel-network.online"
+    INT_WEBSRV_URL: str = "https://nebula.squirrel-network.online"
     WEBAPP_PORT: int = 4046
     TOKEN_SECRET: str
     JWT_TOKEN_EXPIRES: int = 300
