@@ -17,6 +17,7 @@ from core.decorators import check_role, delete_command
 from core.utilities.enums import Role
 from core.utilities.message import message
 from core.utilities.text import Text
+from core.utilities.token_jwt import encode_jwt
 from languages import get_lang
 
 
@@ -28,6 +29,10 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await message(update, context, lang["MESSAGE_DM_FILTERS"])
 
+    print(
+        f"{Session.config.WEBAPP_URL}/filters?token={encode_jwt()}&chat_id={params['chat_id']}"
+    )
+
     await context.bot.send_message(
         update.effective_user.id,
         lang["FILTERS_COMMAND"].format_map(Text(params)),
@@ -36,7 +41,9 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 [
                     InlineKeyboardButton(
                         "Open Filters Settings",
-                        web_app=WebAppInfo(f"{Session.config.WEBAPP_URL}/filters"),
+                        web_app=WebAppInfo(
+                            f"{Session.config.WEBAPP_URL}/filters?token={encode_jwt()}&chat_id={params['chat_id']}"
+                        ),
                     )
                 ]
             ]

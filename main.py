@@ -92,7 +92,6 @@ def main() -> None:
         static_folder="core/webapp/static",
     )
     app.register_blueprint(routes.home.home)
-    app.register_blueprint(routes.filters.filters, url_prefix="/filters")
 
     threading.Thread(
         target=lambda: app.run(debug=conf.DEBUG, port=conf.WEBAPP_PORT), daemon=True
