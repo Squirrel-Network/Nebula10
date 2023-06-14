@@ -16,4 +16,6 @@ def encode_jwt() -> str:
         + datetime.timedelta(seconds=Session.config.JWT_TOKEN_EXPIRES)
     )
 
+    print(Session.config.TOKEN_SECRET)
+
     return jwt.encode(payload, Session.config.TOKEN_SECRET, algorithm="HS256")
