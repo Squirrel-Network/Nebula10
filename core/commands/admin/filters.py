@@ -29,10 +29,6 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await message(update, context, lang["MESSAGE_DM_FILTERS"])
 
-    print(
-        f"{Session.config.WEBAPP_URL}/filters?token={encode_jwt()}&chat_id={params['chat_id']}"
-    )
-
     await context.bot.send_message(
         update.effective_user.id,
         lang["FILTERS_COMMAND"].format_map(Text(params)),
