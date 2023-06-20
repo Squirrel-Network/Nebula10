@@ -5,7 +5,6 @@
 
 __all__ = [
     "CommunityRepository",
-    "DashboardRepository",
     "GroupRepository",
     "GroupLanguageRepository",
     "SuperbanRepository",
@@ -13,7 +12,6 @@ __all__ = [
 ]
 
 from .community import CommunityRepository
-from .dashboard import DashboardRepository
 from .group import GroupRepository
 from .group_language import GroupLanguageRepository
 from .superban import SuperbanRepository
