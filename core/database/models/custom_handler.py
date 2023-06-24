@@ -9,8 +9,8 @@ from tortoise.models import Model
 
 class CustomHandler(Model):
     id = fields.IntField(pk=True)
-    chat_id = fields.BigIntField()
-    question = fields.CharField(255)
+    chat_id = fields.BigIntField(unique=True)
+    question = fields.CharField(255, unique=True)
     answer = fields.CharField(255)
 
     class Meta:

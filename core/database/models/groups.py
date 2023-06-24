@@ -9,7 +9,7 @@ from tortoise.models import Model
 
 class Groups(Model):
     id = fields.IntField(pk=True)
-    id_group = fields.BigIntField()
+    id_group = fields.BigIntField(unique=True)
     group_name = fields.CharField(255)
     welcome_text = fields.TextField()
     welcome_buttons = fields.TextField(

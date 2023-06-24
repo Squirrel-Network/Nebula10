@@ -9,8 +9,8 @@ from tortoise.models import Model
 
 class Users(Model):
     id = fields.IntField(pk=True)
-    tg_id = fields.BigIntField()
-    tg_username = fields.CharField(32)
+    tg_id = fields.BigIntField(unique=True)
+    tg_username = fields.CharField(50)
     created_at = fields.DatetimeField()
     updated_at = fields.DatetimeField()
 

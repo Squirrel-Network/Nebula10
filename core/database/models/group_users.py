@@ -9,8 +9,8 @@ from tortoise.models import Model
 
 class GroupUsers(Model):
     id = fields.IntField(pk=True)
-    tg_id = fields.BigIntField()
-    tg_group_id = fields.BigIntField()
+    tg_id = fields.BigIntField(unique=True)
+    tg_group_id = fields.BigIntField(unique=True)
     warn_count = fields.IntField(default=0)
     user_score = fields.BigIntField(default=0)
 

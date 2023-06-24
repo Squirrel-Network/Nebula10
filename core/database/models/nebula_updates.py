@@ -9,7 +9,7 @@ from tortoise.models import Model
 
 class NebulaUpdates(Model):
     id = fields.IntField(pk=True)
-    update_id = fields.BigIntField()
+    update_id = fields.BigIntField(unique=True)
     message_id = fields.BigIntField()
     tg_group_id = fields.BigIntField()
     tg_user_id = fields.BigIntField()
