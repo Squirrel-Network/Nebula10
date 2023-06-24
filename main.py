@@ -4,11 +4,10 @@
 # Copyright SquirrelNetwork
 
 import sys
-import threading
 
 from dotenv import load_dotenv
-from flask import Flask
 from loguru import logger
+from quart import Quart
 from telegram.ext import Application
 from tortoise import run_async
 
@@ -16,7 +15,7 @@ from config import Config, Session
 from core.callback_query import callback_query_index
 from core.commands import commands_index
 from core.database import init_db
-from core.database.repository import SuperbanRepository, UserRepository
+from core.database.models import OwnerList, WhitelistTable
 from core.handlers import handlers_index
 from core.utilities.functions import get_owner_list
 from core.webapp import routes
@@ -33,7 +32,7 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 10:
 FMT = "<green>[{time}]</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
 
 
-def main() -> None:
+async def main() -> None:
     # Configure loguru
     logger.configure(
         handlers=[
@@ -51,24 +50,27 @@ def main() -> None:
     # Load the Config
     conf = Session.config = Config()
 
-    # Load pool
-    logger.info("Start database (tortoise)")
-    run_async(init_db())
-
     # Load languages
     logger.info("Load languages")
     Session.lang = load_languages()
 
+    # Load database
+    logger.info("Start database (tortoise)")
+    await init_db()
+
     # Add owner
     logger.info("Add owner in database if not exist")
-    # with UserRepository() as db:
-    #    db.add_owner(conf.OWNER_ID, conf.OWNER_USERNAME.lower())
 
-    # with SuperbanRepository() as db:
-    #    db.add_whitelist(conf.OWNER_ID, conf.OWNER_USERNAME.lower())
+    await OwnerList.get_or_create(
+        tg_id=conf.OWNER_ID, tg_username=conf.OWNER_USERNAME.lower()
+    )
+
+    await WhitelistTable.get_or_create(
+        tg_id=conf.OWNER_ID, tg_username=conf.OWNER_USERNAME.lower()
+    )
 
     # Get owner ids
-    # Session.owner_ids = get_owner_list()
+    Session.owner_ids = await get_owner_list()
 
     # Start the bot.
     # Create the Application and pass it your bot's token.
@@ -78,6 +80,7 @@ def main() -> None:
     commands_index.user_command(application)
     commands_index.admin_command(application)
     commands_index.owner_command(application)
+
     # Callback Query Handlers
     callback_query_index.user_callback(application)
     callback_query_index.admin_callback(application)
@@ -87,20 +90,22 @@ def main() -> None:
     handlers_index.core_handlers(application)
 
     # webapp
-    app = Flask(
+    app = Quart(
         __name__,
         template_folder="core/webapp/templates",
         static_folder="core/webapp/static",
     )
     app.register_blueprint(routes.home.home)
 
-    threading.Thread(
-        target=lambda: app.run(debug=conf.DEBUG, port=conf.WEBAPP_PORT), daemon=True
-    ).start()
+    async with application:
+        await application.start()
+        await application.updater.start_polling()
 
-    # Run the bot until the user presses Ctrl-C
-    application.run_polling()
+        await app.run_task()
+
+        await application.updater.stop()
+        await application.stop()
 
 
 if __name__ == "__main__":
-    main()
+    run_async(main())

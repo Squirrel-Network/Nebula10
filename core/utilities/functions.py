@@ -10,15 +10,15 @@ from telegram import Chat, InlineKeyboardButton, InlineKeyboardMarkup, User
 from telegram.ext import ContextTypes
 
 from config import Session
+from core.database.models import OwnerList
 from core.database.repository.group import GroupRepository
 from core.database.repository.user import UserRepository
 from core.utilities.constants import BUTTONS_MENU, PERM_FALSE
 from core.utilities.menu import build_menu
 
 
-def get_owner_list() -> list[int]:
-    with UserRepository() as db:
-        return [int(x["tg_id"]) for x in db.get_owners()]
+async def get_owner_list() -> list[int]:
+    return [x for x, in await OwnerList.all().values_list("tg_id")]
 
 
 async def kick_user(chat_id: int, user_id: int, context: ContextTypes.DEFAULT_TYPE):
@@ -129,7 +129,7 @@ def check_group_badwords(update, chat):
     bad_word = update.effective_message.text or update.effective_message.caption
     if bad_word is not None:
         with GroupRepository() as db:
-            row = db.get_group_badwords(int(chat),str(bad_word))
+            row = db.get_group_badwords(int(chat), str(bad_word))
         if row:
             return True
         else:

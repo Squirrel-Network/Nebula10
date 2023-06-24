@@ -3,11 +3,11 @@
 
 # Copyright SquirrelNetwork
 
-from flask import Blueprint, render_template
+from quart import Blueprint, render_template
 
 home = Blueprint("home", __name__)
 
 
 @home.route("/", methods=["GET"])
-def index():
-    return render_template("home/index.html")
+async def index():
+    return await render_template("home/index.html")
