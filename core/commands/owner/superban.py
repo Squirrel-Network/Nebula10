@@ -10,8 +10,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 
 from config import Session
-from core.database.repository.superban import SuperbanRepository
-from core.database.repository.user import UserRepository
+from core.database.models import SuperbanTable, Users, WhitelistTable
 from core.decorators import check_role
 from core.utilities.enums import Role
 from core.utilities.logs import sys_loggers, telegram_loggers
@@ -21,10 +20,11 @@ from core.utilities.text import Text
 from languages import get_lang
 
 
-def check_user(user_id: int, bot_id: int) -> bool:
-    with SuperbanRepository() as db:
-        blacklist = db.get_by_id(user_id)
-        whitelist = db.get_whitelist_by_id(user_id)
+async def check_user(user_id: int, bot_id: int) -> bool:
+    blacklist = await SuperbanTable.exists(user_id=user_id)
+    whitelist = await WhitelistTable.exists(tg_id=user_id)
+
+    print(blacklist, whitelist)
 
     return blacklist or whitelist or user_id in Session.owner_ids or user_id == bot_id
 
@@ -41,16 +41,15 @@ async def new_superban(
     operator_first_name: str,
     lang: dict[str, str],
 ):
-    with SuperbanRepository() as db:
-        db.add(
-            user_id,
-            first_name,
-            motivation,
-            save_date,
-            operator_id,
-            operator_username,
-            operator_first_name,
-        )
+    await SuperbanTable.create(
+        user_id=user_id,
+        user_first_name=first_name,
+        motivation_text=motivation,
+        user_date=save_date,
+        id_operator=operator_id,
+        username_operator=operator_username,
+        first_name_operator=operator_first_name,
+    )
 
     params = {"id": user_id, "reason": motivation}
 
@@ -111,7 +110,7 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
             ),
         ]
 
-        if check_user(reply.from_user.id, context.bot.id):
+        if await check_user(reply.from_user.id, context.bot.id):
             return await reply.reply_text(lang["SUPERBAN_ERROR"])
 
         return await reply.reply_text(
@@ -141,8 +140,7 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     operator_first_name = update.message.from_user.first_name
 
     if user_id.startswith("@"):
-        with UserRepository() as db:
-            data = db.get_by_username(user_id)
+        data = await Users.get_or_none(tg_id=user_id)
 
         if not data:
             return await message(update, context, lang["SUPERBAN_ERROR_USERNAME"])
@@ -150,8 +148,8 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await new_superban(
             update,
             context,
-            data["tg_id"],
-            f"NB{data['tg_id']}",
+            data.tg_id,
+            f"NB{data.tg_id}",
             motivation,
             save_date,
             operator_id,
@@ -161,17 +159,14 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
     elif user_id.isdigit():
-        with SuperbanRepository() as db:
-            data = db.get_by_id(int(user_id))
+        if await SuperbanTable.exists(user_id=user_id):
+            params = {"id": user_id}
 
-            if data:
-                params = {"id": user_id}
-
-                return await message(
-                    update,
-                    context,
-                    lang["SUPERBAN_ALREADY_EXIST"].format_map(Text(params)),
-                )
+            return await message(
+                update,
+                context,
+                lang["SUPERBAN_ALREADY_EXIST"].format_map(Text(params)),
+            )
 
         await new_superban(
             update,
@@ -202,14 +197,15 @@ async def remove_superban_via_id(update: Update, context: ContextTypes.DEFAULT_T
     if not text[1].isnumeric():
         return await message(update, context, lang["SUPERBAN_ERROR_ID"])
 
-    with SuperbanRepository() as db:
-        if not db.get_by_id(text[1]):
-            return await message(update, context, lang["SUPERBAN_REMOVE_ERROR"])
+    user = SuperbanTable.filter(user_id=text[1])
 
-        db.remove(text[1])
+    if not await user.exists():
+        return await message(update, context, lang["SUPERBAN_REMOVE_ERROR"])
 
-        params = {"id": text[1]}
-        await message(update, context, lang["SUPERBAN_REMOVE"].format_map(Text(params)))
+    await user.delete()
+
+    params = {"id": text[1]}
+    await message(update, context, lang["SUPERBAN_REMOVE"].format_map(Text(params)))
 
 
 @check_role(Role.OWNER)
@@ -226,18 +222,21 @@ async def multi_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
         (
             x,
             f"NB{x}",
-            motivation,
-            save_date,
-            operator_id,
-            operator_username,
-            operator_first_name,
         )
         for x in update.message.text.split(maxsplit=1)[1].split(",")
         if x.isdigit()
     ]
 
-    with SuperbanRepository() as db:
-        db.adds(users)
+    for user_id, first_name in users:
+        await SuperbanTable.create(
+            user_id=user_id,
+            user_first_name=first_name,
+            motivation_text=motivation,
+            user_date=save_date,
+            id_operator=operator_id,
+            username_operator=operator_username,
+            first_name_operator=operator_first_name,
+        )
 
     ids_string = [f"{{BLACK_SMALL_SQUARE}} {x[0]}".format_map(Text()) for x in users]
 
