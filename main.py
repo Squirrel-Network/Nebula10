@@ -101,7 +101,7 @@ async def main() -> None:
         await application.start()
         await application.updater.start_polling()
 
-        await app.run_task()
+        await app.run_task(debug=conf.DEBUG, port=conf.WEBAPP_PORT)
 
         await application.updater.stop()
         await application.stop()
