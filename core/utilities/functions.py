@@ -36,7 +36,7 @@ async def ban_user(chat_id: int, user_id: int, context: ContextTypes.DEFAULT_TYP
 
 
 async def save_group(chat_id: int, chat_title: str):
-    if not (await Groups.get_or_none(id_group=chat_id)):
+    if not (await Groups.exists(id_group=chat_id)):
         dictionary = {
             "id_group": chat_id,
             "group_name": chat_title,
@@ -124,5 +124,4 @@ async def get_keyboard_settings(chat_id: int) -> InlineKeyboardMarkup:
 async def check_group_badwords(update: Update, chat_id: int):
     bad_word = update.effective_message.text or update.effective_message.caption
     if bad_word is not None:
-        row = await GroupsBadwords.get_or_none(tg_group_id=chat_id, word=bad_word)
-        return bool(row)
+        return await GroupsBadwords.exists(tg_group_id=chat_id, word=bad_word)

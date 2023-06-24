@@ -29,9 +29,7 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     user_id = user.id
     user_username = f"@{user.username}"
 
-    get_owner = await OwnerList.get_or_none(tg_id=user_id)
-
-    if get_owner:
+    if await OwnerList.exists(tg_id=user_id):
         buttons = [
             [
                 InlineKeyboardButton(

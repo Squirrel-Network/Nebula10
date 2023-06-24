@@ -23,9 +23,8 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     }
 
     msg = lang["USER_INFORMATION"].format_map(Text(params))
-    superban = await SuperbanTable.get_or_none(user_id=user.id)
 
-    if superban:
+    if await SuperbanTable.exists(user_id=user.id):
         params["url"] = f"https://squirrel-network.online/knowhere/?q={user.id}"
         msg = lang["USER_INFORMATION_SUPERBAN"].format_map(Text(params))
 

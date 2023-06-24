@@ -17,6 +17,7 @@ LIST_ENV = (
     ("DEFAULT_RULES", "TG_DEFAULT_RULES"),
     ("DEFAULT_LOG_CHANNEL", "TG_DEFAULT_LOG_CHANNEL"),
     ("DEFAULT_STAFF_GROUP", "TG_DEFAULT_STAFF_GROUP"),
+    ("DEFAULT_DEBUG_CHANNEL", "TG_DEFAULT_DEBUG_CHANNEL"),
     ("OWNER_ID", "TG_OWNER_ID"),
     ("OWNER_USERNAME", "TG_OWNER_USERNAME"),
 )
@@ -50,6 +51,7 @@ class Config(BaseSettings):
     DEFAULT_RULES: str = "https://github.com/Squirrel-Network/GroupRules"
     DEFAULT_LOG_CHANNEL: str
     DEFAULT_STAFF_GROUP: str
+    DEFAULT_DEBUG_CHANNEL: str
     OWNER_ID: int
     OWNER_USERNAME: str
 

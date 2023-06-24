@@ -3,8 +3,14 @@
 
 # Copyright SquirrelNetwork
 
+from telegram.ext import ContextTypes
 
-async def status(update, context):
+from core.decorators import on_update
+from core.utilities.telegram_update import TelegramUpdate
+
+
+@on_update
+async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     test = update.effective_user
     print("NEW_USER: {}".format(test))
     user = update.effective_message.from_user
