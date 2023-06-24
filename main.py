@@ -10,11 +10,12 @@ from dotenv import load_dotenv
 from flask import Flask
 from loguru import logger
 from telegram.ext import Application
+from tortoise import run_async
 
 from config import Config, Session
 from core.callback_query import callback_query_index
 from core.commands import commands_index
-from core.database import create_pool
+from core.database import init_db
 from core.database.repository import SuperbanRepository, UserRepository
 from core.handlers import handlers_index
 from core.utilities.functions import get_owner_list
@@ -51,8 +52,8 @@ def main() -> None:
     conf = Session.config = Config()
 
     # Load pool
-    logger.info("Start database (pool)")
-    Session.db_pool = create_pool()
+    logger.info("Start database (tortoise)")
+    run_async(init_db())
 
     # Load languages
     logger.info("Load languages")
@@ -60,14 +61,14 @@ def main() -> None:
 
     # Add owner
     logger.info("Add owner in database if not exist")
-    with UserRepository() as db:
-        db.add_owner(conf.OWNER_ID, conf.OWNER_USERNAME.lower())
+    # with UserRepository() as db:
+    #    db.add_owner(conf.OWNER_ID, conf.OWNER_USERNAME.lower())
 
-    with SuperbanRepository() as db:
-        db.add_whitelist(conf.OWNER_ID, conf.OWNER_USERNAME.lower())
+    # with SuperbanRepository() as db:
+    #    db.add_whitelist(conf.OWNER_ID, conf.OWNER_USERNAME.lower())
 
     # Get owner ids
-    Session.owner_ids = get_owner_list()
+    # Session.owner_ids = get_owner_list()
 
     # Start the bot.
     # Create the Application and pass it your bot's token.

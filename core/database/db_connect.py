@@ -3,24 +3,51 @@
 
 # Copyright SquirrelNetwork
 
-import pymysql
-from pymysqlpool import ConnectionPool
+import re
+
+from tortoise import Tortoise
 
 from config import Session
+from core.database import models
 
 
-def create_pool() -> ConnectionPool:
-    return ConnectionPool(
-        name="pool",
-        host=Session.config.HOST,
-        port=Session.config.PORT,
-        user=Session.config.USER,
-        password=Session.config.PASSWORD,
-        database=Session.config.DBNAME,
-        autocommit=True,
-        charset="utf8mb4",
-        cursorclass=pymysql.cursors.DictCursor,
+def is_snake_case(string):
+    pattern = r"^[a-z]+(_[a-z]+)*$"
+    return bool(re.match(pattern, string))
+
+
+async def init_db():
+    conf = Session.config
+
+    await Tortoise.init(
+        {
+            "connections": {
+                "default": {
+                    "engine": "tortoise.backends.mysql",
+                    "credentials": {
+                        "host": conf.HOST,
+                        "port": conf.PORT,
+                        "user": conf.USER,
+                        "password": conf.PASSWORD,
+                        "database": conf.DBNAME,
+                    },
+                }
+            },
+            "apps": {
+                "models": {
+                    "models": list(
+                        map(
+                            lambda x: f"core.database.models.{x}",
+                            filter(lambda x: is_snake_case(x), dir(models)),
+                        )
+                    ),
+                    "default_connection": "default",
+                }
+            },
+            "timezone": "Europe/Rome",
+        }
     )
+    await Tortoise.generate_schemas()
 
 
 class Connection:

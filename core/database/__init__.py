@@ -3,6 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-__all__ = ["create_pool", "Connection"]
+__all__ = ("Connection", "init_db")
 
-from .db_connect import Connection, create_pool
+from .db_connect import Connection, init_db
