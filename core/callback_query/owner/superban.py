@@ -22,7 +22,7 @@ from languages import get_lang
 @callback_query_regex("superban|")
 @logger.catch
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    lang = get_lang(update)
+    lang = await get_lang(update)
     query = update.callback_query
 
     motivation = query.data.split("|", 1)[1].replace("_", "")

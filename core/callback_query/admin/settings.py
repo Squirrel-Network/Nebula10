@@ -6,7 +6,7 @@
 from telegram import Update
 from telegram.ext import ContextTypes
 
-from core.database.repository import GroupRepository
+from core.database.models import Groups
 from core.decorators import callback_query_regex, check_role
 from core.utilities.constants import BUTTONS_MENU, PERM_FALSE, PERM_TRUE
 from core.utilities.enums import Role
@@ -26,21 +26,17 @@ async def settings_set_welcome(
     update: Update, _: ContextTypes.DEFAULT_TYPE, data: dict
 ):
     if not data["set_welcome"] and data["block_new_member"]:
-        with GroupRepository() as db:
-            db.update_group_settings(
-                GroupRepository.SET_BLOCK_N_M, 0, update.effective_chat.id
-            )
+        await Groups.filter(id_group=update.effective_chat.id).update(
+            block_new_member=0
+        )
 
 
 async def settings_set_block_entry(
     update: Update, _: ContextTypes.DEFAULT_TYPE, data: dict
 ):
-    with GroupRepository() as db:
-        db.update_group_settings(
-            GroupRepository.SET_WELCOME,
-            0 if not data["block_new_member"] else 1,
-            update.effective_chat.id,
-        )
+    await Groups.filter(id_group=update.effective_chat.id).update(
+        set_welcome=0 if not data["block_new_member"] else 1
+    )
 
 
 SETTINGS_CALLBACK = {
@@ -56,11 +52,10 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
     callback_data = update.callback_query.data
 
-    with GroupRepository() as db:
-        data = db.get_by_id(chat_id)
-        value = BUTTONS_MENU[callback_data][1]
+    data = await Groups.get(id_group=chat_id).values()
+    value = BUTTONS_MENU[callback_data][1]
 
-        db.update_group_settings(value, not data[value], chat_id)
+    await Groups.filter(id_group=chat_id).update(**{value: not data[value]})
 
     if callback_data in SETTINGS_CALLBACK:
         await SETTINGS_CALLBACK[callback_data](update, context, data)
@@ -68,5 +63,5 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.edit_message_reply_markup(
         chat_id,
         update.callback_query.message.id,
-        reply_markup=get_keyboard_settings(chat_id),
+        reply_markup=await get_keyboard_settings(chat_id),
     )

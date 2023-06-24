@@ -21,6 +21,6 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not len(command) > 1:
         command.insert(
             1,
-            get_lang(update)["SAY_MISSING_MESSAGE_WARNING"].format_map(Text()),
+            (await get_lang(update))["SAY_MISSING_MESSAGE_WARNING"].format_map(Text()),
         )
     await message(update, context, command[1], allow_sending_without_reply=True)

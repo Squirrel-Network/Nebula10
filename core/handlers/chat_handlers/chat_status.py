@@ -72,7 +72,7 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
                 ),
             )
     # This function checks the badwords of the group
-    if check_group_badwords(update, chat.id) == True:
+    if await check_group_badwords(update, chat.id):
         await bot.delete_message(
             update.effective_message.chat_id, update.message.message_id
         )

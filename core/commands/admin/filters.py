@@ -24,7 +24,7 @@ from languages import get_lang
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    lang = get_lang(update)
+    lang = await get_lang(update)
     params = {"name": update.message.chat.title, "chat_id": update.message.chat_id}
 
     await message(update, context, lang["MESSAGE_DM_FILTERS"])

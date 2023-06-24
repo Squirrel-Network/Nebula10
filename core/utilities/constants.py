@@ -85,5 +85,4 @@ BUTTONS_MENU = {
     "settings|novocal": ("Block Vocal ⛔️", "set_no_vocal"),
     "settings|channel_block": ("Block Channel 📢", "sender_chat_block"),
     "settings|spoiler_block": ("Block Spoiler 🚫", "spoiler_block"),
-    "settings|set_group_help": ("Live with GH 🤖", "set_gh"),
 }

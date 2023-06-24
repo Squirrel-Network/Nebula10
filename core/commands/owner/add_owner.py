@@ -7,7 +7,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
 from config import Session
-from core.database.repository import UserRepository
+from core.database.models import OwnerList
 from core.decorators import check_role, delete_command, on_update
 from core.utilities.enums import Role
 from core.utilities.message import message
@@ -20,7 +20,7 @@ from languages import get_lang
 @check_role(Role.OWNER)
 @delete_command
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
-    lang = get_lang(update)
+    lang = await get_lang(update)
 
     if not update.message.reply_to_message:
         return await message(update, context, lang["ERROR_MESSAGE_REPLY"])
@@ -29,31 +29,32 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     user_id = user.id
     user_username = f"@{user.username}"
 
-    with UserRepository() as db:
-        if db.get_owner_by_id(user_id):
-            buttons = [
-                [
-                    InlineKeyboardButton(
-                        "{CROSS_MARK} Remove".format_map(Text()),
-                        callback_data="owner|remove",
-                    )
-                ],
-                [
-                    InlineKeyboardButton(
-                        "{WASTEBASKET} Close".format_map(Text()), callback_data="close"
-                    )
-                ],
-            ]
-            params = {"username": user_username}
+    get_owner = await OwnerList.get_or_none(tg_id=user_id)
 
-            await update.message.reply_to_message.reply_text(
-                lang["OWNER_ALREADY_EXIST"].format_map(Text(params)),
-                reply_markup=InlineKeyboardMarkup(buttons),
-            )
-        else:
-            db.add_owner(user_id, user_username)
-            Session.owner_ids.append(user_id)
+    if get_owner:
+        buttons = [
+            [
+                InlineKeyboardButton(
+                    "{CROSS_MARK} Remove".format_map(Text()),
+                    callback_data="owner|remove",
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    "{WASTEBASKET} Close".format_map(Text()), callback_data="close"
+                )
+            ],
+        ]
+        params = {"username": user_username}
 
-            params = {"username": user_username, "id": user_id}
+        await update.message.reply_to_message.reply_text(
+            lang["OWNER_ALREADY_EXIST"].format_map(Text(params)),
+            reply_markup=InlineKeyboardMarkup(buttons),
+        )
+    else:
+        await OwnerList.create(tg_id=user_id, tg_username=user_username)
+        Session.owner_ids.append(user_id)
 
-            await message(update, context, lang["OWNER_ADD"].format_map(Text(params)))
+        params = {"username": user_username, "id": user_id}
+
+        await message(update, context, lang["OWNER_ADD"].format_map(Text(params)))

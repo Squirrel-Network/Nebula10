@@ -79,12 +79,12 @@ async def welcome_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "version_name": Session.config.VERSION_NAME,
     }
 
-    save_group(update.effective_message.chat_id, update.effective_chat.title)
+    await save_group(update.effective_message.chat_id, update.effective_chat.title)
 
     await message(
         update,
         context,
-        get_lang(update)["BOT_WELCOME"].format_map(Text(params)),
+        await get_lang(update)["BOT_WELCOME"].format_map(Text(params)),
         reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
     )
 
@@ -119,7 +119,7 @@ async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with GroupRepository() as db:
         data = db.get_by_id(update.effective_chat.id)
 
-    lang = get_lang(update)
+    lang = await get_lang(update)
     chat_id = update.effective_chat.id
 
     for member in update.message.new_chat_members:
@@ -188,7 +188,7 @@ async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await message(update, context, lang[text].format_map(Text(params)))
 
         else:
-            save_user(member, update.effective_chat)
+            await save_user(member, update.effective_chat)
 
             if not data:
                 params = {

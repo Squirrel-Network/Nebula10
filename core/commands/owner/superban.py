@@ -77,7 +77,7 @@ async def new_superban(
 @check_role(Role.OWNER)
 @logger.catch
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    lang = get_lang(update)
+    lang = await get_lang(update)
 
     if reply := update.message.reply_to_message:
         buttons = [
@@ -194,7 +194,7 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
 @logger.catch
 async def remove_superban_via_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.effective_message.text.split()
-    lang = get_lang(update)
+    lang = await get_lang(update)
 
     if len(text) == 1:
         return await message(update, context, lang["SUPERBAN_ERROR_NO_ID"])
@@ -215,7 +215,7 @@ async def remove_superban_via_id(update: Update, context: ContextTypes.DEFAULT_T
 @check_role(Role.OWNER)
 @logger.catch
 async def multi_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    lang = get_lang(update)
+    lang = await get_lang(update)
     motivation = "MultiSuperban"
     save_date = datetime.datetime.utcnow().isoformat()
     operator_id = update.message.from_user.id

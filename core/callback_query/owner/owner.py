@@ -7,7 +7,7 @@ from loguru import logger
 from telegram import constants
 from telegram.ext import ContextTypes
 
-from core.database.repository import UserRepository
+from core.database.models import OwnerList
 from core.decorators import callback_query_regex, on_update
 from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
@@ -19,10 +19,9 @@ from languages import get_lang
 @logger.catch
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     user = update.callback_query.message.reply_to_message.from_user
-    lang = get_lang(update)
+    lang = await get_lang(update)
 
-    with UserRepository() as db:
-        db.remove_owner(user.id)
+    await OwnerList.filter(tg_id=user.id).delete()
 
     params = {"name": user.first_name, "id": user.id}
     await update.callback_query.edit_message_text(

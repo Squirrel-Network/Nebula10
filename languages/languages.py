@@ -9,7 +9,7 @@ import pathlib
 from telegram import Update
 
 from config import Session
-from core.database.repository.group_language import GroupLanguageRepository
+from core.database.models import Groups
 from core.utilities.lang import Lang
 
 
@@ -24,15 +24,16 @@ def load_languages() -> dict[str, Lang]:
     return languages
 
 
-def get_group_lang(update: Update) -> str | None:
+async def get_group_lang(update: Update) -> str | None:
     chat = update.effective_message.chat_id
 
-    with GroupLanguageRepository() as db:
-        if row := db.get_by_id(chat):
-            return row["languages"]
+    data = await Groups.get_or_none(id_group=chat)
+
+    if data:
+        return data.languages
 
 
-def get_lang(update: Update) -> Lang:
+async def get_lang(update: Update) -> Lang:
     lang = Session.config.DEFAULT_LANGUAGE
 
     if (
@@ -42,6 +43,6 @@ def get_lang(update: Update) -> Lang:
         lang = update.effective_user.language_code
 
     else:
-        lang = get_group_lang(update) or lang
+        lang = await get_group_lang(update) or lang
 
     return Session.lang[lang.lower()]
