@@ -8,7 +8,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 from config import Session
-from core.database.repository import GroupRepository
+from core.database.models import Groups
 from core.utilities.message import message
 
 LOGGER = {
@@ -32,10 +32,17 @@ async def telegram_loggers(
     chat_id = update.effective_message.chat_id
     log_channel = Session.config.DEFAULT_LOG_CHANNEL
 
-    with GroupRepository() as db:
-        data = db.get_by_id(chat_id)
+    data = await Groups.get_or_none(id_group=chat_id)
 
-        if data:
-            log_channel = data["log_channel"]
+    if data:
+        log_channel = data.log_channel
 
     await message(update, context, msg, type="messageid", chat_id=log_channel)
+
+
+async def telegram_debug_channel(
+    update: Update, context: ContextTypes.DEFAULT_TYPE, msg: str
+):
+    id_debug_channel = Session.config.DEFAULT_DEBUG_CHANNEL
+
+    await message(update, context, msg, "HTML", "messageid", id_debug_channel, None)

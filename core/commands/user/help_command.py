@@ -42,6 +42,6 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await message(
         update,
         context,
-        get_lang(update)["HELP_COMMAND"].format_map(Text(params)),
+        (await get_lang(update))["HELP_COMMAND"].format_map(Text(params)),
         reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
     )

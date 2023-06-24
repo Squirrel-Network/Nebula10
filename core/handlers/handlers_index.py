@@ -12,15 +12,14 @@ from core.handlers.user_handlers import user_status
 
 
 def core_handlers(application: Application):
-    application.add_handlers(
-        [
-            MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, welcome.new_member),
-            MessageHandler(filters.ALL, group_handlers),
-        ]
+    application.add_handler(
+        MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, welcome.new_member),
+        group=-100,
     )
+    application.add_handler(MessageHandler(filters.ALL, group_handlers), group=-101)
 
 
 async def group_handlers(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await chat_status.status(update, context)
     await user_status.status(update, context)
-    await check_updates(update)
+    await check_updates(update, context)

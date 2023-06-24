@@ -24,6 +24,6 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await message(
         update,
         context,
-        get_lang(update)["MAIN_TEXT_SETTINGS"].format_map(Text(params)),
-        reply_markup=get_keyboard_settings(update.effective_chat.id),
+        (await get_lang(update))["MAIN_TEXT_SETTINGS"].format_map(Text(params)),
+        reply_markup=await get_keyboard_settings(update.effective_chat.id),
     )

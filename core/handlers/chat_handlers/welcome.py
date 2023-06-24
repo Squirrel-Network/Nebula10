@@ -9,7 +9,8 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, User
 from telegram.ext import ContextTypes
 
 from config import Session
-from core.database.repository import GroupRepository, SuperbanRepository
+from core.database.models import Groups, SuperbanTable
+from core.decorators import on_update
 from core.utilities.functions import (
     ban_user,
     kick_user,
@@ -20,6 +21,7 @@ from core.utilities.functions import (
 from core.utilities.menu import build_menu
 from core.utilities.message import message
 from core.utilities.regex import Regex
+from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
 from languages import get_lang
 
@@ -47,8 +49,7 @@ def check_name(name: str, data: dict) -> str | None:
 
 
 def is_in_blacklist(user_id: int) -> bool:
-    with SuperbanRepository() as db:
-        return bool(db.get_by_id(user_id))
+    return SuperbanTable.exists(user_id=user_id)
 
 
 async def welcome_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -79,12 +80,12 @@ async def welcome_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "version_name": Session.config.VERSION_NAME,
     }
 
-    save_group(update.effective_message.chat_id, update.effective_chat.title)
+    await save_group(update.effective_message.chat_id, update.effective_chat.title)
 
     await message(
         update,
         context,
-        get_lang(update)["BOT_WELCOME"].format_map(Text(params)),
+        await get_lang(update)["BOT_WELCOME"].format_map(Text(params)),
         reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
     )
 
@@ -115,11 +116,11 @@ async def welcome_user(
     )
 
 
-async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    with GroupRepository() as db:
-        data = db.get_by_id(update.effective_chat.id)
+@on_update
+async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
+    data = await Groups.get(id_group=update.effective_chat.id).values()
 
-    lang = get_lang(update)
+    lang = await get_lang(update)
     chat_id = update.effective_chat.id
 
     for member in update.message.new_chat_members:
@@ -188,7 +189,7 @@ async def new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await message(update, context, lang[text].format_map(Text(params)))
 
         else:
-            save_user(member, update.effective_chat)
+            await save_user(member, update.effective_chat)
 
             if not data:
                 params = {

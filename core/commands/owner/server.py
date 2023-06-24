@@ -31,8 +31,8 @@ def get_size(num_bytes: int, suffix="B"):
         num_bytes /= factor
 
 
-def get_message(update: Update) -> str:
-    lang = get_lang(update)
+async def get_message(update: Update) -> str:
+    lang = await get_lang(update)
     uname = platform.uname()
     net_io = psutil.net_io_counters()
 
@@ -104,6 +104,6 @@ def get_message(update: Update) -> str:
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(
         update.effective_chat.id,
-        get_message(update),
+        await get_message(update),
         parse_mode=constants.ParseMode.HTML,
     )

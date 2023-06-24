@@ -20,7 +20,7 @@ from languages import get_lang
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
 async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    lang = get_lang(update)
+    lang = await get_lang(update)
 
     await message(update, context, lang["USEARCH_MSG"])
 
