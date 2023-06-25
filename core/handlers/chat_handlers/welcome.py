@@ -5,7 +5,15 @@
 
 import json
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, User
+from telegram import (
+    ChatMemberBanned,
+    ChatMemberLeft,
+    ChatMemberRestricted,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Update,
+    User,
+)
 from telegram.ext import ContextTypes
 
 from config import Session
@@ -52,7 +60,15 @@ def is_in_blacklist(user_id: int) -> bool:
     return SuperbanTable.exists(user_id=user_id)
 
 
-async def welcome_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
+@on_update
+async def welcome_bot(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
+    if update.my_chat_member.new_chat_member.status in (
+        ChatMemberBanned,
+        ChatMemberLeft,
+        ChatMemberRestricted,
+    ):
+        return
+
     buttons = [
         InlineKeyboardButton(
             text="{GLOBE_WITH_MERIDIANS} Dashboard".format_map(Text()),
@@ -80,12 +96,12 @@ async def welcome_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "version_name": Session.config.VERSION_NAME,
     }
 
-    await save_group(update.effective_message.chat_id, update.effective_chat.title)
+    await save_group(update.effective_chat.id, update.effective_chat.title)
 
     await message(
         update,
         context,
-        await get_lang(update)["BOT_WELCOME"].format_map(Text(params)),
+        (await get_lang(update))["BOT_WELCOME"].format_map(Text(params)),
         reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
     )
 
@@ -124,11 +140,7 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
     chat_id = update.effective_chat.id
 
     for member in update.message.new_chat_members:
-        if member.id == context.bot.id:
-            # TODO: log
-            await welcome_bot(update, context)
-
-        elif is_in_blacklist(member.id):
+        if is_in_blacklist(member.id):
             await ban_user(chat_id, member.id, context)
 
             params = {"id": member.id, "name": member.first_name}

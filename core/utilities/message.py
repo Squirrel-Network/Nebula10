@@ -18,7 +18,8 @@ async def message(
     thread_id = (
         update.effective_message.message_thread_id
         if (
-            update.effective_message.message_thread_id
+            update.effective_message
+            and update.effective_message.message_thread_id
             and update.effective_message.is_topic_message
         )
         else None

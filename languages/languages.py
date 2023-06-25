@@ -25,7 +25,7 @@ def load_languages() -> dict[str, Lang]:
 
 
 async def get_group_lang(update: Update) -> str | None:
-    chat = update.effective_message.chat_id
+    chat = update.effective_chat.id
 
     data = await Groups.get_or_none(id_group=chat)
 
