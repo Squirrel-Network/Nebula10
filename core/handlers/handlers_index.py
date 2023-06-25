@@ -30,6 +30,9 @@ def core_handlers(application: Application):
 
 
 async def group_handlers(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message.left_chat_member:
+        return
+
     await chat_status.status(update, context)
     await user_status.status(update, context)
     await check_updates(update, context)

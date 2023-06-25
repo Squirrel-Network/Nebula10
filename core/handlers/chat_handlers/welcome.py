@@ -6,15 +6,13 @@
 import json
 
 from telegram import (
-    ChatMemberBanned,
-    ChatMemberLeft,
-    ChatMemberRestricted,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     Update,
     User,
 )
 from telegram.ext import ContextTypes
+from telegram.constants import ChatMemberStatus
 
 from config import Session
 from core.database.models import Groups, SuperbanTable
@@ -62,11 +60,7 @@ def is_in_blacklist(user_id: int) -> bool:
 
 @on_update
 async def welcome_bot(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
-    if update.my_chat_member.new_chat_member.status in (
-        ChatMemberBanned,
-        ChatMemberLeft,
-        ChatMemberRestricted,
-    ):
+    if not update.my_chat_member.new_chat_member.status == ChatMemberStatus.MEMBER:
         return
 
     buttons = [
