@@ -14,6 +14,7 @@ class Regex:
     HAS_LETTER: str = "^[a-zA-Z]+$"
     HAS_ZOOPHILE: str = "[ζ]"
     HAS_URL: str = "((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*"
+    HAS_SNAKE_CASE: str = "^[a-z]+(_[a-z]+)*$"
 
     @classmethod
     def has_arabic_character(cls, data: str) -> bool:
@@ -30,3 +31,7 @@ class Regex:
     @classmethod
     def has_zoophile(cls, data: str) -> bool:
         return bool(re.search(cls.HAS_ZOOPHILE, data))
+
+    @classmethod
+    def is_snake_case(cls, data: str) -> bool:
+        return bool(re.match(cls.HAS_SNAKE_CASE, data))
