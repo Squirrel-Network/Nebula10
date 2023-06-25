@@ -19,6 +19,7 @@ from core.utilities.telegram_update import TelegramUpdate
 
 
 def core_handlers(application: Application):
+    print("A")
     application.add_handler(
         ChatMemberHandler(welcome.new_member, ChatMemberHandler.CHAT_MEMBER),
         group=-100,
