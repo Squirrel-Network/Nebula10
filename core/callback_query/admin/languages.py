@@ -3,21 +3,23 @@
 
 # Copyright SquirrelNetwork
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
 from config import Session
 from core.database.models import Groups
-from core.decorators import callback_query_regex, check_role
+from core.decorators import callback_query_regex, check_role, on_update
 from core.utilities.enums import Role
 from core.utilities.menu import build_menu
+from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
 from languages import get_lang
 
 
+@on_update
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @callback_query_regex("^lang$")
-async def init(update: Update, _: ContextTypes.DEFAULT_TYPE):
+async def init(update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE):
     lang = [(lang, value["LANG_FLAG"]) for lang, value in Session.lang.items()]
 
     buttons = [
@@ -31,9 +33,10 @@ async def init(update: Update, _: ContextTypes.DEFAULT_TYPE):
     )
 
 
+@on_update
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @callback_query_regex("^lang\|([a-zA-Z]+)$")
-async def change_lang(update: Update, _: ContextTypes.DEFAULT_TYPE):
+async def change_lang(update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE):
     lang = update.callback_query.data.split("|")[1].upper()
 
     await Groups.filter(id_group=update.effective_chat.id).update(languages=lang)

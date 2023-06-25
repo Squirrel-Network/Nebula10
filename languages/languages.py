@@ -6,11 +6,10 @@
 import json
 import pathlib
 
-from telegram import Update
-
 from config import Session
 from core.database.models import Groups
 from core.utilities.lang import Lang
+from core.utilities.telegram_update import TelegramUpdate
 
 
 def load_languages() -> dict[str, Lang]:
@@ -24,7 +23,7 @@ def load_languages() -> dict[str, Lang]:
     return languages
 
 
-async def get_group_lang(update: Update) -> str | None:
+async def get_group_lang(update: TelegramUpdate) -> str | None:
     chat = update.effective_chat.id
 
     data = await Groups.get_or_none(id_group=chat)
@@ -33,7 +32,7 @@ async def get_group_lang(update: Update) -> str | None:
         return data.languages
 
 
-async def get_lang(update: Update) -> Lang:
+async def get_lang(update: TelegramUpdate) -> Lang:
     lang = Session.config.DEFAULT_LANGUAGE
 
     if (

@@ -3,18 +3,19 @@
 
 # Copyright SquirrelNetwork
 
-from telegram import Update
 from telegram.ext import ContextTypes
 
 from core.database.models import SuperbanTable
-from core.decorators import delete_command
+from core.decorators import delete_command, on_update
 from core.utilities.message import message
+from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
 from languages import get_lang
 
 
+@on_update
 @delete_command
-async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     user = update.effective_message.from_user
     params = {

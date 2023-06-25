@@ -6,17 +6,17 @@
 import functools
 import typing
 
-from telegram import Update
 from telegram.ext import ContextTypes
 
 from config import Session
 from core.utilities.enums import Role
+from core.utilities.telegram_update import TelegramUpdate
 
 
 def check_role(*roles: Role):
     def decorator(func: typing.Callable):
         @functools.wraps(func)
-        async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        async def wrapper(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
             user = await update.effective_chat.get_member(update.effective_user.id)
 
             if user.status in roles:

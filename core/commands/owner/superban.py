@@ -6,16 +6,17 @@
 import datetime
 
 from loguru import logger
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
 from config import Session
 from core.database.models import SuperbanTable, Users, WhitelistTable
-from core.decorators import check_role
+from core.decorators import check_role, on_update
 from core.utilities.enums import Role
 from core.utilities.logs import sys_loggers, telegram_loggers
 from core.utilities.menu import build_menu
 from core.utilities.message import message
+from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
 from languages import get_lang
 
@@ -30,7 +31,7 @@ async def check_user(user_id: int, bot_id: int) -> bool:
 
 
 async def new_superban(
-    update: Update,
+    update: TelegramUpdate,
     context: ContextTypes.DEFAULT_TYPE,
     user_id: int,
     first_name: str,
@@ -73,9 +74,10 @@ async def new_superban(
     )
 
 
+@on_update
 @check_role(Role.OWNER)
 @logger.catch
-async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
 
     if reply := update.message.reply_to_message:
@@ -185,9 +187,12 @@ async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await message(update, context, lang["SUPERBAN_ERROR_ID"])
 
 
+@on_update
 @check_role(Role.OWNER)
 @logger.catch
-async def remove_superban_via_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def remove_superban_via_id(
+    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
+):
     text = update.effective_message.text.split()
     lang = await get_lang(update)
 
@@ -208,9 +213,10 @@ async def remove_superban_via_id(update: Update, context: ContextTypes.DEFAULT_T
     await message(update, context, lang["SUPERBAN_REMOVE"].format_map(Text(params)))
 
 
+@on_update
 @check_role(Role.OWNER)
 @logger.catch
-async def multi_superban(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def multi_superban(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     motivation = "MultiSuperban"
     save_date = datetime.datetime.utcnow().isoformat()

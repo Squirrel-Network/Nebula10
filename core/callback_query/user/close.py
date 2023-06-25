@@ -3,14 +3,15 @@
 
 # Copyright SquirrelNetwork
 
-from telegram import Update
 from telegram.ext import ContextTypes
 
-from core.decorators import callback_query_regex
+from core.decorators import callback_query_regex, on_update
+from core.utilities.telegram_update import TelegramUpdate
 
 
+@on_update
 @callback_query_regex("close")
-async def init(update: Update, _: ContextTypes.DEFAULT_TYPE):
+async def init(update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
 
     if query.data == "close":

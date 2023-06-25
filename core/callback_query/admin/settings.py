@@ -3,18 +3,18 @@
 
 # Copyright SquirrelNetwork
 
-from telegram import Update
 from telegram.ext import ContextTypes
 
 from core.database.models import Groups
-from core.decorators import callback_query_regex, check_role
+from core.decorators import callback_query_regex, check_role, on_update
 from core.utilities.constants import BUTTONS_MENU, PERM_FALSE, PERM_TRUE
 from core.utilities.enums import Role
 from core.utilities.functions import get_keyboard_settings
+from core.utilities.telegram_update import TelegramUpdate
 
 
 async def settings_set_silence(
-    update: Update, context: ContextTypes.DEFAULT_TYPE, data: dict
+    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE, data: dict
 ):
     await context.bot.set_chat_permissions(
         update.effective_chat.id,
@@ -23,7 +23,7 @@ async def settings_set_silence(
 
 
 async def settings_set_welcome(
-    update: Update, _: ContextTypes.DEFAULT_TYPE, data: dict
+    update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE, data: dict
 ):
     if not data["set_welcome"] and data["block_new_member"]:
         await Groups.filter(id_group=update.effective_chat.id).update(
@@ -32,7 +32,7 @@ async def settings_set_welcome(
 
 
 async def settings_set_block_entry(
-    update: Update, _: ContextTypes.DEFAULT_TYPE, data: dict
+    update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE, data: dict
 ):
     await Groups.filter(id_group=update.effective_chat.id).update(
         set_welcome=0 if not data["block_new_member"] else 1
@@ -46,9 +46,10 @@ SETTINGS_CALLBACK = {
 }
 
 
+@on_update
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @callback_query_regex("settings|")
-async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
     callback_data = update.callback_query.data
 

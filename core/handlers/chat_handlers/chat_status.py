@@ -5,7 +5,6 @@
 
 import datetime
 
-from telegram import Update
 from telegram.constants import ChatType
 from telegram.ext import ContextTypes
 

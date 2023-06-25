@@ -3,18 +3,19 @@
 
 # Copyright SquirrelNetwork
 
-from telegram import Update
 from telegram.ext import (
     Application,
+    ChatMemberHandler,
     ContextTypes,
     MessageHandler,
     filters,
-    ChatMemberHandler,
 )
 
+from core.decorators import on_update
 from core.handlers.chat_handlers import chat_status, welcome
 from core.handlers.chat_handlers.chat_status import check_updates
 from core.handlers.user_handlers import user_status
+from core.utilities.telegram_update import TelegramUpdate
 
 
 def core_handlers(application: Application):
@@ -29,7 +30,8 @@ def core_handlers(application: Application):
     )
 
 
-async def group_handlers(update: Update, context: ContextTypes.DEFAULT_TYPE):
+@on_update
+async def group_handlers(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     if update.message.left_chat_member:
         return
 

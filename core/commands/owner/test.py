@@ -3,14 +3,17 @@
 
 # Copyright SquirrelNetwork
 
-from core.decorators import check_role
-from core.utilities.enums import Role
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, WebAppInfo
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import ContextTypes
 
+from core.decorators import check_role, on_update
+from core.utilities.enums import Role
+from core.utilities.telegram_update import TelegramUpdate
 
+
+@on_update
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-async def command_test(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def command_test(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Please press the button below to choose a color via the WebApp.",
         reply_markup=InlineKeyboardMarkup(

@@ -3,16 +3,19 @@
 
 # Copyright SquirrelNetwork
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
+from core.decorators import on_update
 from core.utilities.menu import build_menu
 from core.utilities.message import message
+from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
 from languages import get_lang
 
 
-async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
+@on_update
+async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     bot = context.bot
     buttons = [
         InlineKeyboardButton(

@@ -6,22 +6,24 @@
 import datetime
 
 from loguru import logger
-from telegram import Update, constants
+from telegram import constants
 from telegram.ext import ContextTypes
 
-from core.database.models import WhitelistTable, SuperbanTable
-from core.decorators import callback_query_regex, check_role
+from core.database.models import SuperbanTable, WhitelistTable
+from core.decorators import callback_query_regex, check_role, on_update
 from core.utilities.enums import Role
 from core.utilities.logs import sys_loggers, telegram_loggers
 from core.utilities.message import message
+from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
 from languages import get_lang
 
 
+@on_update
 @check_role(Role.OWNER)
 @callback_query_regex("superban|")
 @logger.catch
-async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     query = update.callback_query
 

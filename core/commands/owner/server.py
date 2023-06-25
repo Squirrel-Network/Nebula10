@@ -7,13 +7,15 @@ import datetime
 import platform
 
 import psutil
-from telegram import Update, constants
+from telegram import constants
 from telegram.ext import ContextTypes
 
 from core.decorators import check_role, delete_command
 from core.utilities.enums import Role
 from core.utilities.text import Text
 from languages import get_lang
+from core.utilities.telegram_update import TelegramUpdate
+from core.decorators import on_update
 
 
 def get_size(num_bytes: int, suffix="B"):
@@ -31,7 +33,7 @@ def get_size(num_bytes: int, suffix="B"):
         num_bytes /= factor
 
 
-async def get_message(update: Update) -> str:
+async def get_message(update: TelegramUpdate) -> str:
     lang = await get_lang(update)
     uname = platform.uname()
     net_io = psutil.net_io_counters()
@@ -99,9 +101,10 @@ async def get_message(update: Update) -> str:
     return msg
 
 
+@on_update
 @check_role(Role.OWNER)
 @delete_command
-async def init(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(
         update.effective_chat.id,
         await get_message(update),

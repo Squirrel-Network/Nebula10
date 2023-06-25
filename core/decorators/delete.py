@@ -6,13 +6,14 @@
 import functools
 import typing
 
-from telegram import Update
 from telegram.ext import ContextTypes
+
+from core.utilities.telegram_update import TelegramUpdate
 
 
 def delete_command(func: typing.Callable):
     @functools.wraps(func)
-    async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    async def wrapper(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
         if update.message.text and update.message.text.startswith("/"):
             await update.message.delete()
 
