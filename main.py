@@ -8,6 +8,7 @@ import sys
 from dotenv import load_dotenv
 from loguru import logger
 from quart import Quart
+from telegram import Update
 from telegram.ext import Application
 from tortoise import run_async
 
@@ -99,7 +100,7 @@ async def main() -> None:
 
     async with application:
         await application.start()
-        await application.updater.start_polling()
+        await application.updater.start_polling(allowed_updates=Update.ALL_TYPES)
 
         await app.run_task(debug=conf.DEBUG, port=conf.WEBAPP_PORT)
 

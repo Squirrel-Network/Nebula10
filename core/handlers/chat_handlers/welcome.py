@@ -54,8 +54,8 @@ def check_name(name: str, data: dict) -> str | None:
             return text
 
 
-def is_in_blacklist(user_id: int) -> bool:
-    return SuperbanTable.exists(user_id=user_id)
+async def is_in_blacklist(user_id: int) -> bool:
+    return await SuperbanTable.exists(user_id=user_id)
 
 
 @on_update
@@ -128,85 +128,87 @@ async def welcome_user(
 
 @on_update
 async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
+    if not update.chat_member.new_chat_member.status == ChatMemberStatus.MEMBER:
+        return
+
     data = await Groups.get(id_group=update.effective_chat.id).values()
 
     lang = await get_lang(update)
     chat_id = update.effective_chat.id
+    user = update.chat_member.new_chat_member.user
 
-    for member in update.message.new_chat_members:
-        if is_in_blacklist(member.id):
-            await ban_user(chat_id, member.id, context)
+    if await is_in_blacklist(user.id):
+        await ban_user(chat_id, user.id, context)
 
-            params = {"id": member.id, "name": member.first_name}
+        params = {"id": user.id, "name": user.first_name}
+
+        await message(
+            update,
+            context,
+            lang["USER_ALREADY_BAN"].format_map(Text(params)),
+        )
+
+    elif user.id in Session.owner_ids:
+        params = {"id": user.id, "name": user.name}
+        await message(
+            update,
+            context,
+            lang["OPERATOR_JOIN"].format_map(Text(params)),
+        )
+
+    elif data["block_new_member"]:
+        await kick_user(chat_id, user.id, context)
+        await message(update, context, lang["BLOCK_NEW_MEMBER"])
+
+    elif (
+        not user.username and (action := data["type_no_username"]) in NO_USERNAME_ACTION
+    ):
+        value = NO_USERNAME_ACTION.get(action, None)
+
+        if call := value[0]:
+            await call(chat_id, user.id, context)
+
+        if mess := value[1]:
+            params = {"user": user.name, "action": mess}
 
             await message(
                 update,
                 context,
-                lang["USER_ALREADY_BAN"].format_map(Text(params)),
+                lang["KICKED_USER_MESSAGE_NO_USERNAME"].format_map(Text(params)),
             )
 
-        elif member.id in Session.owner_ids:
-            params = {"id": member.id, "name": member.name}
+    elif (
+        not (await user.get_profile_photos()).total_count
+        and data["set_user_profile_picture"]
+    ):
+        await kick_user(chat_id, user.id, context)
+
+        params = {"id": user.id, "name": user.name}
+        await message(
+            update,
+            context,
+            lang["NEW_MEMBER_WITHOUT_PHOTO"].format_map(Text(params)),
+        )
+
+    elif text := check_name(user.name, data):
+        await ban_user(chat_id, user.id, context)
+
+        params = {"id": user.id, "name": user.name}
+        await message(update, context, lang[text].format_map(Text(params)))
+
+    else:
+        await save_user(user, update.effective_chat)
+
+        if not data:
+            params = {
+                "username": update.effective_chat.username,
+                "name": update.effective_chat.title,
+            }
             await message(
                 update,
                 context,
-                lang["OPERATOR_JOIN"].format_map(Text(params)),
+                Session.config.DEFAULT_WELCOME.format_map(Text(params)),
             )
-
-        elif data["block_new_member"]:
-            await kick_user(chat_id, member.id, context)
-            await message(update, context, lang["BLOCK_NEW_MEMBER"])
-
-        elif (
-            not member.username
-            and (action := data["type_no_username"]) in NO_USERNAME_ACTION
-        ):
-            value = NO_USERNAME_ACTION.get(action, None)
-
-            if call := value[0]:
-                await call(chat_id, member.id, context)
-
-            if mess := value[1]:
-                params = {"user": member.name, "action": mess}
-
-                await message(
-                    update,
-                    context,
-                    lang["KICKED_USER_MESSAGE_NO_USERNAME"].format_map(Text(params)),
-                )
-
-        elif (
-            not (await member.get_profile_photos()).total_count
-            and data["set_user_profile_picture"]
-        ):
-            await kick_user(chat_id, member.id, context)
-
-            params = {"id": member.id, "name": member.name}
-            await message(
-                update,
-                context,
-                lang["NEW_MEMBER_WITHOUT_PHOTO"].format_map(Text(params)),
-            )
-
-        elif text := check_name(member.name, data):
-            await ban_user(chat_id, member.id, context)
-
-            params = {"id": member.id, "name": member.name}
-            await message(update, context, lang[text].format_map(Text(params)))
 
         else:
-            await save_user(member, update.effective_chat)
-
-            if not data:
-                params = {
-                    "username": update.effective_chat.username,
-                    "name": update.effective_chat.title,
-                }
-                await message(
-                    update,
-                    context,
-                    Session.config.DEFAULT_WELCOME.format_map(Text(params)),
-                )
-
-            else:
-                await welcome_user(update, context, member, data)
+            await welcome_user(update, context, user, data)
