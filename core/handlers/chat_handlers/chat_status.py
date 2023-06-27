@@ -17,65 +17,40 @@ from core.utilities.message import message
 from core.utilities.telegram_update import TelegramUpdate
 
 
+# This feature changes the chat title on the database when it is changed
 @on_update
-async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
-    bot = context.bot
-    chat = update.chat
-    user = update.effective_message.from_user
-    msg_update = update.message
-    group_members_count = await chat.get_member_count()
-    webapp_url = Session.config.WEBAPP_URL
+async def new_chat_title_handler(
+    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
+):
+    chat = update.effective_chat
 
-    # This feature changes the chat title on the database when it is changed
-    if msg_update.new_chat_title is not None:
-        await Groups.filter(id_group=chat.id).update(group_name=chat.title)
-        await telegram_debug_channel(
-            update,
-            context,
-            "[DEBUG_LOGGER] La chat <code>[{}]</code> ha cambiato titolo".format(
-                chat.id
-            ),
-        )
+    await Groups.filter(id_group=chat.id).update(group_name=chat.title)
+    await telegram_debug_channel(
+        update,
+        context,
+        "[DEBUG_LOGGER] La chat <code>[{}]</code> ha cambiato titolo".format(chat.id),
+    )
 
-    # This function saves the number of users in the group in the database
-    if group_members_count > 0:
-        await Groups.filter(id_group=chat.id).update(total_users=group_members_count)
 
-    # When a chat room changes group image it is saved to the webserver like this: example.com/group_photo/-100123456789.jpg (url variable)
-    if update.effective_message.new_chat_photo:
-        if chat.type in (ChatType.GROUP, ChatType.SUPERGROUP):
-            file_id = update.message.new_chat_photo[2].file_id
-            newfile = await bot.get_file(file_id)
-            folder = "static"
+# When a chat room changes group image it is saved to the webserver like this: example.com/group_photo/-100123456789.jpg (url variable)
+@on_update
+async def new_chat_photo_handler(
+    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
+):
+    file_id = update.message.new_chat_photo[2].file_id
+    newfile = await context.bot.get_file(file_id)
+    chat = update.effective_chat
+    folder = "static"
 
-            await newfile.download_to_drive(
-                f"core/webapp/{folder}/group_photo/{chat.id}.jpg"
-            )
-            url = f"{webapp_url}/{folder}/group_photo/{chat.id}.jpg"
+    await newfile.download_to_drive(f"core/webapp/{folder}/group_photo/{chat.id}.jpg")
+    url = f"{Session.config.WEBAPP_URL}/{folder}/group_photo/{chat.id}.jpg"
 
-            await Groups.filter(id_group=chat.id).update(group_photo=url)
-            await telegram_debug_channel(
-                update,
-                context,
-                "[DEBUG_LOGGER] La chat <code>[{}]</code> ha cambiato foto\nIl suo nuovo URL è: {}".format(
-                    chat.id, url
-                ),
-            )
-
-    # This function checks the badwords of the group
-    if await check_group_badwords(update, chat.id):
-        await bot.delete_message(
-            update.effective_message.chat_id, update.message.message_id
-        )
-        await message(
-            update,
-            context,
-            "<b>#Automatic handler:</b>\n<code>{}</code> You used a forbidden word!".format(
-                user.id
-            ),
-        )
-
-    print("CHAT:\n {}".format(chat))
+    await Groups.filter(id_group=chat.id).update(group_photo=url)
+    await telegram_debug_channel(
+        update,
+        context,
+        f"[DEBUG_LOGGER] La chat <code>[{chat.id}]</code> ha cambiato foto\nIl suo nuovo URL è: {url}",
+    )
 
 
 # this function has the task of saving in the database the updates for the calculation of messages
@@ -84,15 +59,26 @@ async def check_updates(update: TelegramUpdate, context: ContextTypes.DEFAULT_TY
     user = update.effective_message.from_user
     chat = update.effective_chat
     date = datetime.datetime.utcnow().isoformat()
-    msg_id = update.effective_message.message_id
-    upd_id = update.update_id
+    group_members_count = await chat.get_member_count()
 
-    if chat.type in (ChatType.GROUP, ChatType.SUPERGROUP):
-        await Groups.filter(id_group=chat.id).update(updated_at=date)
-        await NebulaUpdates.get_or_create(
-            update_id=upd_id,
-            message_id=msg_id,
-            tg_group_id=chat.id,
-            tg_user_id=user.id,
-            date=date,
+    await Groups.filter(id_group=chat.id).update(updated_at=date)
+    await NebulaUpdates.get_or_create(
+        update_id=update.update_id,
+        message_id=update.effective_message.message_id,
+        tg_group_id=chat.id,
+        tg_user_id=user.id,
+        date=date,
+    )
+
+    # This function saves the number of users in the group in the database
+    if group_members_count > 0:
+        await Groups.filter(id_group=chat.id).update(total_users=group_members_count)
+
+    # This function checks the badwords of the group
+    if await check_group_badwords(update, chat.id):
+        await update.effective_message.delete()
+        await message(
+            update,
+            context,
+            f"<b>#Automatic handler:</b>\n<code>{user.id}</code> You used a forbidden word!",
         )
