@@ -65,8 +65,8 @@ async def welcome_bot(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
 
     buttons = [
         InlineKeyboardButton(
-            text="{GLOBE_WITH_MERIDIANS} Dashboard".format_map(Text()),
-            url="https://nebula.squirrel-network.online",
+            text="{GLOBE_WITH_MERIDIANS} SquirrelNetwork".format_map(Text()),
+            url="https://squirrel-network.online",
         ),
         InlineKeyboardButton(
             text="{LOUDSPEAKER} Bot_Logs".format_map(Text()),
