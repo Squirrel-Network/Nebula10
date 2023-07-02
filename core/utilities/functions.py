@@ -40,9 +40,7 @@ async def save_group(chat_id: int, chat_title: str):
         dictionary = {
             "id_group": chat_id,
             "group_name": chat_title,
-            "welcome_text": Session.config.DEFAULT_WELCOME.format(
-                "{mention}", "{chat}"
-            ),
+            "welcome_text": Session.config.DEFAULT_WELCOME,
             "welcome_buttons": '{"buttons": [{"id": 0,"title": "Bot Logs","url": "https://t.me/nebulalogs"}]}',
             "rules_text": Session.config.DEFAULT_RULES,
             "community": 0,
