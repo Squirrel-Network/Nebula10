@@ -79,17 +79,14 @@ async def save_group(chat_id: int, chat_title: str):
 
 
 async def save_user(member: User, chat: Chat):
-    current_time = datetime.datetime.utcnow().isoformat()
-
     await Users.update_or_create(
-        tg_id=member.id,
-        tg_username=f"@{member.username}",
-        created_at=current_time,
-        updated_at=current_time,
+        tg_id=member.id, defaults={"tg_username": f"@{member.username}"}
     )
 
     await GroupUsers.get_or_create(
-        tg_id=member.id, tg_group_id=chat.id, warn_count=0, user_score=0
+        tg_id=member.id,
+        tg_group_id=chat.id,
+        defaults={"warn_count": 0, "user_score": 0},
     )
 
 
