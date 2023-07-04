@@ -41,5 +41,6 @@
     "OWNER_ALREADY_EXIST": "{USERNAME} This owner already exists in the database",
     "OWNER_ADD": "You have entered {USERNAME} [<code>{ID}</code>] a new owner in the database!",
     "OWNER_REMOVE": "You have removed owner {NAME} [<code>{ID}</code>] from the database",
-    "USEARCH_MSG": "➡\uFE0F The bot sent you a private message, use our public user search!\n\nDo you have a bot too? you can use our API for free: https://api.nebula.squirrel-network.online/v1/users/1080544251"
+    "USEARCH_MSG": "➡\uFE0F The bot sent you a private message, use our public user search!\n\nDo you have a bot too? you can use our API for free: https://api.nebula.squirrel-network.online/v1/users/1080544251",
+    "KICKED_USER_MESSAGE_NO_USERNAME": "{NO_ENTRY} {USER}, to be welcome in the group, set your own username!\nAction: <b>{ACTION}</b>"
 }
