@@ -10,38 +10,31 @@ from core.commands import admin, owner, user
 
 def admin_command(application: Application):
     application.add_handler(
-        CommandHandler("filters", admin.filters.init, filters=filters.ChatType.GROUPS),
-        group=1,
+        CommandHandler("filters", admin.filters.init, filters=filters.ChatType.GROUPS)
     )
-    application.add_handler(CommandHandler("say", admin.say.init), group=2)
+    application.add_handler(CommandHandler("say", admin.say.init))
     application.add_handler(
-        CommandHandler(
-            "settings", admin.settings.init, filters=filters.ChatType.GROUPS
-        ),
-        group=3,
+        CommandHandler("settings", admin.settings.init, filters=filters.ChatType.GROUPS)
     )
-    application.add_handler(CommandHandler("usearch", admin.usearch.init), group=4)
+    application.add_handler(CommandHandler("usearch", admin.usearch.init))
 
 
 def owner_command(application: Application):
-    application.add_handler(CommandHandler("test", owner.test.command_test), group=100)
-    application.add_handler(CommandHandler("server", owner.server.init), group=101)
-    application.add_handler(CommandHandler("bl", owner.superban.init), group=102)
+    application.add_handler(CommandHandler("test", owner.test.command_test))
+    application.add_handler(CommandHandler("server", owner.server.init))
+    application.add_handler(CommandHandler("bl", owner.superban.init))
+    application.add_handler(CommandHandler("mbl", owner.superban.multi_superban))
     application.add_handler(
-        CommandHandler("mbl", owner.superban.multi_superban), group=103
+        CommandHandler("ubl", owner.superban.remove_superban_via_id)
     )
-    application.add_handler(
-        CommandHandler("ubl", owner.superban.remove_superban_via_id), group=104
-    )
-    application.add_handler(CommandHandler("owner", owner.add_owner.init), group=105)
+    application.add_handler(CommandHandler("owner", owner.add_owner.init))
 
 
 def user_command(application: Application):
     application.add_handler(
-        CommandHandler("start", user.start.init, filters=filters.ChatType.PRIVATE),
-        group=200,
+        CommandHandler("start", user.start.init, filters=filters.ChatType.PRIVATE)
     )
     application.add_handler(
-        CommandHandler("io", user.io.init, filters=filters.ChatType.PRIVATE), group=201
+        CommandHandler("io", user.io.init, filters=filters.ChatType.PRIVATE)
     )
-    application.add_handler(CommandHandler("help", user.help_command.init), group=202)
+    application.add_handler(CommandHandler("help", user.help_command.init))

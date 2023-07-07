@@ -10,6 +10,7 @@ from loguru import logger
 from quart import Quart
 from telegram import Update
 from telegram.ext import Application
+from telegram.ext._application import DEFAULT_GROUP
 from tortoise import run_async
 
 from config import Config, Session
@@ -31,6 +32,13 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 10:
 
 
 FMT = "<green>[{time}]</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
+HANDLER_OFFSET = 2
+
+
+async def separate_handlers(app: Application):
+    app.handlers = {
+        (i + HANDLER_OFFSET): [x] for i, x in enumerate(app.handlers[DEFAULT_GROUP])
+    }
 
 
 async def main() -> None:
@@ -89,6 +97,8 @@ async def main() -> None:
 
     # Handlers
     handlers_index.core_handlers(application)
+
+    await separate_handlers(application)
 
     # webapp
     app = Quart(
