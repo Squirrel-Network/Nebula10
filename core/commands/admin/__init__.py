@@ -3,6 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-__all__ = ("filters", "say", "settings", "usearch")
+__all__ = ("ban", "filters", "say", "settings", "usearch")
 
-from . import filters, say, settings, usearch
+from . import ban, filters, say, settings, usearch

@@ -4,6 +4,10 @@ import typing
 class Lang(typing.TypedDict):
     BLOCK_NEW_MEMBER: str
     BAN_ZOOPHILE: str
+    BAN_SELF_BAN: str
+    BAN_ERROR_AC: str
+    BAN_SUCCESS: str
+    BAN_ERROR_SYNTAX: str
     BOT_WELCOME: str
     ERROR_MESSAGE_REPLY: str
     FILTERS_COMMAND: str
