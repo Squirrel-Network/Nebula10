@@ -46,3 +46,11 @@ async def telegram_debug_channel(
     id_debug_channel = Session.config.DEFAULT_DEBUG_CHANNEL
 
     await message(update, context, msg, "HTML", "messageid", id_debug_channel, None)
+
+
+class StringLog:
+    BAN_LOG = (
+        "<b>{WARNING} #Log User Banned!</b>\n{BUST_IN_SILHOUETTE} User_Id: <code>{ID}</code>\n"
+        '{BUST_IN_SILHOUETTE} Username: <a href="tg://user?id={ID}">{USERNAME}</a>\n'
+        "{BUSTS_IN_SILHOUETTE} Group: {CHAT}\n"
+    )

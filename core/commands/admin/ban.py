@@ -11,6 +11,7 @@ from telegram.ext import ContextTypes
 from core.database.models import Groups, Users
 from core.decorators import check_role, delete_command, on_update
 from core.utilities.enums import Role
+from core.utilities.logs import StringLog, sys_loggers, telegram_loggers
 from core.utilities.message import message
 from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
@@ -32,7 +33,18 @@ async def ban_user_from_id(
 
         raise BadRequest("Participant_id_invalid")
 
-    # TODO: log
+    reply = update.effective_message.reply_to_message
+    params = {
+        "id": reply.from_user.id,
+        "username": reply.from_user.username or reply.from_user.first_name,
+        "chat": update.effective_chat.title,
+    }
+
+    await telegram_loggers(update, context, StringLog.BAN_LOG.format_map(Text(params)))
+    sys_loggers(
+        f"Ban eseguito da: {update.effective_message.from_user.id} nella chat {update.effective_chat.id}",
+        "info",
+    )
 
 
 @on_update
