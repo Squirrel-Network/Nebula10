@@ -17,7 +17,8 @@ def admin_command(application: Application):
         CommandHandler("settings", admin.settings.init, filters=filters.ChatType.GROUPS)
     )
     application.add_handler(CommandHandler("usearch", admin.usearch.init))
-    application.add_handler(CommandHandler("ban", admin.ban.init))
+    application.add_handler(CommandHandler("ban", admin.ban.init, ~filters.REPLY))
+    application.add_handler(CommandHandler("ban", admin.ban.init_reply, filters.REPLY))
 
 
 def owner_command(application: Application):
