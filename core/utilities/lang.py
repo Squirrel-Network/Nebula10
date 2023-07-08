@@ -53,3 +53,5 @@ class Lang(typing.TypedDict):
     OWNER_ALREADY_EXIST: str
     OWNER_ADD: str
     OWNER_REMOVE: str
+    PERM_MSG_ERROR: str
+    PERM_MSG_OK: str

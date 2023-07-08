@@ -50,5 +50,7 @@
     "USEARCH_MSG": "➡\uFE0F Il bot ti ha mandato un messaggio in privato utilizza la nostra ricerca utenti pubblica!\n\nHai un bot anche tu? puoi utilizzare le nostre api gratuitamente: https://api.nebula.squirrel-network.online/v1/users/1080544251",
     "UNBAN_SUCCESS": "Il ban per l'utente {USER} <code>[{ID}]</code> è stato rimosso",
     "UNBAN_ERROR": "L'utente {USER} <code>[{ID}]</code> non è bannato",
-    "KICKED_USER_MESSAGE_NO_USERNAME": "{NO_ENTRY} {USER}, per essere ben accetto nel gruppo, imposta un tuo username!\nAzione: <b>{ACTION}</b>"
+    "KICKED_USER_MESSAGE_NO_USERNAME": "{NO_ENTRY} {USER}, per essere ben accetto nel gruppo, imposta un tuo username!\nAzione: <b>{ACTION}</b>",
+    "PERM_MSG_ERROR": "Il bot non ha le autorizzazioni corrette per funzionare correttamente!{CROSS_MARK}\nPromuovi il bot come amministratore",
+    "PERM_MSG_OK": "Il bot ha le autorizzazioni corrette per funzionare correttamente {CHECK_MARK_BUTTON}"
 }

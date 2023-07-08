@@ -7,7 +7,6 @@ from loguru import logger
 from telegram.constants import ChatMemberStatus
 from telegram.ext import ContextTypes
 
-from core.database.models import Groups, Users
 from core.decorators import check_role, delete_command, on_update
 from core.utilities.enums import Role
 from core.utilities.message import message

@@ -31,6 +31,7 @@ def admin_command(application: Application):
     application.add_handler(
         CommandHandler("unban", admin.unban.init_reply, filters.REPLY)
     )
+    application.add_handler(CommandHandler("check", admin.check_permission.init))
 
 
 def owner_command(application: Application):
