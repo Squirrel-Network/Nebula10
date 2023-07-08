@@ -107,3 +107,32 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     result = await ban_user_from_id(update, id_or_username, context)
     if result:
         await message(update, context, lang["BAN_SUCCESS"].format_map(Text(params)))
+
+
+@on_update
+@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@delete_command
+@logger.catch
+async def set_ban_message(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
+    lang = await get_lang(update)
+    text = update.effective_message.text.split(maxsplit=1)
+
+    if len(text) == 1:
+        return await message(update, context, lang["BAN_EMPTY_ERROR"])
+
+    await Groups.filter(id_group=update.effective_chat.id).update(ban_message=text[1])
+    await message(update, context, lang["SET_BAN_MESSAGE"])
+
+
+@on_update
+@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@delete_command
+@logger.catch
+async def set_ban_message_reply(
+    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
+):
+    lang = await get_lang(update)
+    text = update.effective_message.reply_to_message.text
+
+    await Groups.filter(id_group=update.effective_chat.id).update(ban_message=text)
+    await message(update, context, lang["SET_BAN_MESSAGE"])

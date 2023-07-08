@@ -6,6 +6,7 @@
 from telegram.ext import Application, CommandHandler, filters
 
 from core.commands import admin, owner, user
+from core.utilities.filters import REPLY_TEXT
 
 
 def admin_command(application: Application):
@@ -19,6 +20,14 @@ def admin_command(application: Application):
     application.add_handler(CommandHandler("usearch", admin.usearch.init))
     application.add_handler(CommandHandler("ban", admin.ban.init, ~filters.REPLY))
     application.add_handler(CommandHandler("ban", admin.ban.init_reply, filters.REPLY))
+    application.add_handler(
+        CommandHandler("setban", admin.ban.set_ban_message, ~filters.REPLY)
+    )
+    application.add_handler(
+        CommandHandler(
+            "setban", admin.ban.set_ban_message_reply, filters.REPLY & REPLY_TEXT
+        )
+    )
 
 
 def owner_command(application: Application):
