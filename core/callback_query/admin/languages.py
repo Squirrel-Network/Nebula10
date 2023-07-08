@@ -16,7 +16,7 @@ from core.utilities.text import Text
 from languages import get_lang
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @callback_query_regex("^lang$")
 async def init(update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE):
@@ -33,7 +33,7 @@ async def init(update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE):
     )
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @callback_query_regex("^lang\|([a-zA-Z]+)$")
 async def change_lang(update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE):

@@ -13,7 +13,7 @@ from core.utilities.text import Text
 from languages import get_lang
 
 
-@on_update
+@on_update()
 @delete_command
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)

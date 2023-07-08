@@ -11,7 +11,7 @@ from core.utilities.enums import Role
 from core.utilities.telegram_update import TelegramUpdate
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 async def command_test(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(

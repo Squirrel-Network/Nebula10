@@ -74,7 +74,7 @@ async def new_superban(
     )
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER)
 @logger.catch
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
@@ -187,7 +187,7 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
         await message(update, context, lang["SUPERBAN_ERROR_ID"])
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER)
 @logger.catch
 async def remove_superban_via_id(
@@ -213,7 +213,7 @@ async def remove_superban_via_id(
     await message(update, context, lang["SUPERBAN_REMOVE"].format_map(Text(params)))
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER)
 @logger.catch
 async def multi_superban(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):

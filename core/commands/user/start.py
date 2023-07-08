@@ -28,7 +28,7 @@ START_BUTTONS = (
 )
 
 
-@on_update
+@on_update()
 @delete_command
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     buttons = [InlineKeyboardButton(name, url=url) for name, url in START_BUTTONS]

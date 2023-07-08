@@ -9,7 +9,7 @@ from core.decorators import on_update
 from core.utilities.telegram_update import TelegramUpdate
 
 
-@on_update
+@on_update(True)
 async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     test = update.effective_user
     print("NEW_USER: {}".format(test))

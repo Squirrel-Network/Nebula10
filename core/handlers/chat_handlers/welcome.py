@@ -58,7 +58,7 @@ async def is_in_blacklist(user_id: int) -> bool:
     return await SuperbanTable.exists(user_id=user_id)
 
 
-@on_update
+@on_update(True)
 async def welcome_bot(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     if not update.my_chat_member.new_chat_member.status == ChatMemberStatus.MEMBER:
         return
@@ -126,7 +126,7 @@ async def welcome_user(
     )
 
 
-@on_update
+@on_update(True)
 async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     if not update.chat_member.new_chat_member.status == ChatMemberStatus.MEMBER:
         return

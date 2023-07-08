@@ -44,7 +44,7 @@ def core_handlers(application: Application):
     )
 
 
-@on_update
+@on_update(True)
 async def group_handlers(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     if update.message.left_chat_member:
         return

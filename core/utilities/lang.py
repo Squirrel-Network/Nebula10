@@ -55,3 +55,5 @@ class Lang(typing.TypedDict):
     OWNER_REMOVE: str
     PERM_MSG_ERROR: str
     PERM_MSG_OK: str
+    WARN_USER_REASON: str
+    WARN_USER: str

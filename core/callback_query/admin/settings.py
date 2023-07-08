@@ -46,7 +46,7 @@ SETTINGS_CALLBACK = {
 }
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @callback_query_regex("settings|")
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):

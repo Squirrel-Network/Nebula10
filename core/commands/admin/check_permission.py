@@ -20,7 +20,7 @@ PERMISSION_CHECK = (
 )
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
 @logger.catch

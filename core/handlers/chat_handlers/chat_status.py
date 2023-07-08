@@ -18,7 +18,7 @@ from core.utilities.telegram_update import TelegramUpdate
 
 
 # This feature changes the chat title on the database when it is changed
-@on_update
+@on_update(True)
 async def new_chat_title_handler(
     update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
 ):
@@ -33,7 +33,7 @@ async def new_chat_title_handler(
 
 
 # When a chat room changes group image it is saved to the webserver like this: example.com/group_photo/-100123456789.jpg (url variable)
-@on_update
+@on_update(True)
 async def new_chat_photo_handler(
     update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
 ):
@@ -54,7 +54,7 @@ async def new_chat_photo_handler(
 
 
 # this function has the task of saving in the database the updates for the calculation of messages
-@on_update
+@on_update(True)
 async def check_updates(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_message.from_user
     chat = update.effective_chat

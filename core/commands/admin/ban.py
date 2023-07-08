@@ -49,7 +49,7 @@ async def ban_user_from_id(
     return True
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
 @logger.catch
@@ -84,7 +84,7 @@ async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
     await ban_user_from_id(update, user.id, context)
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
 @logger.catch
@@ -109,7 +109,7 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
         await message(update, context, lang["BAN_SUCCESS"].format_map(Text(params)))
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
 @logger.catch
@@ -124,7 +124,7 @@ async def set_ban_message(update: TelegramUpdate, context: ContextTypes.DEFAULT_
     await message(update, context, lang["SET_BAN_MESSAGE"])
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
 @logger.catch

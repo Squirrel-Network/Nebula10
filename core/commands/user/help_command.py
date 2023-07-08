@@ -14,7 +14,7 @@ from core.utilities.text import Text
 from languages import get_lang
 
 
-@on_update
+@on_update()
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     bot = context.bot
     buttons = [

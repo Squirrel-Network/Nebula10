@@ -37,7 +37,14 @@ HANDLER_OFFSET = 2
 
 async def separate_handlers(app: Application):
     app.handlers = {
-        (i + HANDLER_OFFSET): [x] for i, x in enumerate(app.handlers[DEFAULT_GROUP])
+        (i + HANDLER_OFFSET): [x]
+        for i, x in enumerate(
+            sorted(
+                app.handlers[DEFAULT_GROUP],
+                key=lambda x: x.callback.priority,
+                reverse=True,
+            )
+        )
     }
 
 

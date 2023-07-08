@@ -16,7 +16,7 @@ from core.utilities.token_jwt import encode_jwt
 from languages import get_lang
 
 
-@on_update
+@on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
