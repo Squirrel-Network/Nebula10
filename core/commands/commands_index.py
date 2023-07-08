@@ -28,6 +28,9 @@ def admin_command(application: Application):
             "setban", admin.ban.set_ban_message_reply, filters.REPLY & REPLY_TEXT
         )
     )
+    application.add_handler(
+        CommandHandler("unban", admin.unban.init_reply, filters.REPLY)
+    )
 
 
 def owner_command(application: Application):

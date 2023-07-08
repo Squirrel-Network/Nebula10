@@ -47,6 +47,8 @@ class Lang(typing.TypedDict):
     USER_ALREADY_BAN: str
     USER_INFORMATION: str
     USER_INFORMATION_SUPERBAN: str
+    UNBAN_SUCCESS: str
+    UNBAN_ERROR: str
     START_COMMAND: str
     OWNER_ALREADY_EXIST: str
     OWNER_ADD: str
