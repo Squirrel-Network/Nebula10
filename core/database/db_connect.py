@@ -3,8 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-import re
-
 from tortoise import Tortoise
 
 from config import Session
@@ -34,7 +32,7 @@ async def init_db():
                     "models": list(
                         map(
                             lambda x: f"core.database.models.{x}",
-                            filter(lambda x: Regex.is_snake_case(x), dir(models)),
+                            filter(Regex.is_snake_case, dir(models)),
                         )
                     ),
                     "default_connection": "default",

@@ -5,7 +5,6 @@
 
 import datetime
 
-from telegram.constants import ChatType
 from telegram.ext import ContextTypes
 
 from config import Session
