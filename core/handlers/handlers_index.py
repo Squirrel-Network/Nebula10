@@ -15,6 +15,7 @@ from core.decorators import on_update
 from core.handlers.chat_handlers import chat_status, welcome
 from core.handlers.user_handlers import user_status
 from core.utilities.telegram_update import TelegramUpdate
+from core.handlers import error
 
 
 def core_handlers(application: Application):
@@ -42,6 +43,7 @@ def core_handlers(application: Application):
             chat_status.check_updates,
         )
     )
+    application.add_error_handler(error.init)
 
 
 @on_update(True)

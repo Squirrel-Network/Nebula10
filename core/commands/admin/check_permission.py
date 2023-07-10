@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-from loguru import logger
 from telegram.ext import ContextTypes
 
 from core.decorators import check_role, delete_command, on_update
@@ -23,7 +22,6 @@ PERMISSION_CHECK = (
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
-@logger.catch
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
 

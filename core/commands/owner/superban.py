@@ -5,7 +5,6 @@
 
 import datetime
 
-from loguru import logger
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
@@ -76,7 +75,6 @@ async def new_superban(
 
 @on_update()
 @check_role(Role.OWNER)
-@logger.catch
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
 
@@ -189,7 +187,6 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 
 @on_update()
 @check_role(Role.OWNER)
-@logger.catch
 async def remove_superban_via_id(
     update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
 ):
@@ -215,7 +212,6 @@ async def remove_superban_via_id(
 
 @on_update()
 @check_role(Role.OWNER)
-@logger.catch
 async def multi_superban(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     motivation = "MultiSuperban"

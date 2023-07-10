@@ -49,9 +49,9 @@ class Config(BaseSettings):
     # Telegram settings
     DEFAULT_WELCOME: str = "Welcome {USERNAME} to the {NAME} group"
     DEFAULT_RULES: str = "https://github.com/Squirrel-Network/GroupRules"
-    DEFAULT_LOG_CHANNEL: str
-    DEFAULT_STAFF_GROUP: str
-    DEFAULT_DEBUG_CHANNEL: str
+    DEFAULT_LOG_CHANNEL: int
+    DEFAULT_STAFF_GROUP: int
+    DEFAULT_DEBUG_CHANNEL: int
     OWNER_ID: int
     OWNER_USERNAME: str
 

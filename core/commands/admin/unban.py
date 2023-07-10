@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-from loguru import logger
 from telegram.constants import ChatMemberStatus
 from telegram.ext import ContextTypes
 
@@ -18,7 +17,6 @@ from languages import get_lang
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
-@logger.catch
 async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     user = update.effective_message.reply_to_message.from_user

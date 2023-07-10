@@ -5,7 +5,6 @@
 
 import datetime
 
-from loguru import logger
 from telegram import constants
 from telegram.ext import ContextTypes
 
@@ -22,7 +21,6 @@ from languages import get_lang
 @on_update()
 @check_role(Role.OWNER)
 @callback_query_regex(r"superban\|")
-@logger.catch
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     query = update.callback_query

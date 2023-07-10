@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-from loguru import logger
 from telegram.constants import ChatMemberStatus
 from telegram.error import BadRequest
 from telegram.ext import ContextTypes
@@ -52,7 +51,6 @@ async def ban_user_from_id(
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
-@logger.catch
 async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     user = update.effective_message.reply_to_message.from_user
@@ -87,7 +85,6 @@ async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
-@logger.catch
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     id_or_username = update.effective_message.text.split(maxsplit=1)[1]
@@ -112,7 +109,6 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
-@logger.catch
 async def set_ban_message(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     text = update.effective_message.text.split(maxsplit=1)
@@ -127,7 +123,6 @@ async def set_ban_message(update: TelegramUpdate, context: ContextTypes.DEFAULT_
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
-@logger.catch
 async def set_ban_message_reply(
     update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
 ):

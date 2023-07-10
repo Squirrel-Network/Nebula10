@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-from loguru import logger
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.constants import ParseMode
 from telegram.ext import ContextTypes
@@ -40,7 +39,6 @@ SETTING_BUTTON = (
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
-@logger.catch
 async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     reply = update.effective_message.reply_to_message.from_user
@@ -86,7 +84,6 @@ async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
 @delete_command
-@logger.catch
 async def set_max_warn(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
 

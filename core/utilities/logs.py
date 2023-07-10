@@ -54,3 +54,8 @@ class StringLog:
         '{BUST_IN_SILHOUETTE} Username: <a href="tg://user?id={ID}">{USERNAME}</a>\n'
         "{BUSTS_IN_SILHOUETTE} Group: {CHAT}\n"
     )
+    ERROR_LOG = (
+        "{ROBOT} Bot Command: {COMMAND_TEXT}\n\n"
+        "{RED_CIRCLE} <b>[ERROR]:</b> <code>{ERROR}</code>"
+        "\n{BLUE_CIRCLE} <b>[LOG_ERROR]:</b> <code>{LOG}</code>"
+    )
