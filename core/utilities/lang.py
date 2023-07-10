@@ -57,3 +57,8 @@ class Lang(typing.TypedDict):
     PERM_MSG_OK: str
     WARN_USER_REASON: str
     WARN_USER: str
+    WARN_DOWN: str
+    WARN_DOWN_ERR: str
+    WARN_UP: str
+    WARN_UP_ERR: str
+    WARN_DEL: str

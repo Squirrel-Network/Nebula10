@@ -53,6 +53,11 @@
     "KICKED_USER_MESSAGE_NO_USERNAME": "{NO_ENTRY} {USER}, to be welcome in the group, set your own username!\nAction: <b>{ACTION}</b>",
     "PERM_MSG_ERROR": "The bot does not have the correct permissions to function properly!{CROSS_MARK}\nPlease promote the bot as an admin",
     "PERM_MSG_OK": "The bot has the correct permissions to function properly {CHECK_MARK_BUTTON}",
-    "WARN_USER_REASON": "‼️ {NAME} has been warned! for the <code>{COUNT}th</code> time (on {MAX_WARN}).\nin group {GROUP_NAME} [<code>{GROUP_ID}</code>]\nfor the following reason: {REASON}",
-    "WARN_USER": "‼️ {NAME} has been warned! for the <code>{COUNT}th</code> time (on {MAX_WARN}).\nin group {GROUP_NAME} [<code>{GROUP_ID}</code>]"
+    "WARN_USER_REASON": "{DOUBLE_EXCLAMATION_MARK} {NAME} has been warned! for the <code>{COUNT}th</code> time (on {MAX_WARN}).\nin group {GROUP_NAME} [<code>{GROUP_ID}</code>]\nfor the following reason: {REASON}",
+    "WARN_USER": "{DOUBLE_EXCLAMATION_MARK} {NAME} has been warned! for the <code>{COUNT}th</code> time (on {MAX_WARN}).\nin group {GROUP_NAME} [<code>{GROUP_ID}</code>]",
+    "WARN_DOWN": "You Downwarned: <a href=\"tg://user?id={ID}\">{ID}</a>\nWarns: {WARN_COUNT}/{MAX_WARN}",
+    "WARN_DOWN_ERR": "The user cannot be downwarned anymore!",
+    "WARN_UP": "You Upwarned: <a href=\"tg://user?id={ID}\">{ID}</a>\nWarns: {WARN_COUNT}/{MAX_WARN}",
+    "WARN_UP_ERR": "The user has been banned because it has reached the maximum number of warns",
+    "WARN_DEL": "You have removed the Warns from user: <a href=\"tg://user?id={ID}\">{ID}</a>"
 }

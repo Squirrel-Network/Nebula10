@@ -53,6 +53,11 @@
     "KICKED_USER_MESSAGE_NO_USERNAME": "{NO_ENTRY} {USER}, per essere ben accetto nel gruppo, imposta un tuo username!\nAzione: <b>{ACTION}</b>",
     "PERM_MSG_ERROR": "Il bot non ha le autorizzazioni corrette per funzionare correttamente!{CROSS_MARK}\nPromuovi il bot come amministratore",
     "PERM_MSG_OK": "Il bot ha le autorizzazioni corrette per funzionare correttamente {CHECK_MARK_BUTTON}",
-    "WARN_USER_REASON": "‼️ {NAME} è stato warnato! per la <code>{COUNT}°</code> volta (su {MAX_WARN}).\nnel gruppo {GROUP_NAME} [<code>{GROUP_ID}</code>]\nper il seguente motivo: {REASON}",
-    "WARN_USER": "‼️ {NAME} è stato warnato! per la <code>{COUNT}°</code> volta (su {MAX_WARN}).\nnel gruppo {GROUP_NAME} [<code>{GROUP_ID}</code>]"
+    "WARN_USER_REASON": "{DOUBLE_EXCLAMATION_MARK} {NAME} è stato warnato! per la <code>{COUNT}°</code> volta (su {MAX_WARN}).\nnel gruppo {GROUP_NAME} [<code>{GROUP_ID}</code>]\nper il seguente motivo: {REASON}",
+    "WARN_USER": "{DOUBLE_EXCLAMATION_MARK} {NAME} è stato warnato! per la <code>{COUNT}°</code> volta (su {MAX_WARN}).\nnel gruppo {GROUP_NAME} [<code>{GROUP_ID}</code>]",
+    "WARN_DOWN": "Sei stato down-warnato: <a href=\"tg://user?id={ID}\">{ID}</a>\nWarns: {WARN_COUNT}/{MAX_WARN}",
+    "WARN_DOWN_ERR": "L'utente non può più essere down-warnato!",
+    "WARN_UP": "Sei stato up-warnato: <a href=\"tg://user?id={ID}\">{ID}</a>\nWarns: {WARN_COUNT}/{MAX_WARN}",
+    "WARN_UP_ERR": "L'utente è stato bannato perché ha raggiunto il numero massimo di warn",
+    "WARN_DEL": "Hai rimosso i warn all'utente: <a href=\"tg://user?id={ID}\">{ID}</a>"
 }

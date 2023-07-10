@@ -48,7 +48,7 @@ SETTINGS_CALLBACK = {
 
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex("settings|")
+@callback_query_regex(r"settings\|")
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
     callback_data = update.callback_query.data

@@ -10,7 +10,7 @@ from core.utilities.telegram_update import TelegramUpdate
 
 
 @on_update()
-@callback_query_regex("close")
+@callback_query_regex(r"close")
 async def init(update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
 
