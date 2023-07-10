@@ -24,6 +24,7 @@ def admin_callback(application: Application):
     application.add_handler(CallbackQueryHandler(admin.warn.warn_down))
     application.add_handler(CallbackQueryHandler(admin.warn.warn_up))
     application.add_handler(CallbackQueryHandler(admin.warn.warn_del))
+    application.add_handler(CallbackQueryHandler(admin.warn.set_max_warn_cb))
 
 
 def user_callback(application: Application):

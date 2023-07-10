@@ -35,6 +35,7 @@ def admin_command(application: Application):
     application.add_handler(
         CommandHandler("warn", admin.warn.init_reply, filters.REPLY)
     )
+    application.add_handler(CommandHandler("setwarn", admin.warn.set_max_warn))
 
 
 def owner_command(application: Application):

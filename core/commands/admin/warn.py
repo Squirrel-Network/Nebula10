@@ -12,6 +12,7 @@ from core.database.models import Groups, GroupUsers
 from core.decorators import check_role, delete_command, on_update
 from core.utilities.enums import Role
 from core.utilities.menu import build_menu
+from core.utilities.message import message
 from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
 from languages import get_lang
@@ -23,6 +24,17 @@ WARN_USER_BUTTON = [
         "{WASTEBASKET} Rimuovi".format_map(Text()), callback_data="warn|remove"
     ),
 ]
+SETTING_BUTTON = (
+    (2, "KEYCAP_DIGIT_TWO"),
+    (3, "KEYCAP_DIGIT_THREE"),
+    (4, "KEYCAP_DIGIT_FOUR"),
+    (5, "KEYCAP_DIGIT_FIVE"),
+    (6, "KEYCAP_DIGIT_SIX"),
+    (7, "KEYCAP_DIGIT_SEVEN"),
+    (8, "KEYCAP_DIGIT_EIGHT"),
+    (9, "KEYCAP_DIGIT_NINE"),
+    (10, "KEYCAP_10"),
+)
 
 
 @on_update()
@@ -39,6 +51,14 @@ async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
     max_warn = data.max_warn
     user_warn = user.warn_count
 
+    if user_warn == max_warn:
+        await context.bot.ban_chat_member(update.effective_chat.id, reply.id)
+        params = {"username": reply.username, "title": update.effective_chat.title}
+
+        return await update.message.reply_to_message.reply_text(
+            lang["WARN_USER_MAX"].format_map(Text(params))
+        )
+
     params = {
         "name": reply.first_name,
         "count": user_warn + 1,
@@ -52,8 +72,34 @@ async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
         params["reason"] = reason
         msg = lang["WARN_USER_REASON"].format_map(Text(params))
 
+    await GroupUsers.filter(
+        tg_id=reply.id, tg_group_id=update.effective_chat.id
+    ).update(warn_count=user_warn + 1)
+
     await update.message.reply_to_message.reply_text(
         msg,
         reply_markup=InlineKeyboardMarkup(build_menu(WARN_USER_BUTTON, 3)),
         parse_mode=ParseMode.HTML,
+    )
+
+
+@on_update()
+@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@delete_command
+@logger.catch
+async def set_max_warn(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
+    lang = await get_lang(update)
+
+    buttons = [
+        InlineKeyboardButton(
+            f"{{{button}}}".format_map(Text()), callback_data=f"warn|set|{number}"
+        )
+        for number, button in SETTING_BUTTON
+    ]
+
+    await message(
+        update,
+        context,
+        lang["WARN_SETTING"].format_map(Text()),
+        reply_markup=InlineKeyboardMarkup(build_menu(buttons, 3)),
     )

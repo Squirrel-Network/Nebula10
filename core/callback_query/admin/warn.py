@@ -16,7 +16,7 @@ from languages import get_lang
 
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex("^warn\|down$")
+@callback_query_regex(r"^warn\|down$")
 async def warn_down(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     query = update.callback_query
@@ -40,7 +40,7 @@ async def warn_down(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex("^warn\|up$")
+@callback_query_regex(r"^warn\|up$")
 async def warn_up(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     query = update.callback_query
@@ -65,7 +65,7 @@ async def warn_up(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex("^warn\|remove$")
+@callback_query_regex(r"^warn\|remove$")
 async def warn_del(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     query = update.callback_query
@@ -77,4 +77,19 @@ async def warn_del(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     params = {"id": user.id}
     await query.edit_message_text(
         lang["WARN_DEL"].format_map(Text(params)), ParseMode.HTML
+    )
+
+
+@on_update()
+@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@callback_query_regex(r"^warn\|set\|(\d+)$")
+async def set_max_warn_cb(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
+    lang = await get_lang(update)
+    value = update.callback_query.data.split("|")[2]
+
+    await Groups.filter(id_group=update.effective_chat.id).update(max_warn=value)
+
+    params = {"warn_count": value}
+    await update.callback_query.edit_message_text(
+        lang["WARN_SETTING_SUCCESS"].format_map(Text(params)), ParseMode.HTML
     )

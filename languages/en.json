@@ -59,5 +59,8 @@
     "WARN_DOWN_ERR": "The user cannot be downwarned anymore!",
     "WARN_UP": "You Upwarned: <a href=\"tg://user?id={ID}\">{ID}</a>\nWarns: {WARN_COUNT}/{MAX_WARN}",
     "WARN_UP_ERR": "The user has been banned because it has reached the maximum number of warns",
-    "WARN_DEL": "You have removed the Warns from user: <a href=\"tg://user?id={ID}\">{ID}</a>"
+    "WARN_DEL": "You have removed the Warns from user: <a href=\"tg://user?id={ID}\">{ID}</a>",
+    "WARN_USER_MAX": "User @{USERNAME} has reached the maximum number\n of warns in the {TITLE} group and has been banned",
+    "WARN_SETTING": "{GEAR} Warn Settings",
+    "WARN_SETTING_SUCCESS": "You have changed the maximum number of warns in this group to <code>{WARN_COUNT}</code>"
 }

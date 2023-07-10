@@ -59,5 +59,8 @@
     "WARN_DOWN_ERR": "L'utente non può più essere down-warnato!",
     "WARN_UP": "Sei stato up-warnato: <a href=\"tg://user?id={ID}\">{ID}</a>\nWarns: {WARN_COUNT}/{MAX_WARN}",
     "WARN_UP_ERR": "L'utente è stato bannato perché ha raggiunto il numero massimo di warn",
-    "WARN_DEL": "Hai rimosso i warn all'utente: <a href=\"tg://user?id={ID}\">{ID}</a>"
+    "WARN_DEL": "Hai rimosso i warn all'utente: <a href=\"tg://user?id={ID}\">{ID}</a>",
+    "WARN_USER_MAX": "L'utente @{USERNAME} ha raggiunto il numero massimo\n di avvertimenti nel gruppo {TITLE} ed è stato bannato",
+    "WARN_SETTING": "{GEAR} Impostazioni warn",
+    "WARN_SETTING_SUCCESS": "Hai modificato il numero massimo di warn in questo gruppo in <code>{WARN_COUNT}</code>"
 }

@@ -62,3 +62,6 @@ class Lang(typing.TypedDict):
     WARN_UP: str
     WARN_UP_ERR: str
     WARN_DEL: str
+    WARN_USER_MAX: str
+    WARN_SETTING: str
+    WARN_SETTING_SUCCESS: str
