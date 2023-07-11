@@ -20,6 +20,7 @@ from core.database import init_db
 from core.database.models import OwnerList, WhitelistTable
 from core.handlers import handlers_index
 from core.utilities.functions import get_owner_list
+from core.utilities.scheduler import start_scheduler
 from core.webapp import routes
 from languages import load_languages
 
@@ -114,6 +115,9 @@ async def main() -> None:
         static_folder="core/webapp/static",
     )
     app.register_blueprint(routes.home.home)
+
+    # Scheduler
+    start_scheduler()
 
     async with application:
         await application.start()

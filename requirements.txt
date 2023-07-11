@@ -8,3 +8,4 @@ python-dotenv==1.0.0
 python-telegram-bot==20.3
 quart==0.18.4
 tortoise-orm[asyncmy]==0.19.3
+apscheduler==3.10.1

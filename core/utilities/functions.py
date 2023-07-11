@@ -89,3 +89,17 @@ async def check_group_badwords(update: Update, chat_id: int):
     bad_word = update.effective_message.text or update.effective_message.caption
     if bad_word is not None:
         return await GroupsBadwords.exists(tg_group_id=chat_id, word=bad_word)
+
+
+async def is_flood(chat_id: int, user_id: int) -> bool:
+    data = await Groups.get(id_group=chat_id)
+    check = len(
+        list(
+            filter(
+                lambda x: time.monotonic() - x < data.antiflood_seconds,
+                Session.antiflood[chat_id][user_id],
+            )
+        )
+    )
+
+    return check > data.antiflood_max_messages

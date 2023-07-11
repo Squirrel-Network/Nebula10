@@ -12,13 +12,14 @@ from telegram.ext import (
 )
 
 from core.decorators import on_update
+from core.handlers import antiflood, error
 from core.handlers.chat_handlers import chat_status, welcome
 from core.handlers.user_handlers import user_status
 from core.utilities.telegram_update import TelegramUpdate
-from core.handlers import error
 
 
 def core_handlers(application: Application):
+    application.add_handler(MessageHandler(filters.ALL, antiflood.init))
     application.add_handler(
         ChatMemberHandler(welcome.new_member, ChatMemberHandler.CHAT_MEMBER)
     )
