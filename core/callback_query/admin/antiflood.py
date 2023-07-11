@@ -11,8 +11,9 @@ from core.decorators import callback_query_regex, check_role, on_update
 from core.utilities.enums import Role
 from core.utilities.telegram_update import TelegramUpdate
 from languages import get_lang
+from core.utilities.menu import build_menu
 
-DB_DATA = {"messages": "antiflood_max_messages", "seconds": "antiflood_seconds"}
+BUTTON_NUM = ("antiflood|messages", "antiflood|seconds")
 MAX_MESSAGES = 10
 
 
@@ -24,29 +25,28 @@ async def set_antiflood_minus_cb(
 ):
     lang = await get_lang(update)
     action = update.callback_query.data.split("|")[2]
+    edit_button = []
+    value = 1
 
-    data = Groups.filter(id_group=update.effective_chat.id)
-    value = (await data.values())[0]
+    for row in update.callback_query.message.reply_markup.inline_keyboard:
+        buttons = []
+        for col in row:
+            if col.callback_data == f"antiflood|{action}":
+                value = int(col.text)
+                buttons.append(
+                    InlineKeyboardButton(
+                        str(value - 1), callback_data=col.callback_data
+                    )
+                )
+            else:
+                buttons.append(col)
+        edit_button.append(buttons)
 
-    if value[DB_DATA[action]] == 1:
+    if value == 1:
         return await update.callback_query.answer(lang["ANTIFLOOD_ERROR"])
 
-    await data.update(**{DB_DATA[action]: value[DB_DATA[action]] - 1})
-
-    edit_buttons = [
-        [
-            InlineKeyboardButton(
-                str(value[DB_DATA[action]] - 1), callback_data=col.callback_data
-            )
-            if col.callback_data == f"antiflood|{action}"
-            else col
-            for col in row
-        ]
-        for row in update.callback_query.message.reply_markup.inline_keyboard
-    ]
-
     await update.callback_query.edit_message_reply_markup(
-        InlineKeyboardMarkup(edit_buttons)
+        InlineKeyboardMarkup(edit_button)
     )
 
 
@@ -58,27 +58,45 @@ async def set_antiflood_plus_cb(
 ):
     lang = await get_lang(update)
     action = update.callback_query.data.split("|")[2]
+    edit_button = []
+    value = 1
 
-    data = Groups.filter(id_group=update.effective_chat.id)
-    value = (await data.values())[0]
+    for row in update.callback_query.message.reply_markup.inline_keyboard:
+        buttons = []
+        for col in row:
+            if col.callback_data == f"antiflood|{action}":
+                value = int(col.text)
+                buttons.append(
+                    InlineKeyboardButton(
+                        str(value + 1), callback_data=col.callback_data
+                    )
+                )
+            else:
+                buttons.append(col)
+        edit_button.append(buttons)
 
-    if value[DB_DATA[action]] == MAX_MESSAGES:
+    if value == MAX_MESSAGES:
         return await update.callback_query.answer(lang["ANTIFLOOD_ERROR"])
 
-    await data.update(**{DB_DATA[action]: value[DB_DATA[action]] + 1})
+    await update.callback_query.edit_message_reply_markup(
+        InlineKeyboardMarkup(edit_button)
+    )
 
-    edit_buttons = [
-        [
-            InlineKeyboardButton(
-                str(value[DB_DATA[action]] + 1), callback_data=col.callback_data
-            )
-            if col.callback_data == f"antiflood|{action}"
-            else col
-            for col in row
-        ]
+
+@on_update()
+@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@callback_query_regex(r"^antiflood\|success$")
+async def set_antiflood_success(
+    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
+):
+    mes, sec = [
+        int(col.text)
         for row in update.callback_query.message.reply_markup.inline_keyboard
+        for col in row
+        if col.callback_data in BUTTON_NUM
     ]
 
-    await update.callback_query.edit_message_reply_markup(
-        InlineKeyboardMarkup(edit_buttons)
+    await Groups.filter(id_group=update.effective_chat.id).update(
+        antiflood_max_messages=mes, antiflood_seconds=sec
     )
+    await update.callback_query.message.delete()

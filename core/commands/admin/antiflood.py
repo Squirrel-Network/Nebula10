@@ -42,6 +42,9 @@ async def set_antiflood(update: TelegramUpdate, context: ContextTypes.DEFAULT_TY
         InlineKeyboardButton(
             "{PLUS}".format_map(Text()), callback_data="antiflood|set|seconds|plus"
         ),
+        InlineKeyboardButton(
+            "{CHECK_MARK_BUTTON}".format_map(Text()), callback_data="antiflood|success"
+        ),
     ]
     params = {"name": update.effective_chat.title, "chat_id": update.effective_chat.id}
 
