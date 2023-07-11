@@ -17,25 +17,52 @@ def admin_command(application: Application):
     application.add_handler(
         CommandHandler("settings", admin.settings.init, filters=filters.ChatType.GROUPS)
     )
-    application.add_handler(CommandHandler("usearch", admin.usearch.init))
-    application.add_handler(CommandHandler("ban", admin.ban.init, ~filters.REPLY))
-    application.add_handler(CommandHandler("ban", admin.ban.init_reply, filters.REPLY))
     application.add_handler(
-        CommandHandler("setban", admin.ban.set_ban_message, ~filters.REPLY)
+        CommandHandler("usearch", admin.usearch.init, filters.ChatType.GROUPS)
+    )
+    application.add_handler(
+        CommandHandler("ban", admin.ban.init, ~filters.REPLY & filters.ChatType.GROUPS)
     )
     application.add_handler(
         CommandHandler(
-            "setban", admin.ban.set_ban_message_reply, filters.REPLY & REPLY_TEXT
+            "ban", admin.ban.init_reply, filters.REPLY & filters.ChatType.GROUPS
         )
     )
     application.add_handler(
-        CommandHandler("unban", admin.unban.init_reply, filters.REPLY)
+        CommandHandler(
+            "setban",
+            admin.ban.set_ban_message,
+            ~filters.REPLY & filters.ChatType.GROUPS,
+        )
     )
-    application.add_handler(CommandHandler("check", admin.check_permission.init))
     application.add_handler(
-        CommandHandler("warn", admin.warn.init_reply, filters.REPLY)
+        CommandHandler(
+            "setban",
+            admin.ban.set_ban_message_reply,
+            filters.REPLY & REPLY_TEXT & filters.ChatType.GROUPS,
+        )
     )
-    application.add_handler(CommandHandler("setwarn", admin.warn.set_max_warn))
+    application.add_handler(
+        CommandHandler(
+            "unban", admin.unban.init_reply, filters.REPLY & filters.ChatType.GROUPS
+        )
+    )
+    application.add_handler(
+        CommandHandler("check", admin.check_permission.init, filters.ChatType.GROUPS)
+    )
+    application.add_handler(
+        CommandHandler(
+            "warn", admin.warn.init_reply, filters.REPLY & filters.ChatType.GROUPS
+        )
+    )
+    application.add_handler(
+        CommandHandler("setwarn", admin.warn.set_max_warn, filters.ChatType.GROUPS)
+    )
+    application.add_handler(
+        CommandHandler(
+            "setantiflood", admin.antiflood.set_antiflood, filters.ChatType.GROUPS
+        )
+    )
 
 
 def owner_command(application: Application):

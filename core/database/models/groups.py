@@ -17,7 +17,7 @@ class Groups(Model):
     )
     rules_text = fields.TextField()
     community = fields.BooleanField(default=False)
-    languages = fields.CharField(3, default="EN")
+    languages = fields.CharField(3)
     set_welcome = fields.BooleanField(default=True)
     max_warn = fields.IntField(default=3)
     set_silence = fields.BooleanField(default=False)
@@ -30,7 +30,7 @@ class Groups(Model):
     gif_filter = fields.BooleanField(default=False)
     set_cas_ban = fields.BooleanField(default=True)
     type_no_username = fields.IntField(default=1)
-    log_channel = fields.BigIntField(default="-1001359708474")
+    log_channel = fields.BigIntField()
     group_photo = fields.CharField(
         255, default="https://naos.hersel.it/group_photo/default.jpg"
     )
@@ -48,6 +48,8 @@ class Groups(Model):
     ban_message = fields.TextField(
         default="{mention} has been <b>banned</b> from: {chat}"
     )
+    antiflood_max_messages = fields.IntField(default=3)
+    antiflood_seconds = fields.IntField(default=1)
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
 

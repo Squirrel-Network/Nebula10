@@ -65,3 +65,5 @@ class Lang(typing.TypedDict):
     WARN_USER_MAX: str
     WARN_SETTING: str
     WARN_SETTING_SUCCESS: str
+    ANTIFLOOD_SETTING: str
+    ANTIFLOOD_ERROR: str

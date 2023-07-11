@@ -26,6 +26,12 @@ def admin_callback(application: Application):
     application.add_handler(CallbackQueryHandler(admin.warn.warn_del))
     application.add_handler(CallbackQueryHandler(admin.warn.set_max_warn_cb))
 
+    # antiflood
+    application.add_handler(
+        CallbackQueryHandler(admin.antiflood.set_antiflood_minus_cb)
+    )
+    application.add_handler(CallbackQueryHandler(admin.antiflood.set_antiflood_plus_cb))
+
 
 def user_callback(application: Application):
     application.add_handlers([CallbackQueryHandler(close.init)])

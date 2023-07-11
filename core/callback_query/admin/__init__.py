@@ -3,6 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-__all__ = ("languages", "settings", "warn")
+__all__ = ("antiflood", "languages", "settings", "warn")
 
-from . import languages, settings, warn
+from . import antiflood, languages, settings, warn
