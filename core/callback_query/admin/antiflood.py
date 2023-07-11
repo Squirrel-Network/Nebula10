@@ -11,7 +11,6 @@ from core.decorators import callback_query_regex, check_role, on_update
 from core.utilities.enums import Role
 from core.utilities.telegram_update import TelegramUpdate
 from languages import get_lang
-from core.utilities.menu import build_menu
 
 BUTTON_NUM = ("antiflood|messages", "antiflood|seconds")
 MAX_MESSAGES = 10
