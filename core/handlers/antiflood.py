@@ -10,7 +10,10 @@ from telegram.ext import ApplicationHandlerStop, ContextTypes
 from config import Session
 from core.database.models import Groups
 from core.decorators import on_update
+from core.utilities.functions import mute_user_by_id_time
 from core.utilities.telegram_update import TelegramUpdate
+
+MAX_ANTIFLOOD_SIZE = 85
 
 
 async def is_flood(chat_id: int, user_id: int) -> bool:
@@ -40,5 +43,12 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
     user_id = update.effective_user.id
 
+    if len(Session.antiflood) > (
+        Session.antiflood.max_len * (MAX_ANTIFLOOD_SIZE / 100)
+    ):
+        Session.antiflood.max_len *= 2
+
     if await is_flood(chat_id, user_id):
+        await mute_user_by_id_time(chat_id, user_id, context)
+
         raise ApplicationHandlerStop()

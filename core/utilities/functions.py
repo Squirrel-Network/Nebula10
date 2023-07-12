@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-import datetime
 import time
 
 from telegram import Chat, InlineKeyboardButton, InlineKeyboardMarkup, Update, User
@@ -89,3 +88,11 @@ async def check_group_badwords(update: Update, chat_id: int):
     bad_word = update.effective_message.text or update.effective_message.caption
     if bad_word is not None:
         return await GroupsBadwords.exists(tg_group_id=chat_id, word=bad_word)
+
+
+async def mute_user_by_id_time(
+    chat_id: int, user_id: int, context: ContextTypes.DEFAULT_TYPE, mute_time=30
+):
+    await context.bot.restrict_chat_member(
+        chat_id, user_id, PERM_FALSE, until_date=int(time.time() + mute_time)
+    )

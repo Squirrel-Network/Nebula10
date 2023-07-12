@@ -13,4 +13,4 @@ class Session:
     config: Config
     lang: dict[str, Lang]
     owner_ids: list[int]
-    antiflood: ExpiringDict[str, int] = ExpiringDict(10000, 11)
+    antiflood: ExpiringDict[str, int] = ExpiringDict(1, 11)
