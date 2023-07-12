@@ -9,3 +9,4 @@ python-telegram-bot==20.3
 quart==0.18.4
 tortoise-orm[asyncmy]==0.19.3
 apscheduler==3.10.1
+expiringdict==1.2.2
