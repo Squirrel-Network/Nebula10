@@ -5,6 +5,7 @@
 
 __all__ = (
     "antiflood",
+    "antistorm",
     "ban",
     "check_permission",
     "filters",
@@ -17,6 +18,7 @@ __all__ = (
 
 from . import (
     antiflood,
+    antistorm,
     ban,
     check_permission,
     filters,

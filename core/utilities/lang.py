@@ -67,3 +67,4 @@ class Lang(typing.TypedDict):
     WARN_SETTING_SUCCESS: str
     ANTIFLOOD_SETTING: str
     ANTIFLOOD_ERROR: str
+    ANTISTORM_SETTING: str

@@ -64,5 +64,6 @@
     "WARN_SETTING": "{GEAR} Impostazioni warn",
     "WARN_SETTING_SUCCESS": "Hai modificato il numero massimo di warn in questo gruppo in <code>{WARN_COUNT}</code>",
     "ANTIFLOOD_SETTING": "{GEAR} Impostazioni antiflood\n\n{SCROLL} Nome del gruppo: <i>{NAME}</i>\n{LABEL} ChatId: <code>{CHAT_ID}</code>",
-    "ANTIFLOOD_ERROR": "Impossibile!"
+    "ANTIFLOOD_ERROR": "Impossibile!",
+    "ANTISTORM_SETTING": "{GEAR} Impostazioni antistorm\n\n{SCROLL} Nome del gruppo: <i>{NAME}</i>\n{LABEL} ChatId: <code>{CHAT_ID}</code>"
 }

@@ -50,6 +50,8 @@ class Groups(Model):
     )
     antiflood_max_messages = fields.IntField(default=3)
     antiflood_seconds = fields.IntField(default=1)
+    antistorm_max_users = fields.IntField(default=15)
+    antistorm_seconds = fields.IntField(default=3)
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
 

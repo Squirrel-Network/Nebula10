@@ -63,6 +63,11 @@ def admin_command(application: Application):
             "setantiflood", admin.antiflood.set_antiflood, filters.ChatType.GROUPS
         )
     )
+    application.add_handler(
+        CommandHandler(
+            "setantistorm", admin.antistorm.set_antistorm, filters.ChatType.GROUPS
+        )
+    )
 
 
 def owner_command(application: Application):
