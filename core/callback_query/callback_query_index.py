@@ -3,11 +3,12 @@
 
 # Copyright SquirrelNetwork
 
-from telegram.ext import Application, CallbackQueryHandler
+from telegram.ext import Application
 
 from core.callback_query import admin
 from core.callback_query.owner import owner, superban
 from core.callback_query.user import close
+from core.decorators import CallbackQueryHandler
 
 
 def owner_callback(application: Application):
