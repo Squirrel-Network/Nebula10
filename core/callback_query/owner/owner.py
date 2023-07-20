@@ -7,7 +7,7 @@ from telegram import constants
 from telegram.ext import ContextTypes
 
 from core.database.models import OwnerList
-from core.decorators import callback_query_regex, check_role, on_update
+from core.decorators import check_role, on_update
 from core.utilities.enums import Role
 from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
@@ -16,7 +16,6 @@ from languages import get_lang
 
 @on_update()
 @check_role(Role.OWNER)
-@callback_query_regex(r"^owner\|remove$")
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     user = update.callback_query.message.reply_to_message.from_user
     lang = await get_lang(update)

@@ -9,7 +9,7 @@ from telegram import constants
 from telegram.ext import ContextTypes
 
 from core.database.models import SuperbanTable, WhitelistTable
-from core.decorators import callback_query_regex, check_role, on_update
+from core.decorators import check_role, on_update
 from core.utilities.enums import Role
 from core.utilities.logs import sys_loggers, telegram_loggers
 from core.utilities.message import message
@@ -20,7 +20,6 @@ from languages import get_lang
 
 @on_update()
 @check_role(Role.OWNER)
-@callback_query_regex(r"superban\|")
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     query = update.callback_query

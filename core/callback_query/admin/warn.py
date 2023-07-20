@@ -7,7 +7,7 @@ from telegram.ext import ContextTypes
 from telegram.constants import ParseMode
 
 from core.database.models import Groups, GroupUsers
-from core.decorators import callback_query_regex, check_role, on_update
+from core.decorators import check_role, on_update
 from core.utilities.enums import Role
 from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
@@ -16,7 +16,6 @@ from languages import get_lang
 
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex(r"^warn\|down$")
 async def warn_down(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     query = update.callback_query
@@ -40,7 +39,6 @@ async def warn_down(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex(r"^warn\|up$")
 async def warn_up(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     query = update.callback_query
@@ -65,7 +63,6 @@ async def warn_up(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex(r"^warn\|remove$")
 async def warn_del(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     query = update.callback_query
@@ -82,7 +79,6 @@ async def warn_del(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex(r"^warn\|set\|(\d+)$")
 async def set_max_warn_cb(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     value = update.callback_query.data.split("|")[2]

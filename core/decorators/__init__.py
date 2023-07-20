@@ -4,7 +4,6 @@
 # Copyright SquirrelNetwork
 
 __all__ = (
-    "callback_query_regex",
     "check_is_admin",
     "delete_command",
     "on_update",
@@ -12,7 +11,6 @@ __all__ = (
 )
 
 
-from .callback_query_regex import callback_query_regex
 from .check_bot import check_is_admin
 from .delete import delete_command
 from .on_update import on_update

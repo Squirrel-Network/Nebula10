@@ -7,7 +7,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
 from core.database.models import Groups
-from core.decorators import callback_query_regex, check_role, on_update
+from core.decorators import check_role, on_update
 from core.utilities.enums import Role
 from core.utilities.telegram_update import TelegramUpdate
 from languages import get_lang
@@ -18,7 +18,6 @@ MAX_MESSAGES = 10
 
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex(r"^antiflood\|set\|(messages|seconds)\|minus$")
 async def set_antiflood_minus_cb(
     update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
 ):
@@ -51,7 +50,6 @@ async def set_antiflood_minus_cb(
 
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex(r"^antiflood\|set\|(messages|seconds)\|plus$")
 async def set_antiflood_plus_cb(
     update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
 ):
@@ -84,7 +82,6 @@ async def set_antiflood_plus_cb(
 
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex(r"^antiflood\|success$")
 async def set_antiflood_success(
     update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
 ):

@@ -6,7 +6,7 @@
 from telegram.ext import ContextTypes
 
 from core.database.models import Groups
-from core.decorators import callback_query_regex, check_role, on_update
+from core.decorators import check_role, on_update
 from core.utilities.constants import BUTTONS_MENU, PERM_FALSE, PERM_TRUE
 from core.utilities.enums import Role
 from core.utilities.functions import get_keyboard_settings
@@ -48,7 +48,6 @@ SETTINGS_CALLBACK = {
 
 @on_update()
 @check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
-@callback_query_regex(r"settings\|")
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
     callback_data = update.callback_query.data
