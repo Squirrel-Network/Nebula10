@@ -33,6 +33,13 @@ def admin_callback(application: Application):
     application.add_handler(CallbackQueryHandler(admin.antiflood.set_antiflood_plus_cb))
     application.add_handler(CallbackQueryHandler(admin.antiflood.set_antiflood_success))
 
+    # antistorm
+    application.add_handler(
+        CallbackQueryHandler(admin.antistorm.set_antistorm_minus_cb)
+    )
+    application.add_handler(CallbackQueryHandler(admin.antistorm.set_antistorm_plus_cb))
+    application.add_handler(CallbackQueryHandler(admin.antistorm.set_antistorm_success))
+
 
 def user_callback(application: Application):
     application.add_handlers([CallbackQueryHandler(close.init)])
