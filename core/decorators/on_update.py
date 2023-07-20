@@ -10,14 +10,18 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 from core.utilities.telegram_update import TelegramUpdate
+from core.utilities import filters
 
 
-def on_update(priority: bool = False):
+def on_update(priority: bool = False, filters: filters.Filter = filters.ALL):
     def decorator(func: typing.Callable):
         func.priority = priority
 
         @functools.wraps(func)
         async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE):
+            if not (await filters(update, context)):
+                return
+
             up = TelegramUpdate(
                 **{
                     x: getattr(update, x, None)

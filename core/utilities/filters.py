@@ -56,6 +56,29 @@ class OrFilter(Filter):
         return x or y
 
 
+class command(Filter):
+    def __init__(self, prefix: list[str]) -> None:
+        self.prefix = prefix
+
+    async def __call__(
+        self, update: Update, context: ContextTypes.DEFAULT_TYPE
+    ) -> bool:
+        text = update.effective_message.text
+
+        if not text:
+            return False
+
+        return any(map(lambda x: x == text, self.prefix))
+
+
+class _All(Filter):
+    async def __call__(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        return True
+
+
+ALL = _All()
+
+
 class _ReplyText(MessageFilter):
     __slots__ = ()
 
