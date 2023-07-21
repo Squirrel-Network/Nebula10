@@ -137,6 +137,7 @@ async def set_ban_message(update: TelegramUpdate, context: ContextTypes.DEFAULT_
     filters=filters.command(["setban"])
     & filters.check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
     & filters.reply
+    & filters.reply_text
     & filters.group
 )
 @delete_command

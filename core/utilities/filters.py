@@ -5,6 +5,7 @@
 
 from telegram import Update, constants
 from telegram.ext import ContextTypes
+from telegram.ext.filters import StatusUpdate
 
 from config import Session
 from core.utilities.enums import Role
@@ -100,7 +101,7 @@ reply = _Reply()
 
 
 class _ReplyText(Filter):
-    def filter(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
+    async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
         return bool(
             update.effective_message
             and update.effective_message.reply_to_message
@@ -109,6 +110,50 @@ class _ReplyText(Filter):
 
 
 reply_text = _ReplyText()
+
+
+class _Service(Filter):
+    async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
+        if not update.effective_message:
+            return False
+
+        return StatusUpdate.ALL.filter(update)
+
+
+service = _Service()
+
+
+class _LeftChatMember(Filter):
+    async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
+        if not update.effective_message:
+            return False
+
+        return bool(update.effective_message.left_chat_member)
+
+
+left_chat_member = _LeftChatMember()
+
+
+class _NewChatTitle(Filter):
+    async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
+        if not update.effective_message:
+            return False
+
+        return bool(update.effective_message.new_chat_title)
+
+
+new_chat_title = _NewChatTitle()
+
+
+class _NewChatPhoto(Filter):
+    async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
+        if not update.effective_message:
+            return False
+
+        return bool(update.effective_message.new_chat_photo)
+
+
+new_chat_photo = _NewChatPhoto()
 
 
 class command(Filter):

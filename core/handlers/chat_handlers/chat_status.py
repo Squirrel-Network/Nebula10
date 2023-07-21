@@ -10,6 +10,7 @@ from telegram.ext import ContextTypes
 from config import Session
 from core.database.models import Groups, NebulaUpdates
 from core.decorators import on_update
+from core.utilities import filters
 from core.utilities.functions import check_group_badwords
 from core.utilities.logs import telegram_debug_channel
 from core.utilities.message import message
@@ -17,7 +18,7 @@ from core.utilities.telegram_update import TelegramUpdate
 
 
 # This feature changes the chat title on the database when it is changed
-@on_update(True)
+@on_update(True, filters.new_chat_title & filters.group)
 async def new_chat_title_handler(
     update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
 ):
@@ -32,7 +33,7 @@ async def new_chat_title_handler(
 
 
 # When a chat room changes group image it is saved to the webserver like this: example.com/group_photo/-100123456789.jpg (url variable)
-@on_update(True)
+@on_update(True, filters.new_chat_photo & filters.group)
 async def new_chat_photo_handler(
     update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
 ):
@@ -53,7 +54,7 @@ async def new_chat_photo_handler(
 
 
 # this function has the task of saving in the database the updates for the calculation of messages
-@on_update(True)
+@on_update(True, filters.group & ~filters.left_chat_member)
 async def check_updates(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_message.from_user
     chat = update.effective_chat

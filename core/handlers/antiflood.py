@@ -10,6 +10,8 @@ from telegram.ext import ApplicationHandlerStop, ContextTypes
 from config import Session
 from core.database.models import Groups
 from core.decorators import on_update
+from core.utilities import filters
+from core.utilities.enums import Role
 from core.utilities.functions import mute_user_by_id_time
 from core.utilities.telegram_update import TelegramUpdate
 
@@ -38,7 +40,12 @@ async def is_flood(chat_id: int, user_id: int) -> bool:
     return tot_mess > data.antiflood_max_messages
 
 
-@on_update(True)
+@on_update(
+    True,
+    filters.group
+    & ~filters.check_role(Role.OWNER, Role.ADMINISTRATOR, Role.CREATOR)
+    & ~filters.service,
+)
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
     user_id = update.effective_user.id

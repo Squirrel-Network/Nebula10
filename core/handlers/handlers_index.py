@@ -3,13 +3,7 @@
 
 # Copyright SquirrelNetwork
 
-from telegram.ext import (
-    Application,
-    ChatMemberHandler,
-    ContextTypes,
-    MessageHandler,
-    filters,
-)
+from telegram.ext import Application, ChatMemberHandler, ContextTypes, MessageHandler
 
 from core.decorators import on_update
 from core.handlers import antiflood, error
@@ -19,23 +13,15 @@ from core.utilities.telegram_update import TelegramUpdate
 
 
 def core_handlers(application: Application):
-    application.add_handler(
-        MessageHandler(
-            ~filters.StatusUpdate.ALL & filters.ChatType.GROUP, antiflood.init
-        )
-    )
+    application.add_handler(MessageHandler(None, antiflood.init))
     application.add_handler(
         ChatMemberHandler(welcome.new_member, ChatMemberHandler.CHAT_MEMBER)
     )
-    application.add_handler(MessageHandler(filters.ALL, group_handlers))
+    application.add_handler(MessageHandler(None, group_handlers))
+    application.add_handler(MessageHandler(None, chat_status.new_chat_title_handler))
     application.add_handler(
         MessageHandler(
-            filters.StatusUpdate.NEW_CHAT_TITLE, chat_status.new_chat_title_handler
-        )
-    )
-    application.add_handler(
-        MessageHandler(
-            filters.ChatType.GROUPS & filters.StatusUpdate.NEW_CHAT_PHOTO,
+            None,
             chat_status.new_chat_photo_handler,
         )
     )
@@ -44,7 +30,7 @@ def core_handlers(application: Application):
     )
     application.add_handler(
         MessageHandler(
-            filters.ChatType.GROUPS & ~filters.StatusUpdate.LEFT_CHAT_MEMBER,
+            None,
             chat_status.check_updates,
         )
     )
