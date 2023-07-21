@@ -19,7 +19,11 @@ from core.utilities.telegram_update import TelegramUpdate
 
 
 def core_handlers(application: Application):
-    application.add_handler(MessageHandler(~filters.StatusUpdate.ALL, antiflood.init))
+    application.add_handler(
+        MessageHandler(
+            ~filters.StatusUpdate.ALL & filters.ChatType.GROUP, antiflood.init
+        )
+    )
     application.add_handler(
         ChatMemberHandler(welcome.new_member, ChatMemberHandler.CHAT_MEMBER)
     )

@@ -3,89 +3,48 @@
 
 # Copyright SquirrelNetwork
 
-from telegram.ext import Application, CommandHandler, filters
+from telegram.ext import Application, MessageHandler
 
 from core.commands import admin, owner, user
-from core.utilities.filters import REPLY_TEXT
 
 
 def admin_command(application: Application):
+    application.add_handler(MessageHandler(None, admin.filters.init))
+    application.add_handler(MessageHandler(None, admin.say.init))
+    application.add_handler(MessageHandler(None, admin.settings.init))
+    application.add_handler(MessageHandler(None, admin.usearch.init))
+    application.add_handler(MessageHandler(None, admin.ban.init))
+    application.add_handler(MessageHandler(None, admin.ban.init_reply))
     application.add_handler(
-        CommandHandler("filters", admin.filters.init, filters=filters.ChatType.GROUPS)
-    )
-    application.add_handler(CommandHandler("say", admin.say.init))
-    application.add_handler(
-        CommandHandler("settings", admin.settings.init, filters=filters.ChatType.GROUPS)
-    )
-    application.add_handler(
-        CommandHandler("usearch", admin.usearch.init, filters.ChatType.GROUPS)
-    )
-    application.add_handler(
-        CommandHandler("ban", admin.ban.init, ~filters.REPLY & filters.ChatType.GROUPS)
-    )
-    application.add_handler(
-        CommandHandler(
-            "ban", admin.ban.init_reply, filters.REPLY & filters.ChatType.GROUPS
-        )
-    )
-    application.add_handler(
-        CommandHandler(
-            "setban",
+        MessageHandler(
+            None,
             admin.ban.set_ban_message,
-            ~filters.REPLY & filters.ChatType.GROUPS,
         )
     )
     application.add_handler(
-        CommandHandler(
-            "setban",
+        MessageHandler(
+            None,
             admin.ban.set_ban_message_reply,
-            filters.REPLY & REPLY_TEXT & filters.ChatType.GROUPS,
         )
     )
-    application.add_handler(
-        CommandHandler(
-            "unban", admin.unban.init_reply, filters.REPLY & filters.ChatType.GROUPS
-        )
-    )
-    application.add_handler(
-        CommandHandler("check", admin.check_permission.init, filters.ChatType.GROUPS)
-    )
-    application.add_handler(
-        CommandHandler(
-            "warn", admin.warn.init_reply, filters.REPLY & filters.ChatType.GROUPS
-        )
-    )
-    application.add_handler(
-        CommandHandler("setwarn", admin.warn.set_max_warn, filters.ChatType.GROUPS)
-    )
-    application.add_handler(
-        CommandHandler(
-            "setantiflood", admin.antiflood.set_antiflood, filters.ChatType.GROUPS
-        )
-    )
-    application.add_handler(
-        CommandHandler(
-            "setantistorm", admin.antistorm.set_antistorm, filters.ChatType.GROUPS
-        )
-    )
+    application.add_handler(MessageHandler(None, admin.unban.init_reply))
+    application.add_handler(MessageHandler(None, admin.check_permission.init))
+    application.add_handler(MessageHandler(None, admin.warn.init_reply))
+    application.add_handler(MessageHandler(None, admin.warn.set_max_warn))
+    application.add_handler(MessageHandler(None, admin.antiflood.set_antiflood))
+    application.add_handler(MessageHandler(None, admin.antistorm.set_antistorm))
 
 
 def owner_command(application: Application):
-    application.add_handler(CommandHandler("test", owner.test.command_test))
-    application.add_handler(CommandHandler("server", owner.server.init))
-    application.add_handler(CommandHandler("bl", owner.superban.init))
-    application.add_handler(CommandHandler("mbl", owner.superban.multi_superban))
-    application.add_handler(
-        CommandHandler("ubl", owner.superban.remove_superban_via_id)
-    )
-    application.add_handler(CommandHandler("owner", owner.add_owner.init))
+    application.add_handler(MessageHandler(None, owner.test.command_test))
+    application.add_handler(MessageHandler(None, owner.server.init))
+    application.add_handler(MessageHandler(None, owner.superban.init))
+    application.add_handler(MessageHandler(None, owner.superban.multi_superban))
+    application.add_handler(MessageHandler(None, owner.superban.remove_superban_via_id))
+    application.add_handler(MessageHandler(None, owner.add_owner.init))
 
 
 def user_command(application: Application):
-    application.add_handler(
-        CommandHandler("start", user.start.init, filters=filters.ChatType.PRIVATE)
-    )
-    application.add_handler(
-        CommandHandler("io", user.io.init, filters=filters.ChatType.PRIVATE)
-    )
-    application.add_handler(CommandHandler("help", user.help_command.init))
+    application.add_handler(MessageHandler(None, user.start.init))
+    application.add_handler(MessageHandler(None, user.io.init))
+    application.add_handler(MessageHandler(None, user.help_command.init))

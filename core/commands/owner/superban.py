@@ -10,7 +10,8 @@ from telegram.ext import ContextTypes
 
 from config import Session
 from core.database.models import SuperbanTable, Users, WhitelistTable
-from core.decorators import check_role, on_update
+from core.decorators import on_update
+from core.utilities import filters
 from core.utilities.enums import Role
 from core.utilities.logs import sys_loggers, telegram_loggers
 from core.utilities.menu import build_menu
@@ -73,8 +74,7 @@ async def new_superban(
     )
 
 
-@on_update()
-@check_role(Role.OWNER)
+@on_update(filters=filters.command(["bl"]) & filters.check_role(Role.OWNER))
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
 
@@ -185,8 +185,7 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
         await message(update, context, lang["SUPERBAN_ERROR_ID"])
 
 
-@on_update()
-@check_role(Role.OWNER)
+@on_update(filters=filters.command(["ubl"]) & filters.check_role(Role.OWNER))
 async def remove_superban_via_id(
     update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
 ):
@@ -210,8 +209,7 @@ async def remove_superban_via_id(
     await message(update, context, lang["SUPERBAN_REMOVE"].format_map(Text(params)))
 
 
-@on_update()
-@check_role(Role.OWNER)
+@on_update(filters=filters.command(["mbl"]) & filters.check_role(Role.OWNER))
 async def multi_superban(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     motivation = "MultiSuperban"

@@ -6,13 +6,15 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import ContextTypes
 
-from core.decorators import check_role, on_update
+from core.decorators import on_update
+from core.utilities import filters
 from core.utilities.enums import Role
 from core.utilities.telegram_update import TelegramUpdate
 
 
-@on_update()
-@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@on_update(
+    filters=filters.command(["test"]) & filters.check_role(Role.OWNER) & filters.private
+)
 async def command_test(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Please press the button below to choose a color via the WebApp.",

@@ -8,7 +8,8 @@ from telegram.error import BadRequest
 from telegram.ext import ContextTypes
 
 from core.database.models import Groups, Users
-from core.decorators import check_role, delete_command, on_update
+from core.decorators import delete_command, on_update
+from core.utilities import filters
 from core.utilities.enums import Role
 from core.utilities.logs import StringLog, sys_loggers, telegram_loggers
 from core.utilities.message import message
@@ -48,8 +49,12 @@ async def ban_user_from_id(
     return True
 
 
-@on_update()
-@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@on_update(
+    filters=filters.command(["ban"])
+    & filters.check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+    & filters.reply
+    & filters.group
+)
 @delete_command
 async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
@@ -82,8 +87,12 @@ async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
     await ban_user_from_id(update, user.id, context)
 
 
-@on_update()
-@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@on_update(
+    filters=filters.command(["ban"])
+    & filters.check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+    & ~filters.reply
+    & filters.group
+)
 @delete_command
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
@@ -106,8 +115,12 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
         await message(update, context, lang["BAN_SUCCESS"].format_map(Text(params)))
 
 
-@on_update()
-@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@on_update(
+    filters=filters.command(["setban"])
+    & filters.check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+    & ~filters.reply
+    & filters.group
+)
 @delete_command
 async def set_ban_message(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
@@ -120,8 +133,12 @@ async def set_ban_message(update: TelegramUpdate, context: ContextTypes.DEFAULT_
     await message(update, context, lang["SET_BAN_MESSAGE"])
 
 
-@on_update()
-@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@on_update(
+    filters=filters.command(["setban"])
+    & filters.check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+    & filters.reply
+    & filters.group
+)
 @delete_command
 async def set_ban_message_reply(
     update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE

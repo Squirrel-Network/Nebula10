@@ -10,12 +10,12 @@ import psutil
 from telegram import constants
 from telegram.ext import ContextTypes
 
-from core.decorators import check_role, delete_command
+from core.decorators import delete_command, on_update
+from core.utilities import filters
 from core.utilities.enums import Role
+from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
 from languages import get_lang
-from core.utilities.telegram_update import TelegramUpdate
-from core.decorators import on_update
 
 
 def get_size(num_bytes: int, suffix="B"):
@@ -101,8 +101,7 @@ async def get_message(update: TelegramUpdate) -> str:
     return msg
 
 
-@on_update()
-@check_role(Role.OWNER)
+@on_update(filters=filters.command(["server"]) & filters.check_role(Role.OWNER))
 @delete_command
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(

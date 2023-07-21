@@ -8,7 +8,8 @@ from telegram.ext import ContextTypes
 
 from config import Session
 from core.database.models import OwnerList
-from core.decorators import check_role, delete_command, on_update
+from core.decorators import delete_command, on_update
+from core.utilities import filters
 from core.utilities.enums import Role
 from core.utilities.message import message
 from core.utilities.telegram_update import TelegramUpdate
@@ -16,8 +17,7 @@ from core.utilities.text import Text
 from languages import get_lang
 
 
-@on_update()
-@check_role(Role.OWNER)
+@on_update(filters=filters.command(["owner"]) & filters.check_role(Role.OWNER))
 @delete_command
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)

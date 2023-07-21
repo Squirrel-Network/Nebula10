@@ -13,7 +13,7 @@ from core.utilities.telegram_update import TelegramUpdate
 from core.utilities import filters
 
 
-def on_update(priority: bool = False, filters: filters.Filter = filters.ALL):
+def on_update(priority: bool = False, filters: filters.Filter = filters.all):
     def decorator(func: typing.Callable):
         func.priority = priority
 

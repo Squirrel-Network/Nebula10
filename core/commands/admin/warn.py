@@ -8,7 +8,8 @@ from telegram.constants import ParseMode
 from telegram.ext import ContextTypes
 
 from core.database.models import Groups, GroupUsers
-from core.decorators import check_role, delete_command, on_update
+from core.decorators import delete_command, on_update
+from core.utilities import filters
 from core.utilities.enums import Role
 from core.utilities.menu import build_menu
 from core.utilities.message import message
@@ -36,8 +37,12 @@ SETTING_BUTTON = (
 )
 
 
-@on_update()
-@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@on_update(
+    filters=filters.command(["warn"])
+    & filters.check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+    & filters.reply
+    & filters.group
+)
 @delete_command
 async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
@@ -81,8 +86,11 @@ async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
     )
 
 
-@on_update()
-@check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+@on_update(
+    filters=filters.command(["setwarn"])
+    & filters.check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR)
+    & filters.group
+)
 @delete_command
 async def set_max_warn(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
