@@ -6,7 +6,7 @@
 from telegram.ext import Application, ChatMemberHandler, ContextTypes, MessageHandler
 
 from core.decorators import on_update
-from core.handlers import antiflood, error
+from core.handlers import antiflood, antistorm, error
 from core.handlers.chat_handlers import chat_status, welcome
 from core.handlers.user_handlers import user_status
 from core.utilities.telegram_update import TelegramUpdate
@@ -14,6 +14,7 @@ from core.utilities.telegram_update import TelegramUpdate
 
 def core_handlers(application: Application):
     application.add_handler(MessageHandler(None, antiflood.init))
+    application.add_handler(MessageHandler(None, antistorm.init))
     application.add_handler(
         ChatMemberHandler(welcome.new_member, ChatMemberHandler.CHAT_MEMBER)
     )

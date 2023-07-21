@@ -134,6 +134,17 @@ class _LeftChatMember(Filter):
 left_chat_member = _LeftChatMember()
 
 
+class _NewChatMembers(Filter):
+    async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
+        if not update.effective_message:
+            return False
+
+        return bool(update.effective_message.new_chat_members)
+
+
+new_chat_members = _NewChatMembers()
+
+
 class _NewChatTitle(Filter):
     async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
         if not update.effective_message:
