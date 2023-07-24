@@ -65,5 +65,12 @@
     "WARN_SETTING_SUCCESS": "Hai modificato il numero massimo di warn in questo gruppo in <code>{WARN_COUNT}</code>",
     "ANTIFLOOD_SETTING": "{GEAR} Impostazioni antiflood\n\n{SCROLL} Nome del gruppo: <i>{NAME}</i>\n{LABEL} ChatId: <code>{CHAT_ID}</code>",
     "ANTIFLOOD_ERROR": "Impossibile!",
-    "ANTISTORM_SETTING": "{GEAR} Impostazioni antistorm\n\n{SCROLL} Nome del gruppo: <i>{NAME}</i>\n{LABEL} ChatId: <code>{CHAT_ID}</code>"
+    "ANTISTORM_SETTING": "{GEAR} Impostazioni antistorm\n\n{SCROLL} Nome del gruppo: <i>{NAME}</i>\n{LABEL} ChatId: <code>{CHAT_ID}</code>",
+    "AUTOMATIC_HANDLER_USERNAME_KICK": "#Automatic Handler\n<code>{ID}</code> non ha un username! Sei stato espulso per sicurezza!",
+    "AUTOMATIC_HANDLER_USERNAME_WARNING": "#Automatic Handler\n<code>{ID}</code> non ha un username!",
+    "AUTOMATIC_HANDLER_USERNAME_MUTE": "#Automatic Handler\n<code>{ID}</code> non ha un username! Sei stato mutato per sicurezza!",
+    "AUTOMATIC_HANDLER_USERNAME_BAN": "#Automatic Handler\n<code>{ID}</code> è stato bannato perché non aveva un username.",
+    "AUTOMATIC_HANDLER_NO_PHOTO": "#Automatic Handler\n<code>{ID}</code> non ha una foto del profilo! Sei stato espulso per sicurezza!",
+    "AUTOMATIC_HANDLER_SUPERBAN": "#Automatic Handler\nHo super bannato <a href=\"tg://user?id={ID}\">{NAME}</a> <code>[{ID}]</code>\nPer la seguente ragione: {REASON}",
+    "AUTOMATIC_HANDLER_MAX_WARN": "#Automatic Handler\n<code>{ID}</code> ha raggiunto il numero massimo di avvisi."
 }

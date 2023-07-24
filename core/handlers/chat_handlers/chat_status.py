@@ -54,7 +54,7 @@ async def new_chat_photo_handler(
 
 
 # this function has the task of saving in the database the updates for the calculation of messages
-@on_update(True, filters.group & ~filters.left_chat_member)
+@on_update(True, filters.group & ~filters.service)
 async def check_updates(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_message.from_user
     chat = update.effective_chat
