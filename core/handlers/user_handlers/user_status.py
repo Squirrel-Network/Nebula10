@@ -9,7 +9,13 @@ from core.database.models import Groups, GroupUsers, SuperbanTable
 from core.decorators import on_update
 from core.utilities import filters
 from core.utilities.enums import Role
-from core.utilities.functions import ban_user, kick_user, mute_user, save_user
+from core.utilities.functions import (
+    ban_user,
+    check_group_badwords,
+    kick_user,
+    mute_user,
+    save_user,
+)
 from core.utilities.message import message
 from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
@@ -36,7 +42,7 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 
     superban = await SuperbanTable.get_or_none(user_id=user.id)
     group = await Groups.get(id_group=chat.id)
-    user_data = GroupUsers.get_or_none(tg_id=user.id, tg_group_id=chat.id)
+    user_data = await GroupUsers.get_or_none(tg_id=user.id, tg_group_id=chat.id)
 
     params = {"id": user.id, "name": user.first_name}
 
@@ -47,7 +53,7 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
             update, context, lang["AUTOMATIC_HANDLER_SUPERBAN"].format_map(Text(params))
         )
         await ban_user(chat.id, user.id, context)
-        await update.message.delete()
+        await update.effective_message.delete()
         return
 
     elif not user.username and (action := group.type_no_username) in NO_USERNAME_ACTION:
@@ -80,5 +86,14 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
             update, context, lang["AUTOMATIC_HANDLER_MAX_WARN"].format_map(Text(params))
         )
         return
+
+    # This function checks the badwords of the group
+    elif await check_group_badwords(update):
+        await update.effective_message.delete()
+        await message(
+            update,
+            context,
+            lang["AUTOMATIC_HANDLER_BAD_WORD"].format_map(Text(params)),
+        )
 
     await save_user(user, chat)

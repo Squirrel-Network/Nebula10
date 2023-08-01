@@ -72,5 +72,6 @@
     "AUTOMATIC_HANDLER_USERNAME_BAN": "#Automatic Handler\n<code>{ID}</code> was banned because they didn't have an username",
     "AUTOMATIC_HANDLER_NO_PHOTO": "#Automatic Handler\n<code>{ID}</code> set a profile picture! You were kicked for safety!",
     "AUTOMATIC_HANDLER_SUPERBAN": "#Automatic Handler\nI got super banned <a href=\"tg://user?id={ID}\">{NAME}</a> <code>[{ID}]</code>\nFor the following Reason: {REASON}",
-    "AUTOMATIC_HANDLER_MAX_WARN": "#Automatic Handler\n<code>{ID}</code> has reached the maximum number of warns"
+    "AUTOMATIC_HANDLER_MAX_WARN": "#Automatic Handler\n<code>{ID}</code> has reached the maximum number of warns",
+    "AUTOMATIC_HANDLER_BAD_WORD": "<b>#Automatic handler:</b>\n<code>{ID}</code> You used a forbidden word!"
 }

@@ -3,15 +3,13 @@
 
 # Copyright SquirrelNetwork
 
-import datetime
-
 from telegram.ext import ContextTypes
 
 from config import Session
 from core.database.models import Groups, NebulaUpdates
 from core.decorators import on_update
 from core.utilities import filters
-from core.utilities.functions import check_group_badwords
+from core.utilities.functions import check_group_badwords, save_group
 from core.utilities.logs import telegram_debug_channel
 from core.utilities.message import message
 from core.utilities.telegram_update import TelegramUpdate
@@ -58,27 +56,19 @@ async def new_chat_photo_handler(
 async def check_updates(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_message.from_user
     chat = update.effective_chat
-    date = datetime.datetime.utcnow().isoformat()
     group_members_count = await chat.get_member_count()
 
-    await Groups.filter(id_group=chat.id).update(updated_at=date)
+    # Save group if not exist
+    await save_group(chat.id, chat.title)
+
+    # Save update
     await NebulaUpdates.get_or_create(
         update_id=update.update_id,
         message_id=update.effective_message.message_id,
         tg_group_id=chat.id,
         tg_user_id=user.id,
-        date=date,
     )
 
     # This function saves the number of users in the group in the database
     if group_members_count > 0:
         await Groups.filter(id_group=chat.id).update(total_users=group_members_count)
-
-    # This function checks the badwords of the group
-    if await check_group_badwords(update, chat.id):
-        await update.effective_message.delete()
-        await message(
-            update,
-            context,
-            f"<b>#Automatic handler:</b>\n<code>{user.id}</code> You used a forbidden word!",
-        )

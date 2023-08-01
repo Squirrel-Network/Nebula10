@@ -13,7 +13,7 @@ class NebulaUpdates(Model):
     message_id = fields.BigIntField()
     tg_group_id = fields.BigIntField()
     tg_user_id = fields.BigIntField()
-    date = fields.DatetimeField()
+    date = fields.DatetimeField(auto_now=True)
 
     class Meta:
         table = "nebula_updates"
