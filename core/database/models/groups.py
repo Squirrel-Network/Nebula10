@@ -32,7 +32,8 @@ class Groups(Model):
     type_no_username = fields.IntField(default=1)
     log_channel = fields.BigIntField()
     group_photo = fields.CharField(
-        255, default="https://naos.hersel.it/group_photo/default.jpg"
+        255,
+        default="https://nebula.squirrel-network.online/static/group_photo/default.jpg",
     )
     total_users = fields.IntField(default=0)
     zip_filter = fields.BooleanField(default=False)
