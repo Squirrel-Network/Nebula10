@@ -73,5 +73,5 @@
     "AUTOMATIC_HANDLER_NO_PHOTO": "#Automatic Handler\n<code>{ID}</code> non ha una foto del profilo! Sei stato espulso per sicurezza!",
     "AUTOMATIC_HANDLER_SUPERBAN": "#Automatic Handler\nHo super bannato <a href=\"tg://user?id={ID}\">{NAME}</a> <code>[{ID}]</code>\nPer la seguente ragione: {REASON}",
     "AUTOMATIC_HANDLER_MAX_WARN": "#Automatic Handler\n<code>{ID}</code> ha raggiunto il numero massimo di avvisi.",
-    "AUTOMATIC_HANDLER_BAD_WORD": "<b>#Automatic handler:</b>\n<code>{ID}</code> You used a forbidden word!"
+    "AUTOMATIC_HANDLER_BAD_WORD": "<b>#Automatic handler:</b>\n<code>{ID}</code> Hai usato una parola proibita!"
 }
