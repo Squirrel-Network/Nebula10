@@ -175,13 +175,20 @@ class command(Filter):
         self, update: Update, context: ContextTypes.DEFAULT_TYPE
     ) -> bool:
         text = update.effective_message.text
+        command = [
+            text[0 : x.length]
+            for x in update.effective_message.entities
+            if x.offset == 0
+        ]
 
-        if not text:
+        if not text or not command:
             return False
+
+        command = command[0].replace(f"@{context.bot.username}", "")
 
         return any(
             map(
-                lambda x: f"/{x}" == text.replace(f"@{context.bot.username}", ""),
+                lambda x: f"/{x}" == command,
                 self.prefix,
             )
         )

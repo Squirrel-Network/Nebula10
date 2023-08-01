@@ -33,6 +33,8 @@ def admin_command(application: Application):
     application.add_handler(MessageHandler(None, admin.warn.set_max_warn))
     application.add_handler(MessageHandler(None, admin.antiflood.set_antiflood))
     application.add_handler(MessageHandler(None, admin.antistorm.set_antistorm))
+    application.add_handler(MessageHandler(None, admin.set_welcome.set_welcome))
+    application.add_handler(MessageHandler(None, admin.set_welcome.set_welcome_reply))
 
 
 def owner_command(application: Application):
