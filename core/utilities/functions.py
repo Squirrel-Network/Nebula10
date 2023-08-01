@@ -7,6 +7,7 @@ import time
 
 from telegram import Chat, InlineKeyboardButton, InlineKeyboardMarkup, Update, User
 from telegram.ext import ContextTypes
+from tortoise.exceptions import ValidationError
 
 from config import Session
 from core.database.models import Groups, GroupsBadwords, GroupUsers, OwnerList, Users
@@ -84,13 +85,16 @@ async def get_keyboard_settings(chat_id: int) -> InlineKeyboardMarkup:
 
 
 # Check Badwords in chat
-async def check_group_badwords(update: Update):
+async def check_group_badwords(update: Update) -> bool:
     bad_word = update.effective_message.text or update.effective_message.caption
 
     if bad_word is not None:
-        return await GroupsBadwords.exists(
-            tg_group_id=update.effective_chat.id, word=bad_word
-        )
+        try:
+            return await GroupsBadwords.exists(
+                tg_group_id=update.effective_chat.id, word=bad_word
+            )
+        except ValidationError:
+            return False
 
 
 async def mute_user_by_id_time(
