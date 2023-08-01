@@ -12,7 +12,7 @@
     "FILTER_NAME": "Non-Latin filter activated for the user <a href=\"tg://user?id={ID}\">{NAME}</a>",
     "HELP_COMMAND": "Hi my name is {NAME}\nDo You need Help?",
     "LANG_DEFAULT": "en",
-    "LANG_FLAG": "{FLAG_ENGLAND}",
+    "LANG_FLAG": "{FLAG_UNITED_KINGDOM}",
     "LANG_SELECTED": "You have selected the English language for your group",
     "MAIN_TEXT_SETTINGS": "{GEAR} Bot settings\n\n{SCROLL} Group Name: <i>{NAME}</i>\n{LABEL} ChatId: <code>{ID}</code>",
     "MESSAGE_DM_FILTERS": "The bot has sent you a private message with the filter settings.",

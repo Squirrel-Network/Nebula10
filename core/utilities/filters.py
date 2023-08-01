@@ -171,13 +171,20 @@ class command(Filter):
     def __init__(self, prefix: list[str]) -> None:
         self.prefix = prefix
 
-    async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
+    async def __call__(
+        self, update: Update, context: ContextTypes.DEFAULT_TYPE
+    ) -> bool:
         text = update.effective_message.text
 
         if not text:
             return False
 
-        return any(map(lambda x: f"/{x}" == text, self.prefix))
+        return any(
+            map(
+                lambda x: f"/{x}" == text.replace(f"@{context.bot.username}", ""),
+                self.prefix,
+            )
+        )
 
 
 class check_role(Filter):
