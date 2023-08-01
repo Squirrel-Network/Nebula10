@@ -3,24 +3,45 @@
 
 # Copyright SquirrelNetwork
 
-from pydantic import BaseSettings
+import os
+import typing
 
-LIST_ENV = (
-    ("HOST", "MYSQL_HOST"),
-    ("PORT", "MYSQL_PORT"),
-    ("USER", "MYSQL_USER"),
-    ("PASSWORD", "MYSQL_PASSWORD"),
-    ("DBNAME", "MYSQL_DBNAME"),
-    ("BOT_TOKEN", "TOKEN"),
-    ("TOKEN_SECRET", "TOKEN_SECRET"),
-    ("DEFAULT_WELCOME", "TG_DEFAULT_WELCOME"),
-    ("DEFAULT_RULES", "TG_DEFAULT_RULES"),
-    ("DEFAULT_LOG_CHANNEL", "TG_DEFAULT_LOG_CHANNEL"),
-    ("DEFAULT_STAFF_GROUP", "TG_DEFAULT_STAFF_GROUP"),
-    ("DEFAULT_DEBUG_CHANNEL", "TG_DEFAULT_DEBUG_CHANNEL"),
-    ("OWNER_ID", "TG_OWNER_ID"),
-    ("OWNER_USERNAME", "TG_OWNER_USERNAME"),
+from pydantic.fields import FieldInfo
+from pydantic_settings import (
+    BaseSettings,
+    EnvSettingsSource,
+    PydanticBaseSettingsSource,
 )
+
+LIST_ENV = {
+    "HOST": "MYSQL_HOST",
+    "PORT": "MYSQL_PORT",
+    "USER": "MYSQL_USER",
+    "PASSWORD": "MYSQL_PASSWORD",
+    "DBNAME": "MYSQL_DBNAME",
+    "BOT_TOKEN": "TOKEN",
+    "TOKEN_SECRET": "TOKEN_SECRET",
+    "DEFAULT_WELCOME": "TG_DEFAULT_WELCOME",
+    "DEFAULT_RULES": "TG_DEFAULT_RULES",
+    "DEFAULT_LOG_CHANNEL": "TG_DEFAULT_LOG_CHANNEL",
+    "DEFAULT_STAFF_GROUP": "TG_DEFAULT_STAFF_GROUP",
+    "DEFAULT_DEBUG_CHANNEL": "TG_DEFAULT_DEBUG_CHANNEL",
+    "OWNER_ID": "TG_OWNER_ID",
+    "OWNER_USERNAME": "TG_OWNER_USERNAME",
+}
+
+
+class MyCustomSource(EnvSettingsSource):
+    def prepare_field_value(
+        self,
+        field_name: str,
+        field: FieldInfo,
+        value: typing.Any,
+        value_is_complex: bool,
+    ) -> typing.Any:
+        if v := os.environ.get(LIST_ENV.get(field_name) or ""):
+            return v
+        return value
 
 
 class Config(BaseSettings):
@@ -55,5 +76,13 @@ class Config(BaseSettings):
     OWNER_ID: int
     OWNER_USERNAME: str
 
-    class Config:
-        fields = {name: {"env": env} for name, env in LIST_ENV}
+    @classmethod
+    def settings_customise_sources(
+        cls,
+        settings_cls: type[BaseSettings],
+        init_settings: PydanticBaseSettingsSource,
+        env_settings: PydanticBaseSettingsSource,
+        dotenv_settings: PydanticBaseSettingsSource,
+        file_secret_settings: PydanticBaseSettingsSource,
+    ) -> tuple[PydanticBaseSettingsSource, ...]:
+        return (MyCustomSource(settings_cls),)
