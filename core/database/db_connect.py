@@ -24,6 +24,7 @@ async def init_db():
                         "user": conf.USER,
                         "password": conf.PASSWORD,
                         "database": conf.DBNAME,
+                        "pool_recycle": 3600,
                     },
                 }
             },
