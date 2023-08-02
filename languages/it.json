@@ -75,5 +75,9 @@
     "AUTOMATIC_HANDLER_MAX_WARN": "#Automatic Handler\n<code>{ID}</code> ha raggiunto il numero massimo di avvisi.",
     "AUTOMATIC_HANDLER_BAD_WORD": "<b>#Automatic handler:</b>\n<code>{ID}</code> Hai usato una parola proibita!",
     "SET_WELCOME_ERROR": "<b>Istruzioni per il benvenuto del Gruppo:</b>\nDovete utilizzare il comando in questo modo <code>/welcome args</code>\ndove args è il testo che dovete inserire\nè possibilie utilizzare dei tag speciali che vengono interpretati dal bot:\n<code>{username} = username utente\n{chat} = nome del gruppo\n{first_name} = nome utente\n{userid} = id utente\n{mention} = menzione utente</code>\nè possibile utilizzare anche i tag HTML\n<code>b , i, code</code>\ne possono essere usate anche le Emoji\n\n<b>ESEMPIO:</b>\n<code>Benvenuto {username} in {chat}</code>",
-    "SET_WELCOME_SUCCESS": "Ho modificato il welcome del gruppo!\nse vuoi un aiuto digita <code>/welcome</code> senza nessun messaggio"
+    "SET_WELCOME_SUCCESS": "Ho modificato il welcome del gruppo!\nse vuoi un aiuto digita <code>/welcome</code> senza nessun messaggio",
+    "SET_RULES_ERROR": "Il messaggio è vuoto! Il formato corretto è: <code>/setrules args</code>",
+    "SET_RULES_SUCCESS": "Hai cambiato correttamente le regole del gruppo!",
+    "RULES_MSG": "{SCROLL} Regole di: {NAME} [<code>{ID}</code>]",
+    "RULES_BUTTON": "{PLAY_BUTTON} Regole {REVERSE_BUTTON}"
 }

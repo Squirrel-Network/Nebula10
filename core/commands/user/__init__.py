@@ -3,6 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-__all__ = ("help_command", "io", "start")
+__all__ = ("help_command", "io", "rules", "start")
 
-from . import help_command, io, start
+from . import help_command, io, rules, start

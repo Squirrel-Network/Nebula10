@@ -5,9 +5,8 @@
 
 from telegram.ext import Application, CallbackQueryHandler
 
-from core.callback_query import admin
+from core.callback_query import admin, user
 from core.callback_query.owner import owner, superban
-from core.callback_query.user import close
 
 
 def owner_callback(application: Application):
@@ -72,4 +71,5 @@ def admin_callback(application: Application):
 
 
 def user_callback(application: Application):
-    application.add_handler(CallbackQueryHandler(close.init, r"^close$"))
+    application.add_handler(CallbackQueryHandler(user.close.init, r"^close$"))
+    application.add_handler(CallbackQueryHandler(user.rules.init, r"^rules\|open$"))

@@ -78,3 +78,7 @@ class Lang(typing.TypedDict):
     AUTOMATIC_HANDLER_BAD_WORD: str
     SET_WELCOME_ERROR: str
     SET_WELCOME_SUCCESS: str
+    SET_RULES_ERROR: str
+    SET_RULES_SUCCESS: str
+    RULES_MSG: str
+    RULES_BUTTON: str

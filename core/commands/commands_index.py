@@ -35,6 +35,7 @@ def admin_command(application: Application):
     application.add_handler(MessageHandler(None, admin.antistorm.set_antistorm))
     application.add_handler(MessageHandler(None, admin.set_welcome.set_welcome))
     application.add_handler(MessageHandler(None, admin.set_welcome.set_welcome_reply))
+    application.add_handler(MessageHandler(None, admin.set_rules.set_rules))
 
 
 def owner_command(application: Application):
@@ -50,3 +51,4 @@ def user_command(application: Application):
     application.add_handler(MessageHandler(None, user.start.init))
     application.add_handler(MessageHandler(None, user.io.init))
     application.add_handler(MessageHandler(None, user.help_command.init))
+    application.add_handler(MessageHandler(None, user.rules.rules))

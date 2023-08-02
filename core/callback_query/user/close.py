@@ -11,7 +11,4 @@ from core.utilities.telegram_update import TelegramUpdate
 
 @on_update()
 async def init(update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-
-    if query.data == "close":
-        await query.message.delete()
+    await update.callback_query.message.delete()
