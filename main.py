@@ -4,6 +4,7 @@
 # Copyright SquirrelNetwork
 
 import sys
+import logging
 
 from dotenv import load_dotenv
 from loguru import logger
@@ -34,6 +35,24 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 10:
 
 FMT = "<green>[{time}]</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
 HANDLER_OFFSET = 2
+
+
+fmt = logging.Formatter(
+    fmt="%(asctime)s - %(name)s:%(lineno)d - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+
+fh = logging.FileHandler("db.log")
+fh.setLevel(logging.DEBUG)
+fh.setFormatter(fmt)
+
+logger_db_client = logging.getLogger("tortoise.db_client")
+logger_db_client.setLevel(logging.DEBUG)
+logger_db_client.addHandler(fh)
+
+logger_tortoise = logging.getLogger("tortoise")
+logger_tortoise.setLevel(logging.DEBUG)
+logger_tortoise.addHandler(fh)
 
 
 async def separate_handlers(app: Application):
