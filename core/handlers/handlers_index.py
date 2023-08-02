@@ -11,6 +11,7 @@ from core.handlers.user_handlers import user_status
 
 
 def core_handlers(application: Application):
+    application.add_handler(MessageHandler(None, chat_status.change_group_info))
     application.add_handler(
         MessageHandler(
             None,

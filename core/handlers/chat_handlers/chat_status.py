@@ -51,15 +51,25 @@ async def new_chat_photo_handler(
     )
 
 
-# this function has the task of saving in the database the updates for the calculation of messages
-@on_update(True, filters.group & ~filters.service)
-async def check_updates(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
-    user = update.effective_message.from_user
+# This function change data into Groups table
+@on_update(True, filters.group)
+async def change_group_info(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     chat = update.effective_chat
     group_members_count = await chat.get_member_count()
 
     # Save group if not exist
     await save_group(chat.id, chat.title)
+
+    # This function saves the number of users in the group in the database
+    if group_members_count > 0:
+        await Groups.filter(id_group=chat.id).update(total_users=group_members_count)
+
+
+# this function has the task of saving in the database the updates for the calculation of messages
+@on_update(True, filters.group & ~filters.service)
+async def check_updates(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_message.from_user
+    chat = update.effective_chat
 
     # Save update
     await NebulaUpdates.get_or_create(
@@ -68,7 +78,3 @@ async def check_updates(update: TelegramUpdate, context: ContextTypes.DEFAULT_TY
         tg_group_id=chat.id,
         tg_user_id=user.id,
     )
-
-    # This function saves the number of users in the group in the database
-    if group_members_count > 0:
-        await Groups.filter(id_group=chat.id).update(total_users=group_members_count)
