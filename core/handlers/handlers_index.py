@@ -6,7 +6,7 @@
 from telegram.ext import Application, ChatMemberHandler, MessageHandler
 
 from core.handlers import antiflood, antistorm, error
-from core.handlers.chat_handlers import chat_status, welcome
+from core.handlers.chat_handlers import chat_status, filters, welcome
 from core.handlers.user_handlers import user_status
 
 
@@ -41,4 +41,5 @@ def core_handlers(application: Application):
     application.add_handler(
         ChatMemberHandler(welcome.welcome_bot, ChatMemberHandler.MY_CHAT_MEMBER)
     )
+    application.add_handler(MessageHandler(None, filters.filters_chat))
     application.add_error_handler(error.init)

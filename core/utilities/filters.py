@@ -98,6 +98,14 @@ class _User(Filter):
 user = _User()
 
 
+class _Document(Filter):
+    async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
+        return bool(update.effective_message and update.effective_message.document)
+
+
+document = _Document()
+
+
 class _Reply(Filter):
     async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
         return bool(

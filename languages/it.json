@@ -79,5 +79,12 @@
     "SET_RULES_ERROR": "Il messaggio è vuoto! Il formato corretto è: <code>/setrules args</code>",
     "SET_RULES_SUCCESS": "Hai cambiato correttamente le regole del gruppo!",
     "RULES_MSG": "{SCROLL} Regole di: {NAME} [<code>{ID}</code>]",
-    "RULES_BUTTON": "{PLAY_BUTTON} Regole {REVERSE_BUTTON}"
+    "RULES_BUTTON": "{PLAY_BUTTON} Regole {REVERSE_BUTTON}",
+    "AUTOMATIC_FILTER_HANDLER_APK": "#Automatic Filter Handler: <b>Nessun APK consentito!</b>",
+    "AUTOMATIC_FILTER_HANDLER_DOCX": "#Automatic Filter Handler: <b>Nessun DOC/DOCX consentito!</b>",
+    "AUTOMATIC_FILTER_HANDLER_EXE": "#Automatic Filter Handler: <b>Nessun EXE consentito!</b>",
+    "AUTOMATIC_FILTER_HANDLER_GIF": "#Automatic Filter Handler: <b>Nessun GIF consentito!</b>",
+    "AUTOMATIC_FILTER_HANDLER_JPG": "#Automatic Filter Handler: <b>Nessun JPG consentito!</b>",
+    "AUTOMATIC_FILTER_HANDLER_TARGZ": "#Automatic Filter Handler: <b>Nessun TARGZ consentito!</b>",
+    "AUTOMATIC_FILTER_HANDLER_ZIP": "#Automatic Filter Handler: <b>Nessun ZIP consentito!</b>"
 }
