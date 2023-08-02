@@ -66,9 +66,9 @@ async def change_group_info(update: TelegramUpdate, context: ContextTypes.DEFAUL
 
 
 # this function has the task of saving in the database the updates for the calculation of messages
-@on_update(True, filters.group & ~filters.service)
+@on_update(True, filters.group & ~filters.service & filters.user)
 async def check_updates(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
-    user = update.effective_message.from_user
+    user = update.effective_user
     chat = update.effective_chat
 
     # Save update

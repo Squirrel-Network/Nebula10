@@ -90,6 +90,14 @@ class _Private(Filter):
 private = _Private()
 
 
+class _User(Filter):
+    async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
+        return bool(update.effective_user)
+
+
+user = _User()
+
+
 class _Reply(Filter):
     async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
         return bool(

@@ -42,7 +42,8 @@ async def is_storm(chat_id: int) -> bool:
     True,
     filters.group
     & ~filters.check_role(Role.OWNER, Role.ADMINISTRATOR, Role.CREATOR)
-    & filters.new_chat_members,
+    & filters.new_chat_members
+    & filters.user,
 )
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
