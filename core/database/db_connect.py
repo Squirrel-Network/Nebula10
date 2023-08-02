@@ -25,6 +25,7 @@ async def init_db():
                         "password": conf.PASSWORD,
                         "database": conf.DBNAME,
                         "pool_recycle": 3600,
+                        "connect_timeout": 3600,
                     },
                 }
             },
