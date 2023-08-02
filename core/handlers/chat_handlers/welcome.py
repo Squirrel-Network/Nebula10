@@ -128,7 +128,10 @@ async def welcome_user(
 
 @on_update(True)
 async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
-    if not update.chat_member.new_chat_member.status == ChatMemberStatus.MEMBER:
+    if (
+        not update.chat_member.new_chat_member.status == ChatMemberStatus.MEMBER
+        and update.chat_member.old_chat_member.status == ChatMemberStatus.LEFT
+    ):
         return
 
     data = await Groups.get(id_group=update.effective_chat.id).values()

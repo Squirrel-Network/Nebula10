@@ -25,7 +25,9 @@ def core_handlers(application: Application):
         )
     )
     application.add_handler(MessageHandler(None, antiflood.init))
-    application.add_handler(MessageHandler(None, antistorm.init))
+    application.add_handler(
+        ChatMemberHandler(antistorm.init, ChatMemberHandler.CHAT_MEMBER)
+    )
     application.add_handler(
         ChatMemberHandler(welcome.new_member, ChatMemberHandler.CHAT_MEMBER)
     )

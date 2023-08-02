@@ -5,6 +5,7 @@
 
 import time
 
+from telegram.constants import ChatMemberStatus
 from telegram.ext import ApplicationHandlerStop, ContextTypes
 
 from config import Session
@@ -38,14 +39,14 @@ async def is_storm(chat_id: int) -> bool:
     return tot_income > data.antistorm_max_users
 
 
-@on_update(
-    True,
-    filters.group
-    & ~filters.check_role(Role.OWNER, Role.ADMINISTRATOR, Role.CREATOR)
-    & filters.new_chat_members
-    & filters.user,
-)
+@on_update(True, ~filters.check_role(Role.OWNER, Role.ADMINISTRATOR, Role.CREATOR))
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
+    if (
+        not update.chat_member.new_chat_member.status == ChatMemberStatus.MEMBER
+        and update.chat_member.old_chat_member.status == ChatMemberStatus.LEFT
+    ):
+        return
+
     chat_id = update.effective_chat.id
 
     if len(Session.antistorm) > (
