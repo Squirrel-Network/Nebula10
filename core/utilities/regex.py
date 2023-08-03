@@ -34,4 +34,8 @@ class Regex:
 
     @classmethod
     def is_snake_case(cls, data: str) -> bool:
-        return bool(re.match(cls.HAS_SNAKE_CASE, data))
+        return bool(re.search(cls.HAS_SNAKE_CASE, data))
+
+    @classmethod
+    def is_url(cls, data: str) -> bool:
+        return bool(re.search(cls.HAS_URL, data))

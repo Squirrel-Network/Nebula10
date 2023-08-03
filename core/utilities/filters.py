@@ -106,6 +106,14 @@ class _Document(Filter):
 document = _Document()
 
 
+class _Text(Filter):
+    async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
+        return bool(update.effective_message and update.effective_message.text)
+
+
+text = _Text()
+
+
 class _Reply(Filter):
     async def __call__(self, update: Update, _: ContextTypes.DEFAULT_TYPE) -> bool:
         return bool(
@@ -229,3 +237,20 @@ class check_role(Filter):
             return True
 
         return False
+
+
+class check_status(Filter):
+    def __init__(self, status: str) -> None:
+        self.status = status
+
+    async def __call__(
+        self, update: Update, context: ContextTypes.DEFAULT_TYPE
+    ) -> bool:
+        status = Session.status.get(
+            f"{update.effective_user.id}-{update.effective_chat.id}"
+        )
+
+        if not status:
+            return False
+
+        return self.status == status["status"]

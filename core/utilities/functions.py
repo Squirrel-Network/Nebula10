@@ -131,6 +131,14 @@ async def get_welcome_buttons(chat_id: int):
             ]
         )
 
+    result.append(
+        [
+            InlineKeyboardButton(
+                "Close {WASTEBASKET}".format_map(Text()), callback_data="close"
+            )
+        ]
+    )
+
     return InlineKeyboardMarkup(result)
 
 
