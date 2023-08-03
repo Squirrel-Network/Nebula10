@@ -87,5 +87,6 @@
     "AUTOMATIC_FILTER_HANDLER_JPG": "#Automatic Filter Handler: <b>No JPG Allowed!</b>",
     "AUTOMATIC_FILTER_HANDLER_TARGZ": "#Automatic Filter Handler: <b>No TARGZ Allowed!</b>",
     "AUTOMATIC_FILTER_HANDLER_ZIP": "#Automatic Filter Handler: <b>No ZIP Allowed!</b>",
-    "SET_WELCOME_BUTTONS": "Use this menu to modify the welcome message buttons to your liking:"
+    "SET_WELCOME_BUTTONS": "Use this menu to modify the welcome message buttons to your liking:",
+    "SET_WELCOME_BUTTONS_ADD": "Enter the button name and url\nExample: NAME - URL"
 }

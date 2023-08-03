@@ -115,7 +115,7 @@ async def get_welcome_buttons(chat_id: int):
             tmp.append(
                 InlineKeyboardButton(
                     "{PLUS}".format_map(Text()),
-                    callback_data=f"welcome|buttons|add|{column['row']}",
+                    callback_data=f"welcome|buttons|add|{column['row']}|{column['column'] + 1}",
                 )
             )
 
@@ -125,7 +125,8 @@ async def get_welcome_buttons(chat_id: int):
         result.append(
             [
                 InlineKeyboardButton(
-                    "{PLUS}".format_map(Text()), callback_data="welcome|buttons|add"
+                    "{PLUS}".format_map(Text()),
+                    callback_data=f"welcome|buttons|add|{column['row'] + 1}|0",
                 )
             ]
         )

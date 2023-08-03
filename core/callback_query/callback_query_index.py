@@ -75,6 +75,12 @@ def admin_callback(application: Application):
             r"^welcome\|buttons\|del\|\d\|\d$",
         )
     )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.set_welcome_buttons.add_welcome_buttons,
+            r"^welcome\|buttons\|add\|\d\|\d$",
+        )
+    )
 
 
 def user_callback(application: Application):

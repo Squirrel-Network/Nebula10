@@ -41,8 +41,8 @@ async def is_storm(chat_id: int) -> bool:
 
 @on_update(True, ~filters.check_role(Role.OWNER, Role.ADMINISTRATOR, Role.CREATOR))
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
-    if (
-        not update.chat_member.new_chat_member.status == ChatMemberStatus.MEMBER
+    if not (
+        update.chat_member.new_chat_member.status == ChatMemberStatus.MEMBER
         and update.chat_member.old_chat_member.status == ChatMemberStatus.LEFT
     ):
         return
