@@ -3,19 +3,14 @@
 
 # Copyright SquirrelNetwork
 
-import json
+import itertools
 
-from telegram import (
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    Update,
-    User,
-)
-from telegram.ext import ContextTypes
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, User
 from telegram.constants import ChatMemberStatus
+from telegram.ext import ContextTypes
 
 from config import Session
-from core.database.models import Groups, SuperbanTable
+from core.database.models import Groups, GroupWelcomeButtons, SuperbanTable
 from core.decorators import on_update
 from core.utilities.functions import (
     ban_user,
@@ -106,9 +101,14 @@ async def welcome_user(
     member: User,
     data: dict,
 ):
+    buttons = (
+        await GroupWelcomeButtons.filter(chat_id=update.effective_chat.id)
+        .order_by("row", "column")
+        .values()
+    )
     buttons = [
-        InlineKeyboardButton(x["title"], url=x["url"])
-        for x in json.loads(data["welcome_buttons"])["buttons"]
+        [InlineKeyboardButton(column["text"], column["url"]) for column in row]
+        for _, row in itertools.groupby(buttons, key=lambda x: x["row"])
     ]
     params = {
         "first_name": member.first_name,
@@ -122,7 +122,7 @@ async def welcome_user(
         update,
         context,
         data["welcome_text"].format_map(Text(params)),
-        reply_markup=InlineKeyboardMarkup(build_menu(buttons, 2)),
+        reply_markup=InlineKeyboardMarkup(buttons),
     )
 
 

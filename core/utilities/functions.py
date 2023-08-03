@@ -3,6 +3,7 @@
 
 # Copyright SquirrelNetwork
 
+import itertools
 import time
 
 from telegram import Chat, InlineKeyboardButton, InlineKeyboardMarkup, Update, User
@@ -10,9 +11,17 @@ from telegram.ext import ContextTypes
 from tortoise.exceptions import ValidationError
 
 from config import Session
-from core.database.models import Groups, GroupsBadwords, GroupUsers, OwnerList, Users
+from core.database.models import (
+    Groups,
+    GroupsBadwords,
+    GroupUsers,
+    GroupWelcomeButtons,
+    OwnerList,
+    Users,
+)
 from core.utilities.constants import BUTTONS_MENU, PERM_FALSE
 from core.utilities.menu import build_menu
+from core.utilities.text import Text
 
 
 async def get_owner_list() -> list[int]:
@@ -82,6 +91,46 @@ async def get_keyboard_settings(chat_id: int) -> InlineKeyboardMarkup:
     )
 
     return InlineKeyboardMarkup(build_menu(buttons, 2))
+
+
+async def get_welcome_buttons(chat_id: int):
+    result = []
+    buttons = (
+        await GroupWelcomeButtons.filter(chat_id=chat_id)
+        .order_by("row", "column")
+        .values()
+    )
+
+    for _, row in itertools.groupby(buttons, key=lambda x: x["row"]):
+        tmp = []
+        for column in row:
+            tmp.append(
+                InlineKeyboardButton(
+                    column["text"],
+                    callback_data=f"welcome|buttons|del|{column['row']}|{column['column']}",
+                )
+            )
+
+        if len(tmp) < Session.config.MAX_KEYBOARD_COLUMN:
+            tmp.append(
+                InlineKeyboardButton(
+                    "{PLUS}".format_map(Text()),
+                    callback_data=f"welcome|buttons|add|{column['row']}",
+                )
+            )
+
+        result.append(tmp)
+
+    if len(result) < Session.config.MAX_KEYBOARD_ROW:
+        result.append(
+            [
+                InlineKeyboardButton(
+                    "{PLUS}".format_map(Text()), callback_data="welcome|buttons|add"
+                )
+            ]
+        )
+
+    return InlineKeyboardMarkup(result)
 
 
 # Check Badwords in chat

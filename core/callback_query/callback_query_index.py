@@ -68,6 +68,13 @@ def admin_callback(application: Application):
             admin.antistorm.set_antistorm_success, r"^antistorm\|success$"
         )
     )
+    # Welcome button
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.set_welcome_buttons.del_welcome_buttons,
+            r"^welcome\|buttons\|del\|\d\|\d$",
+        )
+    )
 
 
 def user_callback(application: Application):

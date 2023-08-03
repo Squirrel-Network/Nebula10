@@ -3,6 +3,8 @@
 
 # Copyright SquirrelNetwork
 
+import collections
+
 from expiringdict import ExpiringDict
 from telegram.ext import ExtBot
 
@@ -17,3 +19,4 @@ class Session:
     owner_ids: list[int]
     antiflood: ExpiringDict[str, int] = ExpiringDict(1000, 11)
     antistorm: ExpiringDict[str, int] = ExpiringDict(1000, 11)
+    status: collections.defaultdict[str, dict] = collections.defaultdict(dict)
