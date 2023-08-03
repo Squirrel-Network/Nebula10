@@ -86,5 +86,6 @@
     "AUTOMATIC_FILTER_HANDLER_GIF": "#Automatic Filter Handler: <b>No GIF Allowed!</b>",
     "AUTOMATIC_FILTER_HANDLER_JPG": "#Automatic Filter Handler: <b>No JPG Allowed!</b>",
     "AUTOMATIC_FILTER_HANDLER_TARGZ": "#Automatic Filter Handler: <b>No TARGZ Allowed!</b>",
-    "AUTOMATIC_FILTER_HANDLER_ZIP": "#Automatic Filter Handler: <b>No ZIP Allowed!</b>"
+    "AUTOMATIC_FILTER_HANDLER_ZIP": "#Automatic Filter Handler: <b>No ZIP Allowed!</b>",
+    "SET_WELCOME_BUTTONS": "Use this menu to modify the welcome message buttons to your liking:"
 }

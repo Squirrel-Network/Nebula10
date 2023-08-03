@@ -36,6 +36,9 @@ def admin_command(application: Application):
     application.add_handler(MessageHandler(None, admin.set_welcome.set_welcome))
     application.add_handler(MessageHandler(None, admin.set_welcome.set_welcome_reply))
     application.add_handler(MessageHandler(None, admin.set_rules.set_rules))
+    application.add_handler(
+        MessageHandler(None, admin.set_welcome_buttons.set_welcome_buttons)
+    )
 
 
 def owner_command(application: Application):

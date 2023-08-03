@@ -111,6 +111,7 @@ async def main() -> None:
     # Start the bot.
     # Create the Application and pass it your bot's token.
     application = Application.builder().token(conf.BOT_TOKEN).build()
+    Session.bot = application.bot
 
     # on different commands - answer in Telegram
     commands_index.user_command(application)

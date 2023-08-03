@@ -86,5 +86,6 @@
     "AUTOMATIC_FILTER_HANDLER_GIF": "#Automatic Filter Handler: <b>Nessun GIF consentito!</b>",
     "AUTOMATIC_FILTER_HANDLER_JPG": "#Automatic Filter Handler: <b>Nessun JPG consentito!</b>",
     "AUTOMATIC_FILTER_HANDLER_TARGZ": "#Automatic Filter Handler: <b>Nessun TARGZ consentito!</b>",
-    "AUTOMATIC_FILTER_HANDLER_ZIP": "#Automatic Filter Handler: <b>Nessun ZIP consentito!</b>"
+    "AUTOMATIC_FILTER_HANDLER_ZIP": "#Automatic Filter Handler: <b>Nessun ZIP consentito!</b>",
+    "SET_WELCOME_BUTTONS": "Utilizza questo menu per modificare a tuo piacimento i bottoni del messaggio di benvenuto:"
 }

@@ -75,6 +75,8 @@ class Config(BaseSettings):
     DEFAULT_DEBUG_CHANNEL: int
     OWNER_ID: int
     OWNER_USERNAME: str
+    MAX_KEYBOARD_ROW: int = 8
+    MAX_KEYBOARD_COLUMN: int = 4
 
     @classmethod
     def settings_customise_sources(
