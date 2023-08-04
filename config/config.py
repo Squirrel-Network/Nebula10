@@ -68,7 +68,7 @@ class Config(BaseSettings):
     JWT_TOKEN_EXPIRES: int = 300
 
     # Telegram settings
-    DEFAULT_WELCOME: str = "Welcome {USERNAME} to the {NAME} group"
+    DEFAULT_WELCOME: str = "Welcome {USERNAME} to the {CHAT} group"
     DEFAULT_RULES: str = "https://github.com/Squirrel-Network/GroupRules"
     DEFAULT_LOG_CHANNEL: int
     DEFAULT_STAFF_GROUP: int
