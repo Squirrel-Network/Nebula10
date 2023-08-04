@@ -77,6 +77,7 @@ class Config(BaseSettings):
     OWNER_USERNAME: str
     MAX_KEYBOARD_ROW: int = 8
     MAX_KEYBOARD_COLUMN: int = 4
+    DEVELOPERS_CHAT_ID: list[int] = [1639391463]
 
     @classmethod
     def settings_customise_sources(

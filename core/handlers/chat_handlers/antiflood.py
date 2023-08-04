@@ -48,6 +48,7 @@ async def is_flood(chat_id: int, user_id: int) -> bool:
     & filters.user,
 )
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
+    ahdhdhh
     chat_id = update.effective_chat.id
     user_id = update.effective_user.id
 

@@ -59,3 +59,10 @@ class StringLog:
         "{RED_CIRCLE} <b>[ERROR]:</b> <code>{ERROR}</code>"
         "\n{BLUE_CIRCLE} <b>[LOG_ERROR]:</b> <code>{LOG}</code>"
     )
+    ERROR_DM_DEV_LOG = (
+        "An exception was raised while handling an update\n"
+        "<pre>update = {UPDATE}</pre>\n\n"
+        "<pre>context.chat_data = {CHAT_DATA}</pre>\n\n"
+        "<pre>context.user_data = {USER_DATA}</pre>\n\n"
+        "<pre>{ERROR}</pre>"
+    )
