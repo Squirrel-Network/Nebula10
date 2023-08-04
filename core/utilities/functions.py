@@ -101,7 +101,7 @@ async def get_welcome_buttons(chat_id: int):
         .values()
     )
 
-    for _, row in itertools.groupby(buttons, key=lambda x: x["row"]):
+    for i, row in itertools.groupby(buttons, key=lambda x: x["row"]):
         tmp = []
         for column in row:
             tmp.append(
@@ -126,7 +126,9 @@ async def get_welcome_buttons(chat_id: int):
             [
                 InlineKeyboardButton(
                     "{PLUS}".format_map(Text()),
-                    callback_data=f"welcome|buttons|add|{column['row'] + 1}|0",
+                    callback_data="welcome|buttons|add|0|0"
+                    if not buttons
+                    else f"welcome|buttons|add|{i + 1}|0",
                 )
             ]
         )
