@@ -23,13 +23,13 @@ def load_languages() -> dict[str, Lang]:
     return languages
 
 
-async def get_group_lang(update: TelegramUpdate) -> str | None:
-    chat = update.effective_chat.id
-
-    data = await Groups.get_or_none(id_group=chat)
+async def get_group_lang(chat_id: int) -> str | None:
+    data = await Groups.get_or_none(id_group=chat_id)
 
     if data:
         return data.languages
+
+    return Session.config.DEFAULT_LANGUAGE
 
 
 async def get_lang(update: TelegramUpdate) -> Lang:
@@ -42,6 +42,6 @@ async def get_lang(update: TelegramUpdate) -> Lang:
         lang = update.effective_user.language_code
 
     else:
-        lang = await get_group_lang(update) or lang
+        lang = await get_group_lang(update.effective_chat.id)
 
     return Session.lang[lang.lower()]

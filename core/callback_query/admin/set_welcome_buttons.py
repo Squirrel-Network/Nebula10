@@ -3,6 +3,8 @@
 
 # Copyright SquirrelNetwork
 
+import time
+
 from telegram.ext import ContextTypes
 
 from config import Session
@@ -47,5 +49,9 @@ async def add_welcome_buttons(
     status["row"] = row
     status["column"] = column
     status["message_id"] = update.effective_message.message_id
+    status["time"] = time.monotonic()
+    status["username"] = (
+        f"@{update.effective_user.username}" or update.effective_user.first_name
+    )
 
     await update.callback_query.edit_message_text(lang["SET_WELCOME_BUTTONS_ADD"])

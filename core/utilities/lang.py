@@ -92,3 +92,4 @@ class Lang(typing.TypedDict):
     SET_WELCOME_BUTTONS: str
     SET_WELCOME_BUTTONS_ADD: str
     SET_WELCOME_BUTTONS_ADD_ERROR: str
+    GROUP_STATUS_CLEANUP: str
