@@ -42,6 +42,8 @@ def admin_command(application: Application):
     application.add_handler(
         MessageHandler(None, admin.set_welcome_buttons.add_button_status)
     )
+    application.add_handler(MessageHandler(None, admin.info_group.init))
+    application.add_handler(MessageHandler(None, admin.info_group.chat_id))
 
 
 def owner_command(application: Application):
