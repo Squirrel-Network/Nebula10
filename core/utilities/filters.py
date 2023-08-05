@@ -192,12 +192,16 @@ new_chat_photo = _NewChatPhoto()
 
 
 class command(Filter):
-    def __init__(self, prefix: list[str]) -> None:
+    def __init__(self, commands: list[str], prefix: str = "/") -> None:
+        self.commands = commands
         self.prefix = prefix
 
     async def __call__(
         self, update: Update, context: ContextTypes.DEFAULT_TYPE
     ) -> bool:
+        if not update.effective_message or not update.effective_message.text:
+            return False
+
         text = update.effective_message.text
         command = [
             text[0 : x.length]
@@ -213,8 +217,8 @@ class command(Filter):
 
         return any(
             map(
-                lambda x: f"/{x}" == command,
-                self.prefix,
+                lambda x: f"{self.prefix}{x}" == command,
+                self.commands,
             )
         )
 
@@ -246,6 +250,9 @@ class check_status(Filter):
     async def __call__(
         self, update: Update, context: ContextTypes.DEFAULT_TYPE
     ) -> bool:
+        if not update.effective_chat or not update.effective_user:
+            return False
+
         status = Session.status.get(
             f"{update.effective_user.id}-{update.effective_chat.id}"
         )

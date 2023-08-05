@@ -4,6 +4,7 @@
 # Copyright SquirrelNetwork
 
 from telegram.ext import ContextTypes
+from telegram.constants import MessageEntityType
 
 from core.database.models import Groups, GroupUsers, SuperbanTable
 from core.decorators import on_update
@@ -97,5 +98,37 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
             context,
             lang["AUTOMATIC_HANDLER_BAD_WORD"].format_map(Text(params)),
         )
+        return
+
+    # This function is used to filter messages with spoiler type
+    # and delete them if the group owner puts the block at 1
+    spoiler = [
+        x
+        for x in update.effective_message.entities
+        if x.type == MessageEntityType.SPOILER
+    ]
+    if spoiler and group.spoiler_block:
+        await update.effective_message.delete()
+        await message(update, context, lang["AUTOMATIC_HANDLER_SPOILER"])
+
+    # This function checks if messages
+    # are arriving from a channel and deletes them
+    elif (v := update.effective_message.sender_chat) and group.sender_chat_block:
+        if v.id == update.effective_chat.linked_chat_id:
+            return
+
+        params["name"] = v.title
+        params["channel_id"] = v.id
+
+        await update.effective_message.delete()
+        await message(
+            update, context, lang["AUTOMATIC_HANDLER_CHANNEL"].format_map(params)
+        )
+        return
+
+    # Voice audio blocking
+    elif update.effective_message.voice and group.set_no_vocal:
+        await update.effective_message.delete()
+        await message(update, context, lang["AUTOMATIC_HANDLER_VOICE"])
 
     await save_user(user, chat)

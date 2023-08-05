@@ -13,7 +13,7 @@ from core.handlers.chat_handlers import (
     filters,
     welcome,
 )
-from core.handlers.user_handlers import user_status
+from core.handlers.user_handlers import automatic_handler
 
 
 def core_handlers(application: Application):
@@ -27,7 +27,7 @@ def core_handlers(application: Application):
     application.add_handler(
         MessageHandler(
             None,
-            user_status.status,
+            automatic_handler.status,
         )
     )
     application.add_handler(MessageHandler(None, antiflood.init))
