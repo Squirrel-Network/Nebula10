@@ -99,3 +99,4 @@ class Lang(typing.TypedDict):
     MESSAGE_DB_STATUS: str
     STATUS_COMMAND: str
     CHAT_ID_COMMAND: str
+    REPORT_ADMIN_MSG: str

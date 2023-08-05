@@ -86,3 +86,6 @@ def admin_callback(application: Application):
 def user_callback(application: Application):
     application.add_handler(CallbackQueryHandler(user.close.init, r"^close$"))
     application.add_handler(CallbackQueryHandler(user.rules.init, r"^rules\|open$"))
+    application.add_handler(
+        CallbackQueryHandler(user.report.init, r"^report\|resolved$")
+    )

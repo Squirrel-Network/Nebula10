@@ -60,3 +60,4 @@ def user_command(application: Application):
     application.add_handler(MessageHandler(None, user.io.init))
     application.add_handler(MessageHandler(None, user.help_command.init))
     application.add_handler(MessageHandler(None, user.rules.rules))
+    application.add_handler(MessageHandler(None, user.report.report))

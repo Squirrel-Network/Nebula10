@@ -207,7 +207,11 @@ class command(Filter):
             text[0 : x.length]
             for x in update.effective_message.entities
             if x.offset == 0
-            if x.type == constants.MessageEntityType.BOT_COMMAND
+            if x.type
+            in (
+                constants.MessageEntityType.BOT_COMMAND,
+                constants.MessageEntityType.MENTION,
+            )
         ]
 
         if not text or not command:

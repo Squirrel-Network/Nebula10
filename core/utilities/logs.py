@@ -66,3 +66,9 @@ class StringLog:
         "<pre>context.user_data = {USER_DATA}</pre>\n\n"
         "<pre>{ERROR}</pre>"
     )
+    REPORT_MSG = (
+        '#Report User: <a href="tg://user?id={ID}">{FIRST_NAME}</a>\n'
+        "Group ID: [<code>{CHAT_ID}</code>]\n"
+        "Group Title: {CHAT_TITLE}\n"
+        "Link: {LINK}"
+    )

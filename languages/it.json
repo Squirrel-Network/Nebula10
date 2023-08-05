@@ -96,5 +96,6 @@
     "GROUP_STATUS_CLEANUP": "{USERNAME} è scaduto il tempo per eseguire l'operazione è scaduto, se vuoi continuare con l'inserimento devi rieseguire l'operazione.",
     "MESSAGE_DB_STATUS": "Il bot ti ha inviato un messaggio in privato con lo stato del gruppo.",
     "STATUS_COMMAND": "Ecco lo stato del gruppo:",
-    "CHAT_ID_COMMAND": "{GEAR} Chat Id:\n{LABEL} [<code>{ID}</code>]\n\nPer maggiori informazioni usa /status"
+    "CHAT_ID_COMMAND": "{GEAR} Chat Id:\n{LABEL} [<code>{ID}</code>]\n\nPer maggiori informazioni usa /status",
+    "REPORT_ADMIN_MSG": "<b>Segnalazione effettuata! un admin prenderà in carico la tua richiesta!</b>"
 }

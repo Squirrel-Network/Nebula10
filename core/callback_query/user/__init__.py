@@ -3,6 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-__all__ = ("close", "rules")
+__all__ = ("close", "report", "rules")
 
-from . import close, rules
+from . import close, report, rules
