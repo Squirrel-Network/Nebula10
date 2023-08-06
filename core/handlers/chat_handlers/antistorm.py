@@ -43,7 +43,8 @@ async def is_storm(chat_id: int) -> bool:
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     if not (
         update.chat_member.new_chat_member.status == ChatMemberStatus.MEMBER
-        and update.chat_member.old_chat_member.status == ChatMemberStatus.LEFT
+        and update.chat_member.old_chat_member.status
+        in (ChatMemberStatus.LEFT, ChatMemberStatus.BANNED)
     ):
         return
 
