@@ -100,3 +100,6 @@ class Lang(typing.TypedDict):
     STATUS_COMMAND: str
     CHAT_ID_COMMAND: str
     REPORT_ADMIN_MSG: str
+    ADD_COMMUNITY_ERROR: str
+    ADD_COMMUNITY_UPDATE: str
+    ADD_COMMUNITY: str

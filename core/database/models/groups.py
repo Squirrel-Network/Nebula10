@@ -12,9 +12,6 @@ class Groups(Model):
     id_group = fields.BigIntField(unique=True)
     group_name = fields.CharField(255)
     welcome_text = fields.TextField()
-    welcome_buttons = fields.TextField(
-        default='{"buttons": [{"id": 0, "title": "Bot Logs", "url": "https://t.me/nebulalogs"}]}'
-    )
     rules_text = fields.TextField()
     community = fields.BooleanField(default=False)
     languages = fields.CharField(3)

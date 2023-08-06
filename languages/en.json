@@ -97,5 +97,8 @@
     "MESSAGE_DB_STATUS": "The bot sent you a private message with the status of the group.",
     "STATUS_COMMAND": "Here is the status of the group:",
     "CHAT_ID_COMMAND": "{GEAR} Chat Id:\n{LABEL} [<code>{ID}</code>]\n\nFor more information on the group type /status",
-    "REPORT_ADMIN_MSG": "<b>Reporting done! an admin will take care of your request!</b>"
+    "REPORT_ADMIN_MSG": "<b>Reporting done! an admin will take care of your request!</b>",
+    "ADD_COMMUNITY_ERROR": "Attention! this command can only be used in public supergroups!",
+    "ADD_COMMUNITY_UPDATE": "I updated the community on the database",
+    "ADD_COMMUNITY": "I have added the community [{ID}] to the database"
 }

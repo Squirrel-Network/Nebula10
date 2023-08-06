@@ -13,7 +13,6 @@ class Community(Model):
     tg_group_name = fields.CharField(255)
     tg_group_id = fields.BigIntField(unique=True)
     tg_group_link = fields.TextField()
-    language = fields.CharField(3, default="IT")
     type = fields.CharEnumField(ChatType)
 
     class Meta:
