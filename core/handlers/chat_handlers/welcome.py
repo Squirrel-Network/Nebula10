@@ -95,6 +95,9 @@ async def welcome_bot(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
     )
 
 
+""
+
+
 async def welcome_user(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
@@ -128,10 +131,13 @@ async def welcome_user(
 
 @on_update(True)
 async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
+
     if not (
         update.chat_member.new_chat_member.status == ChatMemberStatus.MEMBER
-        and update.chat_member.old_chat_member.status == ChatMemberStatus.LEFT
+        and update.chat_member.old_chat_member.status
+        in (ChatMemberStatus.LEFT, ChatMemberStatus.BANNED)
     ):
+
         return
 
     data = await Groups.get(id_group=update.effective_chat.id).values()
