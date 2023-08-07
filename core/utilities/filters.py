@@ -265,3 +265,16 @@ class check_status(Filter):
             return False
 
         return self.status == status["status"]
+
+
+class users(Filter, set):
+    def __init__(self, users: set[int]) -> None:
+        super().__init__(users)
+
+    async def __call__(
+        self, update: Update, context: ContextTypes.DEFAULT_TYPE
+    ) -> bool:
+        if not update.effective_user:
+            return False
+
+        return update.effective_user.id in self

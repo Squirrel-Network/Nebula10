@@ -36,7 +36,8 @@ NO_USERNAME_ACTION = {
     ~filters.check_role(Role.ADMINISTRATOR, Role.CREATOR, Role.OWNER)
     & ~filters.service
     & filters.group
-    & filters.user,
+    & filters.user
+    & ~filters.users(777000),
 )
 async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
