@@ -123,7 +123,7 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 
         await update.effective_message.delete()
         await message(
-            update, context, lang["AUTOMATIC_HANDLER_CHANNEL"].format_map(params)
+            update, context, lang["AUTOMATIC_HANDLER_CHANNEL"].format_map(Text(params))
         )
         return
 
