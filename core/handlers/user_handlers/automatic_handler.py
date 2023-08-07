@@ -118,6 +118,7 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
         if v.id == update.effective_chat.linked_chat_id:
             return
 
+        params["id"] = chat.id
         params["name"] = v.title
         params["channel_id"] = v.id
 
