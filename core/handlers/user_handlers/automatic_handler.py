@@ -37,7 +37,7 @@ NO_USERNAME_ACTION = {
     & ~filters.service
     & filters.group
     & filters.user
-    & ~filters.users(777000),
+    & ~filters.users({777000}),
 )
 async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
