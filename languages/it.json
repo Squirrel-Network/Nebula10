@@ -93,6 +93,7 @@
     "SET_WELCOME_BUTTONS": "Utilizza questo menu per modificare a tuo piacimento i bottoni del messaggio di benvenuto:",
     "SET_WELCOME_BUTTONS_ADD": "Inserisci il nome del bottone e l'url\nEsempio: NOME - URL",
     "SET_WELCOME_BUTTONS_ADD_ERROR": "Impossibile! Non hai seguito lo schema richiesto o hai inserito un url corrotto",
+    "SET_WELCOME_BUTTONS_DEL_CONFIRM": "Confermi di voler eliminare questo bottone?",
     "GROUP_STATUS_CLEANUP": "{USERNAME} è scaduto il tempo per eseguire l'operazione è scaduto, se vuoi continuare con l'inserimento devi rieseguire l'operazione.",
     "MESSAGE_DB_STATUS": "Il bot ti ha inviato un messaggio in privato con lo stato del gruppo.",
     "STATUS_COMMAND": "Ecco lo stato del gruppo:",

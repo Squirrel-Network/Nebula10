@@ -5,6 +5,7 @@
 
 import time
 
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
 from config import Session
@@ -14,6 +15,7 @@ from core.utilities import filters
 from core.utilities.enums import Role
 from core.utilities.functions import get_welcome_buttons
 from core.utilities.telegram_update import TelegramUpdate
+from core.utilities.text import Text
 from languages import get_lang
 
 
@@ -21,19 +23,46 @@ from languages import get_lang
 async def del_welcome_buttons(
     update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
 ):
+    lang = await get_lang(update)
     _, _, _, row, column = update.callback_query.data.split("|")
 
-    data = GroupWelcomeButtons.filter(
+    await update.callback_query.edit_message_text(
+        lang["SET_WELCOME_BUTTONS_DEL_CONFIRM"],
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        "Close {WASTEBASKET}".format_map(Text()), callback_data="close"
+                    ),
+                    InlineKeyboardButton(
+                        "{CHECK_MARK_BUTTON}".format_map(Text()),
+                        callback_data=f"welcome|buttons|del|confim|{row}|{column}",
+                    ),
+                ]
+            ]
+        ),
+    )
+
+
+@on_update(filters=filters.check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR))
+async def del_welcome_buttons_confirm(
+    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
+):
+    lang = await get_lang(update)
+    _, _, _, _, row, column = update.callback_query.data.split("|")
+
+    data = await GroupWelcomeButtons.get_or_none(
         chat_id=update.effective_chat.id, row=row, column=column
     )
 
-    if not await data.exists():
+    if not data:
         return await update.callback_query.answer("Error!")
 
     await data.delete()
 
-    await update.callback_query.edit_message_reply_markup(
-        await get_welcome_buttons(update.effective_chat.id)
+    await update.callback_query.edit_message_text(
+        lang["SET_WELCOME_BUTTONS"],
+        reply_markup=await get_welcome_buttons(update.effective_chat.id),
     )
 
 
