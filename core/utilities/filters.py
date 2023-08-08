@@ -203,19 +203,11 @@ class command(Filter):
             return False
 
         text = update.effective_message.text
-        command = [
-            text[0 : x.length]
-            for x in update.effective_message.entities
-            if x.offset == 0
-            if x.type
-            in (
-                constants.MessageEntityType.BOT_COMMAND,
-                constants.MessageEntityType.MENTION,
-            )
-        ]
 
-        if not text or not command:
+        if not text:
             return False
+
+        command = text.split()
 
         command = command[0].replace(f"@{context.bot.username}", "")
 

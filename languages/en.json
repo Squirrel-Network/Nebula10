@@ -101,5 +101,7 @@
     "REPORT_ADMIN_MSG": "<b>Reporting done! an admin will take care of your request!</b>",
     "ADD_COMMUNITY_ERROR": "Attention! this command can only be used in public supergroups!",
     "ADD_COMMUNITY_UPDATE": "I updated the community on the database",
-    "ADD_COMMUNITY": "I have added the community [{ID}] to the database"
+    "ADD_COMMUNITY": "I have added the community [{ID}] to the database",
+    "FIKO_EGGS": "I'm not GroupHelp! If you want to know who they are type /source",
+    "KICK_ME_COMMAND": "You kicked yourself <code>[{ID}]</code>\nWe only used 24 lines of code to make a free feature, not paid\nPut a stars to our repository => /source"
 }

@@ -3,6 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-__all__ = ("help_command", "io", "report", "rules", "start")
+__all__ = ("eggs", "help_command", "io", "kickme", "report", "rules", "start")
 
-from . import help_command, io, report, rules, start
+from . import eggs, help_command, io, kickme, report, rules, start

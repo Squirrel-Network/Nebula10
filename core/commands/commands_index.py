@@ -62,3 +62,7 @@ def user_command(application: Application):
     application.add_handler(MessageHandler(None, user.help_command.init))
     application.add_handler(MessageHandler(None, user.rules.rules))
     application.add_handler(MessageHandler(None, user.report.report))
+    application.add_handler(MessageHandler(None, user.eggs.lost_command))
+    application.add_handler(MessageHandler(None, user.eggs.fiko_command))
+    application.add_handler(MessageHandler(None, user.eggs.nanachi_command))
+    application.add_handler(MessageHandler(None, user.kickme.kickme_command))

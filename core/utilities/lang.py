@@ -104,3 +104,5 @@ class Lang(typing.TypedDict):
     ADD_COMMUNITY_ERROR: str
     ADD_COMMUNITY_UPDATE: str
     ADD_COMMUNITY: str
+    FIKO_EGGS: str
+    KICK_ME_COMMAND: str
