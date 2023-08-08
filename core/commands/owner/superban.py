@@ -140,7 +140,7 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     operator_first_name = update.message.from_user.first_name
 
     if user_id.startswith("@"):
-        data = await Users.get_or_none(tg_id=user_id)
+        data = await Users.get_or_none(tg_username=user_id)
 
         if not data:
             return await message(update, context, lang["SUPERBAN_ERROR_USERNAME"])
