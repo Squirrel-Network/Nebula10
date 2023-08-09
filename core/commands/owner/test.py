@@ -17,6 +17,8 @@ from core.utilities.telegram_update import TelegramUpdate
     filters=filters.command(["test"]) & filters.check_role(Role.OWNER) & filters.private
 )
 async def command_test(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
+    image, keyboard = get_catcha(update.effective_user.id)
+
     await message(
-        update, context, "test", type="photo", img=get_catcha(update.effective_user.id)
+        update, context, "test", type="photo", img=image, reply_markup=keyboard
     )

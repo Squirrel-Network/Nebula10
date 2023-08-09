@@ -43,6 +43,7 @@ async def message(
                 caption=text,
                 parse_mode=parse,
                 message_thread_id=thread_id,
+                reply_markup=reply_markup,
             )
 
         case "reply":

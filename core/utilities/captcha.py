@@ -3,6 +3,7 @@
 
 # Copyright SquirrelNetwork
 
+import base64
 import io
 import os
 import pathlib
@@ -10,8 +11,11 @@ import random
 
 from Crypto.Cipher import AES
 from PIL import Image
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from config import Session
+from core.utilities import emoji
+from core.utilities.menu import build_menu
 
 MAX_EMOJI = 15
 MAX_EMOJI_CORRECT = 6
@@ -25,14 +29,14 @@ IMAGE_POSITION = (
 )
 
 
-def encrypt_data(correct: bool, mistakes: int, user_id: int) -> bytes:
+def encrypt_data(correct: bool, mistakes: int, user_id: int) -> str:
     data = (
         correct.to_bytes(1, "little")
         + mistakes.to_bytes(1, "little")
         + user_id.to_bytes(4, "little")
     )
 
-    block_size = AES.block_size * 4
+    block_size = AES.block_size
     data += os.urandom(block_size - len(data))
 
     cipher = AES.new(
@@ -40,14 +44,14 @@ def encrypt_data(correct: bool, mistakes: int, user_id: int) -> bytes:
     )
     ciphertext = cipher.encrypt(data)
 
-    return ciphertext
+    return base64.b64encode(ciphertext).decode("utf-8")
 
 
-def decrypt_data(ciphertext: bytes) -> tuple[bool, int, int]:
+def decrypt_data(ciphertext: str) -> tuple[bool, int, int]:
     decipher = AES.new(
         bytes(Session.config.TOKEN_SECRET, "utf-8"), AES.MODE_CBC, bytes(16)
     )
-    decrypted_data = decipher.decrypt(ciphertext)
+    decrypted_data = decipher.decrypt(base64.b64decode(ciphertext))
 
     return (
         bool(decrypted_data[0]),
@@ -82,10 +86,18 @@ def get_image(correct_emoji: list[str], emoji_path: pathlib.Path):
     return result_bytes_io
 
 
-def get_catcha(user_id: int):
+def get_catcha(user_id: int) -> tuple[io.BytesIO, InlineKeyboardMarkup]:
     path = pathlib.Path("resources") / "emojis"
 
     all_emoji = random.sample([x.stem for x in path.glob("*.png")], MAX_EMOJI)
     correct_emoji = random.sample(all_emoji, MAX_EMOJI_CORRECT)
 
-    return get_image(correct_emoji, path)
+    keyboard = [
+        InlineKeyboardButton(
+            getattr(emoji, x),
+            callback_data=encrypt_data(x in correct_emoji, 0, user_id),
+        )
+        for x in all_emoji
+    ]
+
+    return get_image(correct_emoji, path), InlineKeyboardMarkup(build_menu(keyboard, 5))
