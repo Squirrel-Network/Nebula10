@@ -16,12 +16,12 @@ from config import Session
 MAX_EMOJI = 15
 MAX_EMOJI_CORRECT = 6
 IMAGE_POSITION = (
-    (500, 500),
-    (3000, 500),
-    (5000, 500),
-    (500, 1500),
-    (3000, 1500),
-    (5000, 1500),
+    (38, 45),
+    (215, 45),
+    (392, 45),
+    (38, 235),
+    (215, 235),
+    (392, 235),
 )
 
 
@@ -57,30 +57,25 @@ def decrypt_data(ciphertext: bytes) -> tuple[bool, int, int]:
 
 
 def get_image(correct_emoji: list[str], emoji_path: pathlib.Path):
-    background = Image.open(pathlib.Path("resources") / "background" / "background.jpg")
+    background = Image.open(
+        pathlib.Path("resources") / "background" / "background.png"
+    ).convert("RGBA")
     correct_emoji = [pathlib.Path(emoji_path / f"{x}.png") for x in correct_emoji]
-    image_positions = []
+    emojis = []
 
     for image_name in correct_emoji:
-        image = Image.open(image_name)
-        image_positions.append(image)
+        image = Image.open(image_name).convert("RGBA")
+        emojis.append(image)
 
-    for image in image_positions:
-        width, height = image.size
-        position = (
-            random.randint(0, background.width - width),
-            random.randint(0, background.height - height),
-        )
+    for image, position in zip(emojis, IMAGE_POSITION):
+        rotation_angle = random.randint(0, 360)
+        rotated_image = image.rotate(rotation_angle, expand=True)
 
-        background.paste(image, position)
-
-    max_telegram_width = 4096
-    max_telegram_height = 4096
-    background.thumbnail((max_telegram_width, max_telegram_height))
+        background.paste(rotated_image, position, rotated_image)
 
     result_bytes_io = io.BytesIO()
 
-    background.save(result_bytes_io, format="JPEG", quality=70)
+    background.save(result_bytes_io, format="PNG")
 
     result_bytes_io.seek(0)
 
