@@ -6,10 +6,10 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
+from config import Session
 from core.database.models import Groups
 from core.decorators import on_update
 from core.handlers.chat_handlers.welcome import welcome_user
-from core.utilities.captcha import decrypt_data, encrypt_data
 from core.utilities.functions import unmute_user
 from core.utilities.menu import build_menu
 from core.utilities.message import message
@@ -23,46 +23,55 @@ MAX_MISTAKES = 3
 @on_update()
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
-    data = update.callback_query.data
-    correct, mistakes, tot_correct, user_id = decrypt_data(data.split("|")[1])
+    _, position, mistakes, tot_correct, user_id = update.callback_query.data.split("|")
 
-    if user_id != update.effective_user.id:
+    if int(user_id) != update.effective_user.id:
         return await update.callback_query.answer(lang["WELCOME_CAPTCHA_ERROR_USER_ID"])
 
+    key = f"{update.effective_chat.id}-{update.effective_user.id}"
+
+    if not key in Session.captcha:
+        return await update.callback_query.answer(lang["WELCOME_CAPTCHA_NOT_VALID"])
+
+    correct = int(position) in Session.captcha[key]["correct_position"]
+
     if correct:
-        tot_correct += 1
+        tot_correct = int(tot_correct) + 1
     else:
-        mistakes += 1
+        mistakes = int(mistakes) + 1
 
     if mistakes == MAX_MISTAKES:
         await update.effective_message.delete()
         return await message(update, context, lang["WELCOME_CAPTCHA_NOT_RESOLVE"])
 
     if tot_correct == 6:
+        await update.effective_message.delete()
         await unmute_user(update.effective_chat.id, user_id, context)
 
         group_data = await Groups.get(id_group=update.effective_chat.id).values()
 
-        await update.effective_message.delete()
         return await welcome_user(update, context, update.effective_user, group_data)
 
-    keyboard = []
-
-    for x in update.effective_message.reply_markup.inline_keyboard:
-        for y in x:
-            c, _, _, _ = decrypt_data(y.callback_data.replace("captcha|", ""))
-
-            keyboard.append(
-                InlineKeyboardButton(
-                    y.text
-                    if not data == y.callback_data
-                    else "{CHECK_MARK_BUTTON}".format_map(Text())
-                    if correct
-                    else "{CROSS_MARK}".format_map(Text()),
-                    callback_data=f"captcha|{encrypt_data(c, mistakes, tot_correct, user_id)}",
-                )
+    keyboard = [
+        [
+            InlineKeyboardButton(
+                "{CHECK_MARK_BUTTON}".format_map(Text())
+                if correct
+                else "{CROSS_MARK}".format_map(Text()),
+                callback_data="XX",
             )
+            if y.callback_data == update.callback_query.data
+            else InlineKeyboardButton(
+                y.text,
+                callback_data=f"captcha|{y.callback_data.split('|')[1]}|{mistakes}|{tot_correct}|{user_id}"
+                if "captcha" in y.callback_data
+                else y.callback_data,
+            )
+            for y in x
+        ]
+        for x in update.effective_message.reply_markup.inline_keyboard
+    ]
 
     await update.callback_query.edit_message_reply_markup(
-        InlineKeyboardMarkup(build_menu(keyboard, 5))
+        InlineKeyboardMarkup(keyboard)
     )

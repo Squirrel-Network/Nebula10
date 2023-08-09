@@ -96,5 +96,5 @@ def user_callback(application: Application):
         CallbackQueryHandler(user.report.init, r"^report\|resolved$")
     )
     application.add_handler(
-        CallbackQueryHandler(user.captcha.init, r"^captcha\|[a-zA-Z0-9+/=]+$")
+        CallbackQueryHandler(user.captcha.init, r"^captcha\|\d+\|\d\|\d\|\d+$")
     )

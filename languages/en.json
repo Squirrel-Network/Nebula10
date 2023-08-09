@@ -111,5 +111,6 @@
     "PINNED_COMMAND_ERROR": "Impossible, number no pinned message found",
     "WELCOME_CAPTCHA": "Welcome into the group! {ROBOT}{LOCKED_WITH_KEY}\nWe are happy to have you here. Before you can participate in the discussions, we kindly ask you to complete a short captcha to confirm that you are a user.",
     "WELCOME_CAPTCHA_ERROR_USER_ID": "You don't have to solve the captcha",
-    "WELCOME_CAPTCHA_NOT_RESOLVE": "You were unable to solve the captcha"
+    "WELCOME_CAPTCHA_NOT_RESOLVE": "You were unable to solve the captcha",
+    "WELCOME_CAPTCHA_NOT_VALID": "Captcha not valid"
 }
