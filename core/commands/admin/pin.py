@@ -10,8 +10,8 @@ from core.utilities import filters
 from core.utilities.enums import Role
 from core.utilities.message import message
 from core.utilities.telegram_update import TelegramUpdate
-from languages import get_lang
 from core.utilities.text import Text
+from languages import get_lang
 
 
 @on_update(

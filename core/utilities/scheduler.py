@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-import itertools
 import copy
 import time
 

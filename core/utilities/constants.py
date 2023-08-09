@@ -86,3 +86,6 @@ BUTTONS_MENU = {
     "settings|channel_block": ("Block Channel 📢", "sender_chat_block"),
     "settings|spoiler_block": ("Block Spoiler 🚫", "spoiler_block"),
 }
+
+# Custom button welcome
+CUSTOM_BUTTONS_WELCOME = {"rules": "rules|open"}

@@ -12,6 +12,7 @@ from telegram.ext import ContextTypes
 from config import Session
 from core.database.models import Groups, GroupWelcomeButtons, SuperbanTable
 from core.decorators import on_update
+from core.utilities.constants import CUSTOM_BUTTONS_WELCOME
 from core.utilities.functions import (
     ban_user,
     kick_user,
@@ -107,7 +108,17 @@ async def welcome_user(
         .values()
     )
     buttons = [
-        [InlineKeyboardButton(column["text"], column["url"]) for column in row]
+        [
+            InlineKeyboardButton(
+                column["text"],
+                **(
+                    {"url": column["url"]}
+                    if column["url"] not in CUSTOM_BUTTONS_WELCOME
+                    else {"callback_data": CUSTOM_BUTTONS_WELCOME[column["url"]]}
+                ),
+            )
+            for column in row
+        ]
         for _, row in itertools.groupby(buttons, key=lambda x: x["row"])
     ]
     params = {

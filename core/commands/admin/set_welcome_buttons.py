@@ -8,13 +8,13 @@ from telegram.ext import ContextTypes
 from config import Session
 from core.database.models import GroupWelcomeButtons
 from core.decorators import delete_command, on_update
-from core.utilities import filters
+from core.utilities import constants, filters
 from core.utilities.enums import Role
 from core.utilities.functions import get_welcome_buttons
 from core.utilities.message import message
+from core.utilities.regex import Regex
 from core.utilities.telegram_update import TelegramUpdate
 from languages import get_lang
-from core.utilities.regex import Regex
 
 
 @on_update(
@@ -50,7 +50,11 @@ async def add_button_status(update: TelegramUpdate, context: ContextTypes.DEFAUL
     key = f"{update.effective_user.id}-{update.effective_chat.id}"
     status = Session.status[key]
 
-    if len(text) < 2 or not Regex.is_url(text[1]):
+    if (
+        len(text) < 2
+        or not Regex.is_url(text[1])
+        and text[1] not in constants.CUSTOM_BUTTONS_WELCOME
+    ):
         del Session.status[key]
 
         return await message(update, context, lang["SET_WELCOME_BUTTONS_ADD_ERROR"])
