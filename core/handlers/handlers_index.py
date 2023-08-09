@@ -19,6 +19,11 @@ from core.handlers.user_handlers import automatic_handler
 def core_handlers(application: Application):
     application.add_handler(MessageHandler(None, chat_status.change_group_info))
     application.add_handler(
+        ChatMemberHandler(
+            chat_status.change_group_info, ChatMemberHandler.ANY_CHAT_MEMBER
+        )
+    )
+    application.add_handler(
         MessageHandler(
             None,
             chat_status.check_updates,

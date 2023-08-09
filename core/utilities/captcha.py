@@ -29,10 +29,11 @@ IMAGE_POSITION = (
 )
 
 
-def encrypt_data(correct: bool, mistakes: int, user_id: int) -> str:
+def encrypt_data(correct: bool, mistakes: int, tot_correct: int, user_id: int) -> str:
     data = (
         correct.to_bytes(1, "little")
         + mistakes.to_bytes(1, "little")
+        + tot_correct.to_bytes(1, "little")
         + user_id.to_bytes(4, "little")
     )
 
@@ -47,7 +48,7 @@ def encrypt_data(correct: bool, mistakes: int, user_id: int) -> str:
     return base64.b64encode(ciphertext).decode("utf-8")
 
 
-def decrypt_data(ciphertext: str) -> tuple[bool, int, int]:
+def decrypt_data(ciphertext: str) -> tuple[bool, int, int, int]:
     decipher = AES.new(
         bytes(Session.config.TOKEN_SECRET, "utf-8"), AES.MODE_CBC, bytes(16)
     )
@@ -56,7 +57,8 @@ def decrypt_data(ciphertext: str) -> tuple[bool, int, int]:
     return (
         bool(decrypted_data[0]),
         decrypted_data[1],
-        int.from_bytes(decrypted_data[2:6], "little"),
+        decrypted_data[2],
+        int.from_bytes(decrypted_data[3:7], "little"),
     )
 
 
@@ -86,18 +88,26 @@ def get_image(correct_emoji: list[str], emoji_path: pathlib.Path):
     return result_bytes_io
 
 
+def get_keyboard(
+    all_emoji: list[str], correct_emoji: list[str], user_id: int
+) -> InlineKeyboardMarkup:
+    keyboard = [
+        InlineKeyboardButton(
+            getattr(emoji, x),
+            callback_data=f"captcha|{encrypt_data(x in correct_emoji, 0, 0, user_id)}",
+        )
+        for x in all_emoji
+    ]
+
+    return InlineKeyboardMarkup(build_menu(keyboard, 5))
+
+
 def get_catcha(user_id: int) -> tuple[io.BytesIO, InlineKeyboardMarkup]:
     path = pathlib.Path("resources") / "emojis"
 
     all_emoji = random.sample([x.stem for x in path.glob("*.png")], MAX_EMOJI)
     correct_emoji = random.sample(all_emoji, MAX_EMOJI_CORRECT)
 
-    keyboard = [
-        InlineKeyboardButton(
-            getattr(emoji, x),
-            callback_data=encrypt_data(x in correct_emoji, 0, user_id),
-        )
-        for x in all_emoji
-    ]
-
-    return get_image(correct_emoji, path), InlineKeyboardMarkup(build_menu(keyboard, 5))
+    return get_image(correct_emoji, path), get_keyboard(
+        all_emoji, correct_emoji, user_id
+    )

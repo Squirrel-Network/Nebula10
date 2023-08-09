@@ -108,5 +108,8 @@
     "UNPIN_COMMAND": "Rimosso il messaggio fissato correttamente",
     "UNPIN_COMMAND_ERROR": "Il messaggio selezionato non è fissato",
     "PINNED_COMMAND": "<a href=\"{URL}\">Messaggio fissato</a>",
-    "PINNED_COMMAND_ERROR": "Impossibile, numero nessun messaggio fissato trovato"
+    "PINNED_COMMAND_ERROR": "Impossibile, numero nessun messaggio fissato trovato",
+    "WELCOME_CAPTCHA": "Benvenuto nel gruppo! {ROBOT}{LOCKED_WITH_KEY}\nSiamo felici di averti qui. Prima di poter partecipare alle discussioni, ti chiediamo gentilmente di completare un breve captcha per confermare che sei un utente legittimo.",
+    "WELCOME_CAPTCHA_ERROR_USER_ID": "Non sei tu a dover risolvere il captcha",
+    "WELCOME_CAPTCHA_NOT_RESOLVE": "Non sei riuscito a risolvere il captcha"
 }

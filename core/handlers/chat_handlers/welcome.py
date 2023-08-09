@@ -12,6 +12,7 @@ from telegram.ext import ContextTypes
 from config import Session
 from core.database.models import Groups, GroupWelcomeButtons, SuperbanTable
 from core.decorators import on_update
+from core.utilities.captcha import get_catcha
 from core.utilities.constants import CUSTOM_BUTTONS_WELCOME
 from core.utilities.functions import (
     ban_user,
@@ -214,16 +215,17 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
     else:
         await save_user(user, update.effective_chat)
 
-        if not data:
-            params = {
-                "username": update.effective_chat.username,
-                "name": update.effective_chat.title,
-            }
-            await message(
+        if data["set_captcha"]:
+            image, keyboard = get_catcha(user.id)
+
+            await mute_user(chat_id, user.id, context)
+            return await message(
                 update,
                 context,
-                Session.config.DEFAULT_WELCOME.format_map(Text(params)),
+                lang["WELCOME_CAPTCHA"].format_map(Text()),
+                type="photo",
+                reply_markup=keyboard,
+                img=image,
             )
 
-        else:
-            await welcome_user(update, context, user, data)
+        await welcome_user(update, context, user, data)

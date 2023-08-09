@@ -3,6 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-__all__ = ("close", "report", "rules")
+__all__ = ("captcha", "close", "report", "rules")
 
-from . import close, report, rules
+from . import captcha, close, report, rules
