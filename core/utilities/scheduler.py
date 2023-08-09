@@ -3,12 +3,14 @@
 
 # Copyright SquirrelNetwork
 
+import itertools
 import copy
 import time
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from config import Session
+from core.database.models import GroupPinnedMessage
 from core.utilities.text import Text
 from languages import get_group_lang
 
@@ -29,9 +31,22 @@ async def status_cleanup():
             )
 
 
+async def pinned_message():
+    data = await GroupPinnedMessage.all().order_by("created_at").values()
+
+    for chat_id, value in itertools.groupby(data, lambda x: x["chat_id"]):
+        await Session.bot.unpin_all_chat_messages(chat_id)
+
+        for x in value:
+            await Session.bot.pin_chat_message(
+                chat_id, x["message_id"], disable_notification=True
+            )
+
+
 def start_scheduler():
     scheduler = AsyncIOScheduler()
 
     scheduler.add_job(status_cleanup, "interval", seconds=15)
+    scheduler.add_job(pinned_message, "interval", hours=1)
 
     scheduler.start()

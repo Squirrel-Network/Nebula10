@@ -103,5 +103,10 @@
     "ADD_COMMUNITY_UPDATE": "Ho aggiornato la community sul database",
     "ADD_COMMUNITY": "Ho aggiunto la community [{ID}] al database",
     "FIKO_EGGS": "Non sono GroupHelp! Se vuoi sapere chi sono digita /source",
-    "KICK_ME_COMMAND": "Ti sei kickato <code>[{ID}]</code>\nAbbiamo utilizzato solo 24 righe di codice per creare una funzionalità gratuita, non a pagamento\nAssegna una stella al nostro repository => /source"
+    "KICK_ME_COMMAND": "Ti sei kickato <code>[{ID}]</code>\nAbbiamo utilizzato solo 24 righe di codice per creare una funzionalità gratuita, non a pagamento\nAssegna una stella al nostro repository => /source",
+    "PIN_COMMAND": "Il messaggio è stato fissato correttamente",
+    "UNPIN_COMMAND": "Rimosso il messaggio fissato correttamente",
+    "UNPIN_COMMAND_ERROR": "Il messaggio selezionato non è fissato",
+    "PINNED_COMMAND": "<a href=\"{URL}\">Messaggio fissato</a>",
+    "PINNED_COMMAND_ERROR": "Impossibile, numero nessun messaggio fissato trovato"
 }

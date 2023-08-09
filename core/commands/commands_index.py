@@ -44,6 +44,9 @@ def admin_command(application: Application):
     )
     application.add_handler(MessageHandler(None, admin.info_group.init))
     application.add_handler(MessageHandler(None, admin.info_group.chat_id))
+    application.add_handler(MessageHandler(None, admin.pin.init))
+    application.add_handler(MessageHandler(None, admin.pin.get_pinned))
+    application.add_handler(MessageHandler(None, admin.pin.unpin))
 
 
 def owner_command(application: Application):

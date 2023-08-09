@@ -103,5 +103,10 @@
     "ADD_COMMUNITY_UPDATE": "I updated the community on the database",
     "ADD_COMMUNITY": "I have added the community [{ID}] to the database",
     "FIKO_EGGS": "I'm not GroupHelp! If you want to know who they are type /source",
-    "KICK_ME_COMMAND": "You kicked yourself <code>[{ID}]</code>\nWe only used 24 lines of code to make a free feature, not paid\nPut a stars to our repository => /source"
+    "KICK_ME_COMMAND": "You kicked yourself <code>[{ID}]</code>\nWe only used 24 lines of code to make a free feature, not paid\nPut a stars to our repository => /source",
+    "PIN_COMMAND": "The message has been pinned successfully",
+    "UNPIN_COMMAND": "Removed the pinned message correctly",
+    "UNPIN_COMMAND_ERROR": "The selected message is not pinned",
+    "PINNED_COMMAND": "<a href=\"{URL}\">Pinned message</a>",
+    "PINNED_COMMAND_ERROR": "Impossible, number no pinned message found"
 }

@@ -9,9 +9,8 @@ from config import Session
 from core.database.models import Groups, NebulaUpdates
 from core.decorators import on_update
 from core.utilities import filters
-from core.utilities.functions import check_group_badwords, save_group
+from core.utilities.functions import save_group
 from core.utilities.logs import telegram_debug_channel
-from core.utilities.message import message
 from core.utilities.telegram_update import TelegramUpdate
 
 

@@ -106,3 +106,8 @@ class Lang(typing.TypedDict):
     ADD_COMMUNITY: str
     FIKO_EGGS: str
     KICK_ME_COMMAND: str
+    PIN_COMMAND: str
+    UNPIN_COMMAND: str
+    UNPIN_COMMAND_ERROR: str
+    PINNED_COMMAND: str
+    PINNED_COMMAND_ERROR: str
