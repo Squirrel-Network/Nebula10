@@ -13,6 +13,7 @@ from core.utilities.text import Text
 from languages import get_group_lang
 
 MAX_TIME_STATUS_CLEANUP = 3 * 60
+MAX_TIME_CAPTCHA_CLEANUP = 5 * 60
 
 
 async def status_cleanup():
@@ -29,9 +30,27 @@ async def status_cleanup():
             )
 
 
+async def captcha_cleanup():
+    for k, v in copy.deepcopy(Session.captcha).items():
+        if (time.monotonic() - v["time"]) >= MAX_TIME_CAPTCHA_CLEANUP:
+            _, chat_id = k.split("-", maxsplit=1)
+            lang = Session.lang[(await get_group_lang(int(chat_id))).lower()]
+            params = {"username": v["username"]}
+
+            await Session.bot.delete_message(chat_id, v["message_id"])
+
+            del Session.captcha[k]
+
+            await Session.bot.send_message(
+                chat_id,
+                lang["WELCOME_CAPTCHA_CLEANUP"].format_map(Text(params)),
+            )
+
+
 def start_scheduler():
     scheduler = AsyncIOScheduler()
 
     scheduler.add_job(status_cleanup, "interval", seconds=15)
+    scheduler.add_job(captcha_cleanup, "interval", seconds=15)
 
     scheduler.start()

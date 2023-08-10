@@ -11,7 +11,6 @@ from core.database.models import Groups
 from core.decorators import on_update
 from core.handlers.chat_handlers.welcome import welcome_user
 from core.utilities.functions import unmute_user
-from core.utilities.menu import build_menu
 from core.utilities.message import message
 from core.utilities.telegram_update import TelegramUpdate
 from core.utilities.text import Text
@@ -28,7 +27,7 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     if int(user_id) != update.effective_user.id:
         return await update.callback_query.answer(lang["WELCOME_CAPTCHA_ERROR_USER_ID"])
 
-    key = f"{update.effective_chat.id}-{update.effective_user.id}"
+    key = f"{update.effective_user.id}-{update.effective_chat.id}"
 
     if not key in Session.captcha:
         return await update.callback_query.answer(lang["WELCOME_CAPTCHA_NOT_VALID"])
@@ -41,10 +40,14 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
         mistakes = int(mistakes) + 1
 
     if mistakes == MAX_MISTAKES:
+        del Session.captcha[key]
+
         await update.effective_message.delete()
         return await message(update, context, lang["WELCOME_CAPTCHA_NOT_RESOLVE"])
 
     if tot_correct == 6:
+        del Session.captcha[key]
+
         await update.effective_message.delete()
         await unmute_user(update.effective_chat.id, user_id, context)
 

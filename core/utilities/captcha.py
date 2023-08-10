@@ -9,11 +9,16 @@ import random
 import time
 
 from PIL import Image
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, User
+from telegram.ext import ContextTypes
 
 from config import Session
 from core.utilities import emoji
+from core.utilities.functions import mute_user
 from core.utilities.menu import build_menu
+from core.utilities.message import message
+from core.utilities.telegram_update import TelegramUpdate
+from core.utilities.text import Text
 
 MAX_EMOJI = 15
 MAX_EMOJI_CORRECT = 6
@@ -65,15 +70,32 @@ def get_keyboard(all_emoji: list[str], user_id: int) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(build_menu(keyboard, 5))
 
 
-def get_catcha(user_id: int, chat_id: int) -> tuple[io.BytesIO, InlineKeyboardMarkup]:
+async def get_catcha(
+    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE, lang: dict
+):
     path = pathlib.Path("resources") / "emojis"
+    user = update.effective_user
+    chat_id = update.effective_chat.id
 
-    key = f"{chat_id}-{user_id}"
+    key = f"{user.id}-{chat_id}"
     all_emoji = random.sample([x.stem for x in path.glob("*.png")], MAX_EMOJI)
     correct_emoji = random.sample(all_emoji, MAX_EMOJI_CORRECT)
     correct_position = [all_emoji.index(x) for x in correct_emoji]
 
     Session.captcha[key]["correct_position"] = correct_position
+    Session.captcha[key]["username"] = user.username
     Session.captcha[key]["time"] = time.monotonic()
 
-    return get_image(correct_emoji, path), get_keyboard(all_emoji, user_id)
+    await mute_user(chat_id, user.id, context)
+    image, keyboard = get_image(correct_emoji, path), get_keyboard(all_emoji, user.id)
+
+    m = await message(
+        update,
+        context,
+        lang["WELCOME_CAPTCHA"].format_map(Text()),
+        type="photo",
+        reply_markup=keyboard,
+        img=image,
+    )
+
+    Session.captcha[key]["message_id"] = m.message_id

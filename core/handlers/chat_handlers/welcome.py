@@ -216,16 +216,6 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
         await save_user(user, update.effective_chat)
 
         if data["set_captcha"]:
-            image, keyboard = get_catcha(user.id, chat_id)
-
-            await mute_user(chat_id, user.id, context)
-            return await message(
-                update,
-                context,
-                lang["WELCOME_CAPTCHA"].format_map(Text()),
-                type="photo",
-                reply_markup=keyboard,
-                img=image,
-            )
+            return await get_catcha(update, context, lang)
 
         await welcome_user(update, context, user, data)
