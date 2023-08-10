@@ -13,7 +13,7 @@ from core.utilities.text import Text
 from languages import get_group_lang
 
 MAX_TIME_STATUS_CLEANUP = 3 * 60
-MAX_TIME_CAPTCHA_CLEANUP = 5 * 60
+MAX_TIME_CAPTCHA_CLEANUP = 2.5 * 60
 
 
 async def status_cleanup():

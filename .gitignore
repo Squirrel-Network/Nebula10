@@ -130,4 +130,3 @@ dmypy.json
 .vs
 
 /core/webapp/.fleet/run.json
-resources/emojis
