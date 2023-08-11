@@ -113,5 +113,6 @@
     "WELCOME_CAPTCHA_ERROR_USER_ID": "You don't have to solve the captcha",
     "WELCOME_CAPTCHA_NOT_RESOLVE": "You were unable to solve the captcha",
     "WELCOME_CAPTCHA_NOT_VALID": "Captcha not valid",
-    "WELCOME_CAPTCHA_CLEANUP": "@{USERNAME} the captcha is no longer valid"
+    "WELCOME_CAPTCHA_CLEANUP": "@{USERNAME} the captcha is no longer valid",
+    "BAN_ERROR_NO_ID": "Please enter a valid id or username\nExample: /ban id"
 }

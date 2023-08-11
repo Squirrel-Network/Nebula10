@@ -64,7 +64,10 @@ async def save_user(member: User, chat: Chat):
     await Users.update_or_create(
         tg_id=member.id,
         defaults={
-            "tg_username": (f"@{member.username}" if member.username else "unknowntgid")
+            "first_name": member.first_name,
+            "tg_username": (
+                f"@{member.username}" if member.username else "unknowntgid"
+            ),
         },
     )
 
