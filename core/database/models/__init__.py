@@ -12,6 +12,7 @@ __all__ = (
     "Groups",
     "GroupsBadwords",
     "GroupsBlacklist",
+    "GroupsFilters",
     "NebulaAntispam",
     "NebulaUpdates",
     "OwnerList",
@@ -29,6 +30,7 @@ from .group_welcome_buttons import GroupWelcomeButtons
 from .groups import Groups
 from .groups_badwords import GroupsBadwords
 from .groups_blacklist import GroupsBlacklist
+from .groups_filters import GroupsFilters
 from .nebula_antispam import NebulaAntispam
 from .nebula_updates import NebulaUpdates
 from .owner_list import OwnerList

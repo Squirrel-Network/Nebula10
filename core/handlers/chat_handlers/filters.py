@@ -5,7 +5,7 @@
 
 from telegram.ext import ContextTypes
 
-from core.database.models import Groups
+from core.database.models import GroupsFilters
 from core.decorators import on_update
 from core.utilities import filters
 from core.utilities.enums import Role
@@ -35,11 +35,10 @@ DOCUMENT_DATA = (
     (("video/mp4",), "gif_filter", "AUTOMATIC_FILTER_HANDLER_GIF"),
     (("image/jpeg",), "jpg_filter", "AUTOMATIC_FILTER_HANDLER_JPG"),
     (
-        ("application/x-compressed-tar",),
-        "targz_filter",
-        "AUTOMATIC_FILTER_HANDLER_TARGZ",
+        ("application/x-compressed-tar", "application/zip"),
+        "compress_filter",
+        "AUTOMATIC_FILTER_HANDLER_ZIP_TARGZ",
     ),
-    (("application/zip",), "zip_filter", "AUTOMATIC_FILTER_HANDLER_ZIP"),
 )
 
 
@@ -52,7 +51,7 @@ DOCUMENT_DATA = (
 async def filters_chat(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     mime_type = update.effective_message.document.mime_type
-    data = await Groups.get(id_group=update.effective_chat.id).values()
+    data = await GroupsFilters.get(chat_id=update.effective_chat.id).values()
 
     for mime_types, db, msg in DOCUMENT_DATA:
         if mime_type in mime_types and data[db]:

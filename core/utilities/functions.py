@@ -14,12 +14,13 @@ from config import Session
 from core.database.models import (
     Groups,
     GroupsBadwords,
+    GroupsFilters,
     GroupUsers,
     GroupWelcomeButtons,
     OwnerList,
     Users,
 )
-from core.utilities.constants import BUTTONS_MENU, PERM_FALSE, PERM_ALL_TRUE
+from core.utilities.constants import BUTTONS_MENU, PERM_ALL_TRUE, PERM_FALSE
 from core.utilities.menu import build_menu
 from core.utilities.text import Text
 
@@ -58,6 +59,8 @@ async def save_group(chat_id: int, chat_title: str):
             languages=Session.config.DEFAULT_LANGUAGE,
             log_channel=Session.config.DEFAULT_LOG_CHANNEL,
         )
+
+    await GroupsFilters.update_or_create(chat_id=chat_id)
 
 
 async def save_user(member: User, chat: Chat):
