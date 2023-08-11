@@ -15,7 +15,7 @@ class GroupsFilters(Model):
     jpg_filter = fields.BooleanField(default=False)
     docx_filter = fields.BooleanField(default=False)
     apk_filter = fields.BooleanField(default=False)
-    compress_filter: fields.BooleanField(default=False)
+    compress_filter = fields.BooleanField(default=False)
 
     class Meta:
         table = "groups_filters"
