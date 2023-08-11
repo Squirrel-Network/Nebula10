@@ -62,7 +62,10 @@ async def save_group(chat_id: int, chat_title: str):
 
 async def save_user(member: User, chat: Chat):
     await Users.update_or_create(
-        tg_id=member.id, defaults={"tg_username": f"@{member.username}"}
+        tg_id=member.id,
+        defaults={
+            "tg_username": (f"@{member.username}" if member.username else "unknowntgid")
+        },
     )
 
     await GroupUsers.get_or_create(
