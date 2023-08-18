@@ -17,28 +17,27 @@ from languages import get_lang
 
 
 async def settings_set_silence(
-    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE, data: dict
+    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE, value: bool
 ):
     await context.bot.set_chat_permissions(
         update.effective_chat.id,
-        PERM_TRUE if data["set_silence"] else PERM_FALSE,
+        PERM_TRUE if value else PERM_FALSE,
     )
 
 
 async def settings_set_welcome(
-    update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE, data: dict
+    update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE, value: bool
 ):
-    if not data["set_welcome"] and data["block_new_member"]:
-        await GroupSettings.filter(chat_id=update.effective_chat.id).update(
-            block_new_member=0
-        )
+    await GroupSettings.filter(chat_id=update.effective_chat.id).update(
+        block_new_member=0 if not value else 1
+    )
 
 
 async def settings_set_block_entry(
-    update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE, data: dict
+    update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE, value: bool
 ):
     await GroupSettings.filter(chat_id=update.effective_chat.id).update(
-        set_welcome=0 if not data["block_new_member"] else 1
+        set_welcome=0 if not value else 1
     )
 
 
@@ -53,17 +52,14 @@ SETTINGS_CALLBACK = {
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
     callback_data = update.callback_query.data.split("|")
-    db_key = callback_data[-2]
+    db_key = callback_data[-3]
+    value = bool(int(callback_data[-2]))
     page = int(callback_data[-1])
 
-    data = await GroupSettings.get(chat_id=chat_id).values()
-
-    await (await GroupSettings.get(chat_id=chat_id)).update_from_dict(
-        {db_key: not data[db_key]}
-    ).save()
+    await GroupSettings.filter(chat_id=chat_id).update(**{db_key: not value})
 
     if db_key in SETTINGS_CALLBACK:
-        await SETTINGS_CALLBACK[db_key](update, context, data)
+        await SETTINGS_CALLBACK[db_key](update, context, value)
 
     await context.bot.edit_message_reply_markup(
         chat_id,

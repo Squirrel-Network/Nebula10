@@ -93,7 +93,7 @@ async def get_keyboard_settings(chat_id: int, page: int) -> InlineKeyboardMarkup
             f"{'{CHECK_MARK_BUTTON}' if v else '{CROSS_MARK}'} {BUTTONS_SETTINGS[k]}".format_map(
                 Text()
             ),
-            callback_data=f"settings|select|{k}|{page}",
+            callback_data=f"settings|select|{k}|{int(v)}|{page}",
         )
         for k, v in group.items()
     ]

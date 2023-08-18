@@ -17,7 +17,7 @@ def owner_callback(application: Application):
 def admin_callback(application: Application):
     application.add_handler(
         CallbackQueryHandler(
-            admin.settings.init, r"^settings\|select\|([a-zA-Z_]+)\|(\d+)$"
+            admin.settings.init, r"^settings\|select\|([a-zA-Z_]+)\|(\d)\|(\d+)$"
         )
     )
     application.add_handler(
