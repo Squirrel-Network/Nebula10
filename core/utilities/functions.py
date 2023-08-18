@@ -68,9 +68,7 @@ async def save_user(member: User, chat: Chat):
         tg_id=member.id,
         defaults={
             "first_name": member.first_name,
-            "tg_username": (
-                f"@{member.username}" if member.username else "unknowntgid"
-            ),
+            "tg_username": (f"@{member.username}" if member.username else None),
         },
     )
 

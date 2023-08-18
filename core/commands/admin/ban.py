@@ -23,7 +23,7 @@ async def ban_user_from_id(
     context: ContextTypes.DEFAULT_TYPE,
     user_id: int,
     first_name: str,
-    username: str,
+    username: str | None,
 ) -> bool:
     lang = await get_lang(update)
 
@@ -48,11 +48,12 @@ async def ban_user_from_id(
 
     # Group ban message
     data = await Groups.get(id_group=update.effective_chat.id)
+    mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
     params = {
         "first_name": first_name,
         "chat": update.effective_chat.title,
-        "username": username,
-        "mention": f'<a href="tg://user?id={user_id}">{first_name}</a>',
+        "username": username or mention,
+        "mention": mention,
         "userid": user_id,
     }
     await message(update, context, data.ban_message.format_map(Text(params)))
@@ -60,7 +61,7 @@ async def ban_user_from_id(
     # Log
     params = {
         "id": user_id,
-        "username": username,
+        "username": username or mention,
         "chat": update.effective_chat.title,
     }
 
@@ -89,7 +90,7 @@ async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
         context,
         user.id,
         user.first_name,
-        f"@{user.username}" or user.first_name,
+        f"@{user.username}" if user.username else None,
     )
 
 
