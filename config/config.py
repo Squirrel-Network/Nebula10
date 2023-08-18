@@ -59,6 +59,7 @@ class Config(BaseSettings):
     VERSION: str = "10.0.0"
     VERSION_NAME: str = "Lucario"
     REPO: str = "https://github.com/Squirrel-Network/nebula10"
+    MAX_ELEMENTS_PAGE: int = 5
 
     # Webapp
     WEBAPP_URL: str = "https://webapp.nebula.squirrel-network.online"

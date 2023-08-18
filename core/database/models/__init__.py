@@ -7,6 +7,7 @@ __all__ = (
     "Community",
     "CustomCommands",
     "CustomHandler",
+    "GroupSettings",
     "GroupUsers",
     "GroupWelcomeButtons",
     "Groups",
@@ -25,6 +26,7 @@ __all__ = (
 from .community import Community
 from .custom_commands import CustomCommands
 from .custom_handler import CustomHandler
+from .group_settings import GroupSettings
 from .group_users import GroupUsers
 from .group_welcome_buttons import GroupWelcomeButtons
 from .groups import Groups

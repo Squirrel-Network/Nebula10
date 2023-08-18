@@ -14,13 +14,14 @@ from config import Session
 from core.database.models import (
     Groups,
     GroupsBadwords,
+    GroupSettings,
     GroupsFilters,
     GroupUsers,
     GroupWelcomeButtons,
     OwnerList,
     Users,
 )
-from core.utilities.constants import BUTTONS_MENU, PERM_ALL_TRUE, PERM_FALSE
+from core.utilities.constants import BUTTONS_SETTINGS, PERM_ALL_TRUE, PERM_FALSE
 from core.utilities.menu import build_menu
 from core.utilities.text import Text
 
@@ -61,6 +62,7 @@ async def save_group(chat_id: int, chat_title: str):
         )
 
     await GroupsFilters.update_or_create(chat_id=chat_id)
+    await GroupSettings.update_or_create(chat_id=chat_id)
 
 
 async def save_user(member: User, chat: Chat):
@@ -79,29 +81,66 @@ async def save_user(member: User, chat: Chat):
     )
 
 
-async def get_keyboard_settings(chat_id: int) -> InlineKeyboardMarkup:
-    group = await Groups.get(id_group=chat_id).values()
+async def get_keyboard_settings(chat_id: int, page: int) -> InlineKeyboardMarkup:
+    limit = Session.config.MAX_ELEMENTS_PAGE * 2
+    offset = (page - 1) * limit
+
+    data = await (await GroupSettings.get(chat_id=chat_id)).get_settings()
+    group = dict(list(data.items())[offset : (offset + limit)])
 
     buttons = [
-        InlineKeyboardButton(f"{'✅' if group[v[1]] else '❌'} {v[0]}", callback_data=cb)
-        for cb, v in BUTTONS_MENU.items()
+        InlineKeyboardButton(
+            f"{'{CHECK_MARK_BUTTON}' if v else '{CROSS_MARK}'} {BUTTONS_SETTINGS[k]}".format_map(
+                Text()
+            ),
+            callback_data=f"settings|select|{k}|{page}",
+        )
+        for k, v in group.items()
     ]
+
+    page_buttons = []
+    buttons = build_menu(buttons, 2)
+
+    if page > 1:
+        page_buttons.append(
+            InlineKeyboardButton(
+                "{LEFT_ARROW}".format_map(Text()),
+                callback_data=f"settings|page|{page - 1}",
+            )
+        )
+    if len(data) > (offset + limit):
+        page_buttons.append(
+            InlineKeyboardButton(
+                "{RIGHT_ARROW}".format_map(Text()),
+                callback_data=f"settings|page|{page + 1}",
+            )
+        )
 
     buttons.extend(
         [
-            InlineKeyboardButton("Languages 🌍", callback_data="lang"),
-            InlineKeyboardButton(
-                "Commands",
-                url="https://github.com/Squirrel-Network/nebula8/wiki/Command-List",
-            ),
-            InlineKeyboardButton(
-                "Dashboard", url="https://nebula.squirrel-network.online"
-            ),
-            InlineKeyboardButton("Close 🗑", callback_data="close"),
+            page_buttons,
+            [
+                InlineKeyboardButton(
+                    "Languages {GLOBE_SHOWING_EUROPE_AFRICA}".format_map(Text()),
+                    callback_data="lang",
+                ),
+            ],
+            [
+                InlineKeyboardButton(
+                    "Commands",
+                    url="https://github.com/Squirrel-Network/nebula8/wiki/Command-List",
+                ),
+                InlineKeyboardButton(
+                    "Dashboard", url="https://nebula.squirrel-network.online"
+                ),
+            ],
+            [
+                InlineKeyboardButton("Close 🗑", callback_data="close"),
+            ],
         ]
     )
 
-    return InlineKeyboardMarkup(build_menu(buttons, 2))
+    return InlineKeyboardMarkup(buttons)
 
 
 async def get_welcome_buttons(chat_id: int):

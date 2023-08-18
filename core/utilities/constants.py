@@ -87,23 +87,20 @@ PERM_MEDIA_FALSE = ChatPermissions(
 )
 
 # Settings Buttons Menu
-BUTTONS_MENU = {
-    "settings|set_welcome": ("Welcome 👋🏻", "set_welcome"),
-    "settings|set_silence": ("Silence 🤫", "set_silence"),
-    "settings|set_block_entry": ("Deny All Entry 🚷", "block_new_member"),
-    "settings|set_antiflood": ("AntiFlood 🚫", "set_antiflood"),
-    "settings|user_photo": (
-        "No User Photo Entry ⛔️",
-        "set_user_profile_picture",
-    ),
-    "settings|arabic": ("No Arabic Entry ⛔️", "set_arabic_filter"),
-    "settings|cirillic": ("No Russian Entry ⛔️", "set_cirillic_filter"),
-    "settings|chinese": ("No Chinese Entry ⛔️", "set_chinese_filter"),
-    "settings|zoophile": ("No ZooPhile Entry ⛔️", "zoophile_filter"),
-    "settings|novocal": ("Block Vocal ⛔️", "set_no_vocal"),
-    "settings|channel_block": ("Block Channel 📢", "sender_chat_block"),
-    "settings|spoiler_block": ("Block Spoiler 🚫", "spoiler_block"),
-    "settings|set_captcha": ("Captcha", "set_captcha"),
+BUTTONS_SETTINGS = {
+    "set_welcome": "Welcome 👋🏻",
+    "set_silence": "Silence 🤫",
+    "block_new_member": "Deny All Entry 🚷",
+    "set_antiflood": "AntiFlood 🚫",
+    "set_user_profile_picture": "No User Photo Entry ⛔️",
+    "set_arabic_filter": "No Arabic Entry ⛔️",
+    "set_cirillic_filter": "No Russian Entry ⛔️",
+    "set_chinese_filter": "No Chinese Entry ⛔️",
+    "zoophile_filter": "No ZooPhile Entry ⛔️",
+    "set_no_vocal": "Block Vocal ⛔️",
+    "sender_chat_block": "Block Channel 📢",
+    "spoiler_block": "Block Spoiler 🚫",
+    "set_captcha": "Captcha",
 }
 
 # Custom button welcome

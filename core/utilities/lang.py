@@ -116,3 +116,4 @@ class Lang(typing.TypedDict):
     WELCOME_CAPTCHA_NOT_VALID: str
     WELCOME_CAPTCHA_CLEANUP: str
     BAN_ERROR_NO_ID: str
+    SETTINGS_MODE_SELECTION: str

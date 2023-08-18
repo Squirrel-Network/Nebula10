@@ -3,15 +3,14 @@
 
 # Copyright SquirrelNetwork
 
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
 from core.decorators import check_is_admin, delete_command, on_update
 from core.utilities import filters
 from core.utilities.enums import Role
-from core.utilities.functions import get_keyboard_settings
 from core.utilities.message import message
 from core.utilities.telegram_update import TelegramUpdate
-from core.utilities.text import Text
 from languages import get_lang
 
 
@@ -23,13 +22,17 @@ from languages import get_lang
 @check_is_admin
 @delete_command
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
-    params = {
-        "name": update.effective_chat.title,
-        "id": update.effective_chat.id,
-    }
+    lang = await get_lang(update)
+    buttons = [
+        [
+            InlineKeyboardButton("Classic", callback_data="settings|page|1"),
+            InlineKeyboardButton("Modern", callback_data="settings|modern"),
+        ],
+    ]
+
     await message(
         update,
         context,
-        (await get_lang(update))["MAIN_TEXT_SETTINGS"].format_map(Text(params)),
-        reply_markup=await get_keyboard_settings(update.effective_chat.id),
+        lang["SETTINGS_MODE_SELECTION"],
+        reply_markup=InlineKeyboardMarkup(buttons),
     )
