@@ -124,17 +124,6 @@ async def get_keyboard_settings(chat_id: int, page: int) -> InlineKeyboardMarkup
                     "Languages {GLOBE_SHOWING_EUROPE_AFRICA}".format_map(Text()),
                     callback_data="lang",
                 ),
-            ],
-            [
-                InlineKeyboardButton(
-                    "Commands",
-                    url="https://github.com/Squirrel-Network/nebula8/wiki/Command-List",
-                ),
-                InlineKeyboardButton(
-                    "Dashboard", url="https://nebula.squirrel-network.online"
-                ),
-            ],
-            [
                 InlineKeyboardButton("Close 🗑", callback_data="close"),
             ],
         ]

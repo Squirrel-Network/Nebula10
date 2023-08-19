@@ -28,9 +28,10 @@ async def settings_set_silence(
 async def settings_set_welcome(
     update: TelegramUpdate, _: ContextTypes.DEFAULT_TYPE, value: bool
 ):
-    await GroupSettings.filter(chat_id=update.effective_chat.id).update(
-        block_new_member=0 if not value else 1
-    )
+    if not value:
+        await GroupSettings.filter(chat_id=update.effective_chat.id).update(
+            block_new_member=0
+        )
 
 
 async def settings_set_block_entry(
