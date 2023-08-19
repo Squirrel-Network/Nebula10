@@ -3,6 +3,7 @@
 
 # Copyright SquirrelNetwork
 
+from telegram.constants import ParseMode
 from telegram.ext import ContextTypes
 
 from core.database.models import GroupSettings
@@ -62,10 +63,8 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     if db_key in SETTINGS_CALLBACK:
         await SETTINGS_CALLBACK[db_key](update, context, value)
 
-    await context.bot.edit_message_reply_markup(
-        chat_id,
-        update.callback_query.message.id,
-        reply_markup=await get_keyboard_settings(chat_id, page),
+    await update.callback_query.edit_message_reply_markup(
+        await get_keyboard_settings(chat_id, page)
     )
 
 
@@ -78,6 +77,7 @@ async def settings_page(update: TelegramUpdate, context: ContextTypes.DEFAULT_TY
     await update.callback_query.edit_message_text(
         lang["MAIN_TEXT_SETTINGS"].format_map(Text(params)),
         reply_markup=await get_keyboard_settings(update.effective_chat.id, page),
+        parse_mode=ParseMode.HTML,
     )
 
 
