@@ -10,7 +10,12 @@ from telegram.constants import ChatMemberStatus
 from telegram.ext import ContextTypes
 
 from config import Session
-from core.database.models import Groups, GroupWelcomeButtons, SuperbanTable
+from core.database.models import (
+    Groups,
+    GroupWelcomeButtons,
+    SuperbanTable,
+    GroupSettings,
+)
 from core.decorators import on_update
 from core.utilities.captcha import get_catcha
 from core.utilities.constants import CUSTOM_BUTTONS_WELCOME
@@ -101,7 +106,7 @@ async def welcome_user(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
     member: User,
-    data: dict,
+    welcome_text: str,
 ):
     buttons = (
         await GroupWelcomeButtons.filter(chat_id=update.effective_chat.id)
@@ -133,7 +138,7 @@ async def welcome_user(
     await message(
         update,
         context,
-        data["welcome_text"].format_map(Text(params)),
+        welcome_text.format_map(Text(params)),
         reply_markup=InlineKeyboardMarkup(buttons),
     )
 
@@ -147,11 +152,12 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
     ):
         return
 
-    data = await Groups.get(id_group=update.effective_chat.id).values()
-
     lang = await get_lang(update)
     chat_id = update.effective_chat.id
     user = update.chat_member.new_chat_member.user
+
+    data = await Groups.get(id_group=chat_id)
+    settings = await GroupSettings.get(chat_id=chat_id)
 
     if await is_in_blacklist(user.id):
         await ban_user(chat_id, user.id, context)
@@ -172,13 +178,11 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
             lang["OPERATOR_JOIN"].format_map(Text(params)),
         )
 
-    elif data["block_new_member"]:
+    elif settings.block_new_member:
         await kick_user(chat_id, user.id, context)
         await message(update, context, lang["BLOCK_NEW_MEMBER"])
 
-    elif (
-        not user.username and (action := data["type_no_username"]) in NO_USERNAME_ACTION
-    ):
+    elif not user.username and (action := data.type_no_username) in NO_USERNAME_ACTION:
         value = NO_USERNAME_ACTION.get(action, None)
 
         if call := value[0]:
@@ -195,7 +199,7 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
 
     elif (
         not (await user.get_profile_photos()).total_count
-        and data["set_user_profile_picture"]
+        and settings.set_user_profile_picture
     ):
         await kick_user(chat_id, user.id, context)
 
@@ -206,7 +210,7 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
             lang["NEW_MEMBER_WITHOUT_PHOTO"].format_map(Text(params)),
         )
 
-    elif text := check_name(user.name, data):
+    elif text := check_name(user.name, await settings.get_settings()):
         await ban_user(chat_id, user.id, context)
 
         params = {"id": user.id, "name": user.name}
@@ -215,7 +219,8 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
     else:
         await save_user(user, update.effective_chat)
 
-        if data["set_captcha"]:
-            return await get_catcha(update, context, lang)
+        if settings.set_welcome:
+            if data.set_captcha:
+                return await get_catcha(update, context, lang)
 
-        await welcome_user(update, context, user, data)
+            await welcome_user(update, context, user, data.welcome_text)
