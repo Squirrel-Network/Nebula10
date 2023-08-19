@@ -6,7 +6,7 @@
 from telegram.ext import ContextTypes
 from telegram.constants import MessageEntityType
 
-from core.database.models import Groups, GroupUsers, SuperbanTable
+from core.database.models import Groups, GroupUsers, SuperbanTable, GroupSettings
 from core.decorators import on_update
 from core.utilities import filters
 from core.utilities.enums import Role
@@ -46,6 +46,7 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 
     superban = await SuperbanTable.get_or_none(user_id=user.id)
     group = await Groups.get(id_group=chat.id)
+    settings = await GroupSettings.get(chat_id=chat.id)
     user_data = await GroupUsers.get_or_none(tg_id=user.id, tg_group_id=chat.id)
 
     params = {"id": user.id, "name": user.first_name}
@@ -76,7 +77,7 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 
     elif (
         not (await user.get_profile_photos()).total_count
-        and group.set_user_profile_picture
+        and settings.set_user_profile_picture
     ):
         await kick_user(chat.id, user.id, context)
         await message(
@@ -108,13 +109,13 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
         for x in update.effective_message.entities
         if x.type == MessageEntityType.SPOILER
     ]
-    if spoiler and group.spoiler_block:
+    if spoiler and settings.spoiler_block:
         await update.effective_message.delete()
         await message(update, context, lang["AUTOMATIC_HANDLER_SPOILER"])
 
     # This function checks if messages
     # are arriving from a channel and deletes them
-    elif (v := update.effective_message.sender_chat) and group.sender_chat_block:
+    elif (v := update.effective_message.sender_chat) and settings.sender_chat_block:
         if v.id == update.effective_chat.linked_chat_id:
             return
 
@@ -129,7 +130,7 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
         return
 
     # Voice audio blocking
-    elif update.effective_message.voice and group.set_no_vocal:
+    elif update.effective_message.voice and settings.set_no_vocal:
         await update.effective_message.delete()
         await message(update, context, lang["AUTOMATIC_HANDLER_VOICE"])
 
