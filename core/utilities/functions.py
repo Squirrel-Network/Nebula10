@@ -5,6 +5,7 @@
 
 import itertools
 import time
+import html
 
 from telegram import Chat, InlineKeyboardButton, InlineKeyboardMarkup, Update, User
 from telegram.ext import ContextTypes
@@ -54,7 +55,7 @@ async def save_group(chat_id: int, chat_title: str):
     if not (await Groups.exists(id_group=chat_id)):
         await Groups.create(
             id_group=chat_id,
-            group_name=chat_title,
+            group_name=html.escape(chat_title),
             welcome_text=Session.config.DEFAULT_WELCOME,
             rules_text=Session.config.DEFAULT_RULES,
             languages=Session.config.DEFAULT_LANGUAGE,
@@ -69,7 +70,7 @@ async def save_user(member: User, chat: Chat):
     await Users.update_or_create(
         tg_id=member.id,
         defaults={
-            "first_name": member.first_name,
+            "first_name": html.escape(member.first_name),
             "tg_username": (f"@{member.username}" if member.username else None),
         },
     )
