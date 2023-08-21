@@ -42,7 +42,9 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 
     # Send message to debug channel
     params = {
-        "command_text": update.effective_message.text,
+        "command_text": update.effective_message.text
+        if update.effective_message
+        else "None",
         "error": error,
         "log": context.error,
     }

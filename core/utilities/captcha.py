@@ -9,7 +9,7 @@ import random
 import time
 
 from PIL import Image
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, User
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
 from config import Session

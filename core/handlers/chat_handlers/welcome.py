@@ -220,7 +220,7 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
         await save_user(user, update.effective_chat)
 
         if settings.set_welcome:
-            if data.set_captcha:
+            if settings.set_captcha:
                 return await get_catcha(update, context, lang)
 
             await welcome_user(update, context, user, data.welcome_text)
