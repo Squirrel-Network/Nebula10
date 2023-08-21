@@ -3,12 +3,14 @@
 
 # Copyright SquirrelNetwork
 
+import html
+
 from core.utilities import emoji
 
 
 class Text(dict):
     def __getitem__(self, key: str) -> str:
         if (value := self.get(key.lower(), None)) is not None:
-            return value
+            return html.escape(str(value))
 
         return getattr(emoji, key, f"{{{key}}}")
