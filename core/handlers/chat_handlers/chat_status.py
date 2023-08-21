@@ -3,6 +3,8 @@
 
 # Copyright SquirrelNetwork
 
+import html
+
 from telegram.ext import ContextTypes
 
 from config import Session
@@ -21,7 +23,7 @@ async def new_chat_title_handler(
 ):
     chat = update.effective_chat
 
-    await Groups.filter(id_group=chat.id).update(group_name=chat.title)
+    await Groups.filter(id_group=chat.id).update(group_name=html.escape(chat.title))
     await telegram_debug_channel(
         update,
         context,

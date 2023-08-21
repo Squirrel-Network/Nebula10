@@ -3,9 +3,9 @@
 
 # Copyright SquirrelNetwork
 
+import html
 import itertools
 import time
-import html
 
 from telegram import Chat, InlineKeyboardButton, InlineKeyboardMarkup, Update, User
 from telegram.ext import ContextTypes
@@ -52,15 +52,21 @@ async def ban_user(chat_id: int, user_id: int, context: ContextTypes.DEFAULT_TYP
 
 
 async def save_group(chat_id: int, chat_title: str):
-    if not (await Groups.exists(id_group=chat_id)):
-        await Groups.create(
-            id_group=chat_id,
-            group_name=html.escape(chat_title),
-            welcome_text=Session.config.DEFAULT_WELCOME,
-            rules_text=Session.config.DEFAULT_RULES,
-            languages=Session.config.DEFAULT_LANGUAGE,
-            log_channel=Session.config.DEFAULT_LOG_CHANNEL,
-        )
+    chat_title = html.escape(chat_title)
+
+    group, created = await Groups.get_or_create(
+        id_group=chat_id,
+        defaults={
+            "group_name": chat_title,
+            "welcome_text": Session.config.DEFAULT_WELCOME,
+            "rules_text": Session.config.DEFAULT_RULES,
+            "languages": Session.config.DEFAULT_LANGUAGE,
+            "log_channel": Session.config.DEFAULT_LOG_CHANNEL,
+        },
+    )
+
+    if not created:
+        await group.update_from_dict({"group_name": chat_title}).save()
 
     await GroupsFilters.update_or_create(chat_id=chat_id)
     await GroupSettings.update_or_create(chat_id=chat_id)
