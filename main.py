@@ -88,7 +88,7 @@ async def main() -> None:
 
     # Load languages
     logger.info("Load languages")
-    Session.lang = load_languages()
+    load_languages()
 
     # Load database
     logger.info("Start database (tortoise)")

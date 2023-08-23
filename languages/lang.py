@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
 import typing
 
 
@@ -117,3 +122,15 @@ class Lang(typing.TypedDict):
     WELCOME_CAPTCHA_CLEANUP: str
     BAN_ERROR_NO_ID: str
     SETTINGS_MODE_SELECTION: str
+
+
+class LangKeyboard(typing.TypedDict):
+    SETTINGS_WELCOME: str
+    SETTINGS_RULES: str
+    SETTINGS_ANTIFLOOD: str
+    SETTINGS_ANTISTORM: str
+    SETTINGS_NIGHT: str
+    SETTINGS_CHAT_BLOCK: str
+    SETTINGS_CAPTCHA: str
+    CLOSE: str
+    LANG: str

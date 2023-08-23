@@ -5,6 +5,9 @@
 
 from telegram import Chat, Update, User
 
+from config import Session
+from languages import get_group_lang, get_lang
+
 
 class TelegramUpdate(Update):
     @property
@@ -22,3 +25,13 @@ class TelegramUpdate(Update):
             if self.message.reply_to_message
             else None
         )
+
+    @property
+    async def lang(self):
+        return await get_lang(self)
+
+    @property
+    async def lang_keyboard(self):
+        lang = await get_group_lang(self.chat.id)
+
+        return Session.lang_keyboard[f"{lang.lower()}_keyboard"]

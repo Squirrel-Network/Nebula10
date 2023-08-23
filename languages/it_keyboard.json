@@ -1,0 +1,11 @@
+{
+    "SETTINGS_WELCOME": "{WAVING_HAND} Benvenuto",
+    "SETTINGS_RULES": "{SCROLL} Regolamento",
+    "SETTINGS_ANTIFLOOD": "Antiflood",
+    "SETTINGS_ANTISTORM": "Antistorm",
+    "SETTINGS_NIGHT": "{CRESCENT_MOON} Notte",
+    "SETTINGS_CHAT_BLOCK": "{NO_ENTRY} Blocchi chat",
+    "SETTINGS_CAPTCHA": "{ROBOT} Captcha",
+    "CLOSE": "{WASTEBASKET} Chiudi",
+    "LANG": "{GLOBE_SHOWING_EUROPE_AFRICA} Lingua"
+}
