@@ -114,5 +114,6 @@
     "WELCOME_CAPTCHA_NOT_VALID": "Captcha non valido",
     "WELCOME_CAPTCHA_CLEANUP": "@{USERNAME} il captcha non è più valido",
     "BAN_ERROR_NO_ID": "Inserisci un id o un username valido\nEsempio: /ban id",
-    "SETTINGS_MODE_SELECTION": "Segli la modalità per aprire le impostazioni"
+    "SETTINGS_MODE_SELECTION": "Segli la modalità per aprire le impostazioni",
+    "SETTINGS_WELCOME": "Da questo menù puoi scegliere le impostazioni per quanto riguarda il welcome:"
 }

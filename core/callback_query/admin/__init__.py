@@ -9,7 +9,16 @@ __all__ = (
     "languages",
     "set_welcome_buttons",
     "settings",
+    "settings_welcome",
     "warn",
 )
 
-from . import antiflood, antistorm, languages, set_welcome_buttons, settings, warn
+from . import (
+    antiflood,
+    antistorm,
+    languages,
+    set_welcome_buttons,
+    settings,
+    settings_welcome,
+    warn,
+)

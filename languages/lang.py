@@ -122,6 +122,7 @@ class Lang(typing.TypedDict):
     WELCOME_CAPTCHA_CLEANUP: str
     BAN_ERROR_NO_ID: str
     SETTINGS_MODE_SELECTION: str
+    SETTINGS_WELCOME: str
 
 
 class LangKeyboard(typing.TypedDict):
@@ -132,5 +133,10 @@ class LangKeyboard(typing.TypedDict):
     SETTINGS_NIGHT: str
     SETTINGS_CHAT_BLOCK: str
     SETTINGS_CAPTCHA: str
+    SETTINGS_WELCOME_STATE_ACTIVE: str
+    SETTINGS_WELCOME_STATE_DEACTIVE: str
+    SETTINGS_WELCOME_SET_MESSAGE: str
+    SETTINGS_WELCOME_SEE_MESSAGE: str
     CLOSE: str
     LANG: str
+    BACK: str
