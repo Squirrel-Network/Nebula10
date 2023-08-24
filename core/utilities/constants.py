@@ -103,5 +103,21 @@ BUTTONS_SETTINGS = {
     "set_captcha": "Captcha",
 }
 
+SETTING_BUTTONS = (
+    (
+        ("SETTINGS_WELCOME", "settings|welcome"),
+        ("SETTINGS_RULES", "settings|rules"),
+    ),
+    (
+        ("SETTINGS_ANTIFLOOD", "settings|antiflood"),
+        ("SETTINGS_ANTISTORM", "settings|antistorm"),
+    ),
+    (
+        ("SETTINGS_NIGHT", "settings|night"),
+        ("SETTINGS_CHAT_BLOCK", "settings|chat_block"),
+    ),
+    (("SETTINGS_CAPTCHA", "settings|captcha"),),
+)
+
 # Custom button welcome
 CUSTOM_BUTTONS_WELCOME = {"rules": "rules|open"}

@@ -16,12 +16,7 @@ def owner_callback(application: Application):
 
 def admin_callback(application: Application):
     application.add_handler(
-        CallbackQueryHandler(
-            admin.settings.init, r"^settings\|select\|([a-zA-Z_]+)\|(\d)\|(\d+)$"
-        )
-    )
-    application.add_handler(
-        CallbackQueryHandler(admin.settings.settings_page, r"^settings\|page\|(\d+)$")
+        CallbackQueryHandler(admin.settings.settings, r"^settings$")
     )
     application.add_handler(
         CallbackQueryHandler(admin.settings.settings_modern, r"^settings\|modern$")
