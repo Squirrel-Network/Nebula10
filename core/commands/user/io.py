@@ -21,7 +21,7 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_message.from_user
     params = {
         "id": user.id,
-        "name": f"@{user.username}" if user.username else user.name,
+        "name": f"@{user.username}" if user.username else f"<>{user.name}</>",
     }
 
     msg = lang["USER_INFORMATION"].format_map(Text(params))

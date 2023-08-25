@@ -50,7 +50,10 @@ async def set_antiflood(update: TelegramUpdate, context: ContextTypes.DEFAULT_TY
             "{CHECK_MARK_BUTTON}".format_map(Text()), callback_data="antiflood|success"
         ),
     ]
-    params = {"name": update.effective_chat.title, "chat_id": update.effective_chat.id}
+    params = {
+        "name": f"<>{update.effective_chat.title}</>",
+        "chat_id": update.effective_chat.id,
+    }
 
     await message(
         update,

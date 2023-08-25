@@ -48,10 +48,10 @@ async def ban_user_from_id(
 
     # Group ban message
     data = await Groups.get(id_group=update.effective_chat.id)
-    mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+    mention = f'<a href="tg://user?id={user_id}"><>{first_name}</></a>'
     params = {
-        "first_name": first_name,
-        "chat": update.effective_chat.title,
+        "first_name": f"<>{first_name}</>",
+        "chat": f"<>{update.effective_chat.title}</>",
         "username": username or mention,
         "mention": mention,
         "userid": user_id,

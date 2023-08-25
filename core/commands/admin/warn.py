@@ -56,17 +56,20 @@ async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
 
     if user_warn == max_warn:
         await context.bot.ban_chat_member(update.effective_chat.id, reply.id)
-        params = {"username": reply.username, "title": update.effective_chat.title}
+        params = {
+            "username": reply.username,
+            "title": f"<>{update.effective_chat.title}</>",
+        }
 
         return await update.message.reply_to_message.reply_text(
             lang["WARN_USER_MAX"].format_map(Text(params))
         )
 
     params = {
-        "name": reply.first_name,
+        "name": f"<>{reply.first_name}</>",
         "count": user_warn + 1,
         "max_warn": max_warn,
-        "group_name": update.effective_chat.title,
+        "group_name": f"<>{update.effective_chat.title}</>",
         "group_id": update.effective_chat.id,
     }
     msg = lang["WARN_USER"].format_map(Text(params))

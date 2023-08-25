@@ -72,7 +72,10 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 async def settings_page(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
     page = int(update.callback_query.data.split("|")[-1])
-    params = {"name": update.effective_chat.title, "id": update.effective_chat.id}
+    params = {
+        "name": f"<>{update.effective_chat.title}</>",
+        "id": update.effective_chat.id,
+    }
 
     await update.callback_query.edit_message_text(
         lang["MAIN_TEXT_SETTINGS"].format_map(Text(params)),
