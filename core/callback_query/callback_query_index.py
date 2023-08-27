@@ -24,6 +24,18 @@ def admin_callback(application: Application):
         )
     )
     application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_welcome.settings_welcome_state_cb,
+            r"^settings\|welcome\|state$",
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_welcome.settings_welcome_see_message_cb,
+            r"^settings\|welcome\|see_message$",
+        )
+    )
+    application.add_handler(
         CallbackQueryHandler(admin.settings.settings_modern, r"^settings\|modern$")
     )
     application.add_handler(CallbackQueryHandler(admin.languages.init, r"^lang$"))

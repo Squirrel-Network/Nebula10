@@ -7,7 +7,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.constants import ParseMode
 from telegram.ext import ContextTypes
 
-from core.database.models import GroupSettings
+from core.database.models import Groups, GroupSettings
 from core.decorators import on_update
 from core.utilities import filters
 from core.utilities.enums import Role
@@ -59,4 +59,38 @@ async def settings_welcome(update: TelegramUpdate, context: ContextTypes.DEFAULT
 
     await update.callback_query.edit_message_text(
         lang["SETTINGS_WELCOME"], reply_markup=await get_keyboard(update)
+    )
+
+
+@on_update(filters=filters.check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR))
+async def settings_welcome_state_cb(
+    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
+):
+    data = await GroupSettings.get(chat_id=update.effective_chat.id)
+
+    data.set_welcome = not data.set_welcome
+    await data.save()
+
+    await update.callback_query.edit_message_reply_markup(await get_keyboard(update))
+
+
+@on_update(filters=filters.check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR))
+async def settings_welcome_see_message_cb(
+    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
+):
+    lang_kb = await update.lang_keyboard
+    data = await Groups.get(id_group=update.effective_chat.id)
+
+    await update.callback_query.edit_message_text(
+        data.welcome_text,
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        lang_kb["BACK"].format_map(Text()),
+                        callback_data="settings|welcome",
+                    )
+                ]
+            ]
+        ),
     )
