@@ -123,6 +123,7 @@ class Lang(typing.TypedDict):
     BAN_ERROR_NO_ID: str
     SETTINGS_MODE_SELECTION: str
     SETTINGS_WELCOME: str
+    SETTINGS_WELCOME_TEXT: str
 
 
 class LangKeyboard(typing.TypedDict):
@@ -140,3 +141,4 @@ class LangKeyboard(typing.TypedDict):
     CLOSE: str
     LANG: str
     BACK: str
+    CANCEL: str

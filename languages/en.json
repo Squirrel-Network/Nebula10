@@ -115,5 +115,6 @@
     "WELCOME_CAPTCHA_CLEANUP": "@{USERNAME} the captcha is no longer valid",
     "BAN_ERROR_NO_ID": "Please enter a valid id or username\nExample: /ban id",
     "SETTINGS_MODE_SELECTION": "Choose the mode to open the settings",
-    "SETTINGS_WELCOME": "From this menu you can choose the settings regarding the welcome:"
+    "SETTINGS_WELCOME": "From this menu you can choose the settings regarding the welcome:",
+    "SETTINGS_WELCOME_TEXT": "Now send the message you would like to welcome:"
 }

@@ -6,6 +6,7 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
+from config import Session
 from core.database.models import Groups, GroupSettings
 from core.decorators import check_settings, on_update
 from core.utilities import filters
@@ -73,6 +74,36 @@ async def settings_welcome_state_cb(
     await data.save()
 
     await update.callback_query.edit_message_reply_markup(await get_keyboard(update))
+
+
+@on_update(filters=filters.check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR))
+@check_settings
+async def settings_welcome_set_message_cb(
+    update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE
+):
+    lang = await update.lang
+    lang_kb = await update.lang_keyboard
+    key = f"{update.effective_user.id}-{update.effective_chat.id}"
+
+    status = Session.status[key]
+    status["status"] = "set_welcome_text"
+    status["username"] = (
+        f"@{update.effective_user.username}" or update.effective_user.first_name
+    )
+
+    await update.callback_query.edit_message_text(
+        lang["SETTINGS_WELCOME_TEXT"],
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        lang_kb["CANCEL"].format_map(Text()),
+                        callback_data="settings|cancel",
+                    )
+                ]
+            ]
+        ),
+    )
 
 
 @on_update(filters=filters.check_role(Role.OWNER, Role.CREATOR, Role.ADMINISTRATOR))

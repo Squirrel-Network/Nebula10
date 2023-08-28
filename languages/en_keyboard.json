@@ -12,5 +12,6 @@
     "SETTINGS_WELCOME_SEE_MESSAGE": "{EYES} See message",
     "CLOSE": "{WASTEBASKET} Close",
     "LANG": "{GLOBE_SHOWING_EUROPE_AFRICA} Lang",
-    "BACK": "{BACK_ARROW} Back"
+    "BACK": "{BACK_ARROW} Back",
+    "CANCEL": "{CROSS_MARK} Cancel"
 }
