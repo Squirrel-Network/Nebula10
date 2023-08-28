@@ -6,6 +6,7 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
+from config import Session
 from core.decorators import check_is_admin, delete_command, on_update
 from core.utilities import filters
 from core.utilities.enums import Role
@@ -23,7 +24,7 @@ from core.utilities.telegram_update import TelegramUpdate
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await update.lang
 
-    await message(
+    m = await message(
         update,
         context,
         lang["SETTINGS_MODE_SELECTION"],
@@ -36,3 +37,4 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
             ]
         ),
     )
+    Session.last_settings[update.effective_chat.id] = m.message_id

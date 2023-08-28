@@ -25,3 +25,4 @@ class Session:
     antistorm: ExpiringDict[str, int] = ExpiringDict(1000, 11)
     status: collections.defaultdict[str, dict] = collections.defaultdict(dict)
     captcha: collections.defaultdict[str, dict] = collections.defaultdict(dict)
+    last_settings: collections.defaultdict[int, int] = collections.defaultdict(int)
