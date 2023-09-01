@@ -210,7 +210,7 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
             lang["NEW_MEMBER_WITHOUT_PHOTO"].format_map(Text(params)),
         )
 
-    elif text := check_name(user.name, await settings.get_settings()):
+    elif text := check_name(user.first_name, await settings.get_settings()):
         await ban_user(chat_id, user.id, context)
 
         params = {"id": user.id, "name": f"<>{user.name}</>"}
