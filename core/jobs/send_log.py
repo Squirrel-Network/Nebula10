@@ -3,11 +3,17 @@
 
 # Copyright SquirrelNetwork
 
-from telegram.ext import ContextTypes
+from telegram import InputFile
 
-#This function sends the log file to the Telegram log channel
-#async def send_log(context: ContextTypes.DEFAULT_TYPE):
+from config import Session
+
+
+# This function sends the log file to the Telegram log channel
+# async def send_log(context: ContextTypes.DEFAULT_TYPE):
 async def send_log():
-    #bot = context.bot
-    #await bot.send_document(chat_id='-1001540824311',document=open('file.log', 'rb'))
-    print("TEST LOG")
+    with open("file.log", "rb") as f:
+        data = f.read()
+
+    await Session.bot.send_document(
+        Session.config.DEFAULT_LOG_CHANNEL, InputFile(data), "#log"
+    )
