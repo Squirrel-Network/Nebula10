@@ -3,6 +3,8 @@
 
 # Copyright SquirrelNetwork
 
+import time
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
@@ -87,6 +89,8 @@ async def settings_welcome_set_message_cb(
 
     status = Session.status[key]
     status["status"] = "set_welcome_text"
+    status["message_id"] = update.effective_message.message_id
+    status["time"] = time.monotonic()
     status["username"] = (
         f"@{update.effective_user.username}" or update.effective_user.first_name
     )

@@ -86,6 +86,25 @@ PERM_MEDIA_FALSE = ChatPermissions(
     can_pin_messages=False,
 )
 
+# Allowed HTML Tags
+ALLOWED_HTML_TAGS = (
+    "b",
+    "strong",
+    "i",
+    "em",
+    "u",
+    "ins",
+    "s",
+    "strike",
+    "del",
+    "span",
+    "tg-spoiler",
+    "a",
+    "tg-emoji",
+    "code",
+    "pre",
+)
+
 # Settings Buttons Menu
 BUTTONS_SETTINGS = {
     "set_welcome": "Welcome 👋🏻",

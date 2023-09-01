@@ -209,3 +209,7 @@ async def mute_user_by_id_time(
     await context.bot.restrict_chat_member(
         chat_id, user_id, PERM_FALSE, until_date=int(time.time() + mute_time)
     )
+
+
+def is_valid_html(text: str):
+    return True
