@@ -14,7 +14,6 @@
     "LANG_DEFAULT": "it",
     "LANG_FLAG": "{FLAG_ITALY}",
     "LANG_SELECTED": "Hai selezionato la lingua italiana per il tuo gruppo",
-    "MAIN_TEXT_SETTINGS": "{GEAR} Impostazioni del bot\n\n{SCROLL} Nome del gruppo: <i>{NAME}</i>\n{LABEL} ChatId: <code>{ID}</code>",
     "MESSAGE_DM_FILTERS": "Il bot ti ha inviato un messaggio in privato con le impostazioni dei filtri.",
     "NEW_MEMBER_WITHOUT_PHOTO": "<a href=\"tg://user?id={ID}\">{NAME}</a> imposta una foto del profilo! Sei stato espulso per motivi di sicurezza!",
     "OPERATOR_JOIN": "Il gestore del bot <a href=\"tg://user?id={ID}\">{NAME}</a> si è appena unito al gruppo",
@@ -114,7 +113,14 @@
     "WELCOME_CAPTCHA_NOT_VALID": "Captcha non valido",
     "WELCOME_CAPTCHA_CLEANUP": "@{USERNAME} il captcha non è più valido",
     "BAN_ERROR_NO_ID": "Inserisci un id o un username valido\nEsempio: /ban id",
-    "SETTINGS_MODE_SELECTION": "Segli la modalità per aprire le impostazioni",
-    "SETTINGS_WELCOME": "Da questo menù puoi scegliere le impostazioni per quanto riguarda il welcome:",
-    "SETTINGS_WELCOME_TEXT": "Invia ora il messaggio che vorresti mettere nel benvenuto"
+    "SETTINGS": {
+        "SETTINGS_MODE_SELECTION": "Segli la modalità per aprire le impostazioni {HAMMER_AND_WRENCH}",
+        "SETTINGS_MAIN_TEXT": "{GEAR} Impostazioni del bot\n\n{SCROLL} Nome del gruppo: <i>{NAME}</i>\n{LABEL} ChatId: <code>{ID}</code>",
+        "WELCOME": {
+            "SETTINGS_WELCOME": "{SCROLL}{BACKHAND_INDEX_POINTING_RIGHT}{WAVING_HAND} Da questo menu, puoi selezionare le impostazioni per il messaggio di benvenuto {GLOWING_STAR}",
+            "SETTINGS_WELCOME_TEXT": "{SPARKLES} Ora vai avanti e invia il messaggio di benvenuto che desideri! {ENVELOPE}",
+            "SETTINGS_WELCOME_TEXT_INVALID_HTML": "Il testo inserito contiene HTML non valido!",
+            "SETTINGS_WELCOME_TEXT_DONE": "{ENVELOPE_WITH_ARROW}{GLOWING_STAR} Hai impostato correttamente il tuo messaggio di benvenuto. Adesso inviamolo! {ROCKET}{WAVING_HAND}"
+        }
+    }
 }

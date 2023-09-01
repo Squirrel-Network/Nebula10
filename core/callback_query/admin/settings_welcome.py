@@ -61,7 +61,8 @@ async def settings_welcome(update: TelegramUpdate, context: ContextTypes.DEFAULT
     lang = await update.lang
 
     await update.callback_query.edit_message_text(
-        lang["SETTINGS_WELCOME"], reply_markup=await get_keyboard(update)
+        lang["SETTINGS"]["WELCOME"]["SETTINGS_WELCOME"].format_map(Text()),
+        reply_markup=await get_keyboard(update),
     )
 
 
@@ -96,7 +97,7 @@ async def settings_welcome_set_message_cb(
     )
 
     await update.callback_query.edit_message_text(
-        lang["SETTINGS_WELCOME_TEXT"],
+        lang["SETTINGS"]["WELCOME"]["SETTINGS_WELCOME_TEXT"].format_map(Text()),
         reply_markup=InlineKeyboardMarkup(
             [
                 [

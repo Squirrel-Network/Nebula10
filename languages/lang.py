@@ -6,6 +6,19 @@
 import typing
 
 
+class SettingsWelcomeTexts(typing.TypedDict):
+    SETTINGS_WELCOME: str
+    SETTINGS_WELCOME_TEXT: str
+    SETTINGS_WELCOME_TEXT_INVALID_HTML: str
+    SETTINGS_WELCOME_TEXT_DONE: str
+
+
+class SettingsTexts(typing.TypedDict):
+    SETTINGS_MODE_SELECTION: str
+    SETTINGS_MAIN_TEXT: str
+    WELCOME: SettingsWelcomeTexts
+
+
 class Lang(typing.TypedDict):
     BLOCK_NEW_MEMBER: str
     BAN_ZOOPHILE: str
@@ -24,7 +37,6 @@ class Lang(typing.TypedDict):
     LANG_DEFAULT: str
     LANG_FLAG: str
     LANG_SELECTED: str
-    MAIN_TEXT_SETTINGS: str
     MESSAGE_DM_FILTERS: str
     NEW_MEMBER_WITHOUT_PHOTO: str
     OPERATOR_JOIN: str
@@ -124,6 +136,7 @@ class Lang(typing.TypedDict):
     SETTINGS_MODE_SELECTION: str
     SETTINGS_WELCOME: str
     SETTINGS_WELCOME_TEXT: str
+    SETTINGS: SettingsTexts
 
 
 class LangKeyboard(typing.TypedDict):

@@ -12,6 +12,7 @@ from core.utilities import filters
 from core.utilities.enums import Role
 from core.utilities.message import message
 from core.utilities.telegram_update import TelegramUpdate
+from core.utilities.text import Text
 
 
 @on_update(
@@ -27,7 +28,7 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     m = await message(
         update,
         context,
-        lang["SETTINGS_MODE_SELECTION"],
+        lang["SETTINGS"]["SETTINGS_MODE_SELECTION"].format_map(Text()),
         reply_markup=InlineKeyboardMarkup(
             [
                 [

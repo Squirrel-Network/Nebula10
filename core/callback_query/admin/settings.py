@@ -23,7 +23,7 @@ async def settings(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     params = {"name": update.effective_chat.title, "id": update.effective_chat.id}
 
     await update.callback_query.edit_message_text(
-        lang["MAIN_TEXT_SETTINGS"].format_map(Text(params)),
+        lang["SETTINGS"]["SETTINGS_MAIN_TEXT"].format_map(Text(params)),
         reply_markup=InlineKeyboardMarkup(
             [
                 [

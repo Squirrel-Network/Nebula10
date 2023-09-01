@@ -211,5 +211,37 @@ async def mute_user_by_id_time(
     )
 
 
-def is_valid_html(text: str):
-    return True
+def validate_html(msg: str) -> bool:
+    tags = []
+    i = 0
+
+    while i < len(msg):
+        char = msg[i]
+
+        if char == "<":
+            close_tkn_index = msg.index(">", i)
+            next_chr_index = i + 1
+
+            if msg[next_chr_index] == "/":
+                cur_tag = msg[(next_chr_index + 1) : close_tkn_index]
+
+                if tags and cur_tag == tags[-1]:
+                    tags.pop()
+                else:
+                    return False
+            else:
+                new_tag = msg[next_chr_index:close_tkn_index]
+
+                if not new_tag:
+                    return False
+
+                if " " in new_tag:
+                    new_tag = new_tag[0 : new_tag.index(" ")]
+
+                tags.append(new_tag)
+
+            i = close_tkn_index + 1
+        else:
+            i += 1
+
+    return not bool(tags)
