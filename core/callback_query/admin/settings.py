@@ -28,7 +28,8 @@ async def settings(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
             [
                 [
                     InlineKeyboardButton(
-                        lang_kb[name].format_map(Text()), callback_data=cb
+                        lang_kb["SETTINGS"]["MAIN_BUTTON"][name].format_map(Text()),
+                        callback_data=cb,
                     )
                     for name, cb in x
                 ]

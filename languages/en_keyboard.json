@@ -1,11 +1,16 @@
 {
-    "SETTINGS_WELCOME": "{WAVING_HAND} Welcome",
-    "SETTINGS_RULES": "{SCROLL} Rules",
-    "SETTINGS_ANTIFLOOD": "{PROHIBITED} Antiflood",
-    "SETTINGS_ANTISTORM": "{CLOUD_WITH_LIGHTNING} Antistorm",
-    "SETTINGS_NIGHT": "{CRESCENT_MOON} Night",
-    "SETTINGS_CHAT_BLOCK": "{NO_ENTRY} Chat block",
-    "SETTINGS_CAPTCHA": "{ROBOT} Captcha",
+    "SETTINGS": {
+        "MAIN_BUTTON": {
+            "SETTINGS_WELCOME": "{WAVING_HAND} Welcome",
+            "SETTINGS_RULES": "{SCROLL} Rules",
+            "SETTINGS_ANTIFLOOD": "{PROHIBITED} Antiflood",
+            "SETTINGS_ANTISTORM": "{CLOUD_WITH_LIGHTNING} Antistorm",
+            "SETTINGS_FILTERS": "{FACE_WITH_MONOCLE} Filters",
+            "SETTINGS_CHAT_BLOCK": "{NO_ENTRY} Chat block",
+            "SETTINGS_NIGHT": "{CRESCENT_MOON} Night",
+            "SETTINGS_CAPTCHA": "{ROBOT} Captcha"
+        }
+    },
     "SETTINGS_WELCOME_STATE_ACTIVE": "{CHECK_MARK_BUTTON} Activate",
     "SETTINGS_WELCOME_STATE_DEACTIVE": "{CROSS_MARK} Deactivate",
     "SETTINGS_WELCOME_SET_MESSAGE": "{WRITING_HAND} Set message",

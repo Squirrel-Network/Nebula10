@@ -15,9 +15,32 @@ def owner_callback(application: Application):
 
 
 def admin_callback(application: Application):
+    # Settings - mode
     application.add_handler(
         CallbackQueryHandler(admin.settings.settings, r"^settings$")
     )
+    application.add_handler(
+        CallbackQueryHandler(admin.settings.settings_modern, r"^settings\|modern$")
+    )
+
+    # Settings - filters
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_filters.settings_filters, r"^settings\|filters$"
+        )
+    )
+
+    # Settings - night
+    application.add_handler(
+        CallbackQueryHandler(admin.settings_night.settings_night, r"^settings\|night$")
+    )
+
+    # Settings - rules
+    application.add_handler(
+        CallbackQueryHandler(admin.settings_rules.settings_rules, r"^settings\|rules$")
+    )
+
+    # Settings - welcome
     application.add_handler(
         CallbackQueryHandler(
             admin.settings_welcome.settings_welcome, r"^settings\|welcome$"
@@ -41,9 +64,8 @@ def admin_callback(application: Application):
             r"^settings\|welcome\|set_message$",
         )
     )
-    application.add_handler(
-        CallbackQueryHandler(admin.settings.settings_modern, r"^settings\|modern$")
-    )
+
+    # Lang
     application.add_handler(CallbackQueryHandler(admin.languages.init, r"^lang$"))
     application.add_handler(
         CallbackQueryHandler(admin.languages.change_lang, r"^lang\|([a-zA-Z]+)$")
@@ -59,7 +81,7 @@ def admin_callback(application: Application):
         CallbackQueryHandler(admin.warn.set_max_warn_cb, r"^warn\|set\|(\d+)$")
     )
 
-    # antiflood
+    # Antiflood
     application.add_handler(
         CallbackQueryHandler(
             admin.antiflood.set_antiflood_minus_cb,
@@ -78,7 +100,7 @@ def admin_callback(application: Application):
         )
     )
 
-    # antistorm
+    # Antistorm
     application.add_handler(
         CallbackQueryHandler(
             admin.antistorm.set_antistorm_minus_cb,

@@ -139,14 +139,23 @@ class Lang(typing.TypedDict):
     SETTINGS: SettingsTexts
 
 
-class LangKeyboard(typing.TypedDict):
+class SettingsMainButtonTexts(typing.TypedDict):
     SETTINGS_WELCOME: str
     SETTINGS_RULES: str
     SETTINGS_ANTIFLOOD: str
     SETTINGS_ANTISTORM: str
-    SETTINGS_NIGHT: str
+    SETTINGS_FILTERS: str
     SETTINGS_CHAT_BLOCK: str
+    SETTINGS_NIGHT: str
     SETTINGS_CAPTCHA: str
+
+
+class SettingsKeyboardTexts(typing.TypedDict):
+    MAIN_BUTTON: SettingsMainButtonTexts
+
+
+class LangKeyboard(typing.TypedDict):
+    SETTINGS: SettingsKeyboardTexts
     SETTINGS_WELCOME_STATE_ACTIVE: str
     SETTINGS_WELCOME_STATE_DEACTIVE: str
     SETTINGS_WELCOME_SET_MESSAGE: str

@@ -105,23 +105,6 @@ ALLOWED_HTML_TAGS = (
     "pre",
 )
 
-# Settings Buttons Menu
-BUTTONS_SETTINGS = {
-    "set_welcome": "Welcome 👋🏻",
-    "set_silence": "Silence 🤫",
-    "block_new_member": "Deny All Entry 🚷",
-    "set_antiflood": "AntiFlood 🚫",
-    "set_user_profile_picture": "No User Photo Entry ⛔️",
-    "set_arabic_filter": "No Arabic Entry ⛔️",
-    "set_cirillic_filter": "No Russian Entry ⛔️",
-    "set_chinese_filter": "No Chinese Entry ⛔️",
-    "zoophile_filter": "No ZooPhile Entry ⛔️",
-    "set_no_vocal": "Block Vocal ⛔️",
-    "sender_chat_block": "Block Channel 📢",
-    "spoiler_block": "Block Spoiler 🚫",
-    "set_captcha": "Captcha",
-}
-
 SETTING_BUTTONS = (
     (
         ("SETTINGS_WELCOME", "settings|welcome"),
@@ -132,10 +115,13 @@ SETTING_BUTTONS = (
         ("SETTINGS_ANTISTORM", "settings|antistorm"),
     ),
     (
-        ("SETTINGS_NIGHT", "settings|night"),
+        ("SETTINGS_FILTERS", "settings|filters"),
         ("SETTINGS_CHAT_BLOCK", "settings|chat_block"),
     ),
-    (("SETTINGS_CAPTCHA", "settings|captcha"),),
+    (
+        ("SETTINGS_NIGHT", "settings|night"),
+        ("SETTINGS_CAPTCHA", "settings|captcha"),
+    ),
 )
 
 # Custom button welcome

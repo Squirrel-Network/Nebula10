@@ -22,8 +22,7 @@ from core.database.models import (
     OwnerList,
     Users,
 )
-from core.utilities.constants import BUTTONS_SETTINGS, PERM_ALL_TRUE, PERM_FALSE
-from core.utilities.menu import build_menu
+from core.utilities.constants import PERM_ALL_TRUE, PERM_FALSE
 from core.utilities.text import Text
 
 
@@ -86,57 +85,6 @@ async def save_user(member: User, chat: Chat):
         tg_group_id=chat.id,
         defaults={"warn_count": 0, "user_score": 0},
     )
-
-
-async def get_keyboard_settings(chat_id: int, page: int) -> InlineKeyboardMarkup:
-    limit = Session.config.MAX_ELEMENTS_PAGE * 2
-    offset = (page - 1) * limit
-
-    data = await (await GroupSettings.get(chat_id=chat_id)).get_settings()
-    group = dict(list(data.items())[offset : (offset + limit)])
-
-    buttons = [
-        InlineKeyboardButton(
-            f"{'{CHECK_MARK_BUTTON}' if v else '{CROSS_MARK}'} {BUTTONS_SETTINGS[k]}".format_map(
-                Text()
-            ),
-            callback_data=f"settings|select|{k}|{int(v)}|{page}",
-        )
-        for k, v in group.items()
-    ]
-
-    page_buttons = []
-    buttons = build_menu(buttons, 2)
-
-    if page > 1:
-        page_buttons.append(
-            InlineKeyboardButton(
-                "{LEFT_ARROW}".format_map(Text()),
-                callback_data=f"settings|page|{page - 1}",
-            )
-        )
-    if len(data) > (offset + limit):
-        page_buttons.append(
-            InlineKeyboardButton(
-                "{RIGHT_ARROW}".format_map(Text()),
-                callback_data=f"settings|page|{page + 1}",
-            )
-        )
-
-    buttons.extend(
-        [
-            page_buttons,
-            [
-                InlineKeyboardButton(
-                    "Languages {GLOBE_SHOWING_EUROPE_AFRICA}".format_map(Text()),
-                    callback_data="lang",
-                ),
-                InlineKeyboardButton("Close 🗑", callback_data="close"),
-            ],
-        ]
-    )
-
-    return InlineKeyboardMarkup(buttons)
 
 
 async def get_welcome_buttons(chat_id: int):
