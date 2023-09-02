@@ -20,14 +20,10 @@ from core.utilities.text import Text
 async def get_keyboard(update: TelegramUpdate) -> InlineKeyboardMarkup:
     lang_kb = await update.lang_keyboard
     data = await GroupSettings.get(chat_id=update.effective_chat.id)
-    is_active = (
-        "SETTINGS_WELCOME_STATE_ACTIVE"
-        if not data.set_welcome
-        else "SETTINGS_WELCOME_STATE_DEACTIVE"
-    )
+    is_active = "ACTIVE" if not data.set_welcome else "DEACTIVE"
     buttons = [
         InlineKeyboardButton(
-            lang_kb["SETTINGS"]["WELCOME"][is_active].format_map(Text()),
+            lang_kb["SETTINGS"][is_active].format_map(Text()),
             callback_data="settings|welcome|state",
         )
     ]

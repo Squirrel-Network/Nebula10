@@ -11,8 +11,6 @@
             "SETTINGS_CAPTCHA": "{ROBOT} Captcha"
         },
         "WELCOME": {
-            "SETTINGS_WELCOME_STATE_ACTIVE": "{CHECK_MARK_BUTTON} Attiva",
-            "SETTINGS_WELCOME_STATE_DEACTIVE": "{CROSS_MARK} Disattiva",
             "SETTINGS_WELCOME_SET_MESSAGE": "{WRITING_HAND} Imposta messaggio",
             "SETTINGS_WELCOME_SEE_MESSAGE": "{EYES} Vedi messaggio"
         },
@@ -25,7 +23,9 @@
             "ZOOPHILE_FILTER": "No ZooPhile Entry {NO_ENTRY}",
             "ACTIVE_BUTTON": "{CHECK_MARK_BUTTON} ",
             "DEACTIVE_BUTTON": "{CROSS_MARK} "
-        }
+        },
+        "ACTIVE": "{CHECK_MARK_BUTTON} Attiva",
+        "DEACTIVE": "{CROSS_MARK} Disattiva"
     },
     "CLOSE": "{WASTEBASKET} Chiudi",
     "LANG": "{GLOBE_SHOWING_EUROPE_AFRICA} Lingua",

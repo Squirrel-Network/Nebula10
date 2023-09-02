@@ -124,6 +124,9 @@
         },
         "CHAT_BLOCK": {
             "MAIN_TEXT": "Scegli le impostazioni per quanto riguarda il blocco delle entrate:"
+        },
+        "CAPTCHA": {
+            "MAIN_TEXT": "Impostazioni riguardanti il captcha:"
         }
     }
 }

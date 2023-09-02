@@ -124,6 +124,9 @@
         },
         "CHAT_BLOCK": {
             "MAIN_TEXT": "Choose your settings regarding blocking of revenue:"
+        },
+        "CAPTCHA": {
+            "MAIN_TEXT": "Settings concerning the captcha:"
         }
     }
 }

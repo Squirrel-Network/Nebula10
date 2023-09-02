@@ -23,6 +23,19 @@ def admin_callback(application: Application):
         CallbackQueryHandler(admin.settings.settings_modern, r"^settings\|modern$")
     )
 
+    # Settings - captcha
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_captcha.settings_captcha, r"^settings\|captcha$"
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_captcha.settings_captcha_state_cb,
+            r"^settings\|captcha\|state$",
+        )
+    )
+
     # Settings - chat block
     application.add_handler(
         CallbackQueryHandler(

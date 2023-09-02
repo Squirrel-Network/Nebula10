@@ -17,11 +17,16 @@ class SettingsChatBlockTexts(typing.TypedDict):
     MAIN_TEXT: str
 
 
+class SettingsCaptchaTexts(typing.TypedDict):
+    MAIN_TEXT: str
+
+
 class SettingsTexts(typing.TypedDict):
     SETTINGS_MODE_SELECTION: str
     SETTINGS_MAIN_TEXT: str
     WELCOME: SettingsWelcomeTexts
     CHAT_BLOCK: SettingsChatBlockTexts
+    CAPTCHA: SettingsCaptchaTexts
 
 
 class Lang(typing.TypedDict):
@@ -156,8 +161,6 @@ class SettingsMainButtonTexts(typing.TypedDict):
 
 
 class WelcomeKeyboardTexts(typing.TypedDict):
-    SETTINGS_WELCOME_STATE_ACTIVE: str
-    SETTINGS_WELCOME_STATE_DEACTIVE: str
     SETTINGS_WELCOME_SET_MESSAGE: str
     SETTINGS_WELCOME_SEE_MESSAGE: str
 
@@ -177,6 +180,8 @@ class SettingsKeyboardTexts(typing.TypedDict):
     MAIN_BUTTON: SettingsMainButtonTexts
     WELCOME: WelcomeKeyboardTexts
     CHAT_BLOCK: ChatBlockKeyboardTexts
+    ACTIVE: str
+    DEACTIVE: str
 
 
 class LangKeyboard(typing.TypedDict):
