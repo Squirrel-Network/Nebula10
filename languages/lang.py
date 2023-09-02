@@ -21,12 +21,22 @@ class SettingsCaptchaTexts(typing.TypedDict):
     MAIN_TEXT: str
 
 
+class SettingsAntifloodTexts(typing.TypedDict):
+    MAIN_TEXT: str
+
+
+class SettingsAntistormTexts(typing.TypedDict):
+    MAIN_TEXT: str
+
+
 class SettingsTexts(typing.TypedDict):
     SETTINGS_MODE_SELECTION: str
     SETTINGS_MAIN_TEXT: str
     WELCOME: SettingsWelcomeTexts
     CHAT_BLOCK: SettingsChatBlockTexts
     CAPTCHA: SettingsCaptchaTexts
+    ANTIFLOOD: SettingsAntifloodTexts
+    ANTISTORM: SettingsAntistormTexts
 
 
 class Lang(typing.TypedDict):

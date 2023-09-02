@@ -14,6 +14,7 @@ class GroupSettings(Model):
     set_silence = fields.BooleanField(default=False)
     block_new_member = fields.BooleanField(default=False)
     set_antiflood = fields.BooleanField(default=True)
+    set_antistorm = fields.BooleanField(default=False)
     set_user_profile_picture = fields.BooleanField(default=False)
     set_arabic_filter = fields.BooleanField(default=True)
     set_cirillic_filter = fields.BooleanField(default=True)

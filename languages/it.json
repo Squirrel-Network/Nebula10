@@ -127,6 +127,12 @@
         },
         "CAPTCHA": {
             "MAIN_TEXT": "Impostazioni riguardanti il captcha:"
+        },
+        "ANTIFLOOD": {
+            "MAIN_TEXT": "Impostazioni riguardanti l'antiflood:"
+        },
+        "ANTISTORM": {
+            "MAIN_TEXT": "Impostazioni riguardanti l'antistorm:"
         }
     }
 }

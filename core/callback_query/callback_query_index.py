@@ -23,6 +23,32 @@ def admin_callback(application: Application):
         CallbackQueryHandler(admin.settings.settings_modern, r"^settings\|modern$")
     )
 
+    # Settings - antiflood
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_antiflood.settings_antiflood, r"^settings\|antiflood$"
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_antiflood.settings_antiflood_state_cb,
+            r"^settings\|antiflood\|state$",
+        )
+    )
+
+    # Settings - antistorm
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_antistorm.settings_antistorm, r"^settings\|antistorm$"
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_antistorm.settings_antistorm_state_cb,
+            r"^settings\|antistorm\|state$",
+        )
+    )
+
     # Settings - captcha
     application.add_handler(
         CallbackQueryHandler(
