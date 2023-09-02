@@ -23,6 +23,10 @@ FOUR_HOUR = 14400.0
 ONE_HOUR = 3600.0
 ONE_MINUTE = 60.0
 
+#Constants for captcha and status management
+MAX_TIME_STATUS_CLEANUP = 3 * 60
+MAX_TIME_CAPTCHA_CLEANUP = 2.5 * 60
+
 # these constants change and disrupt an entire group
 PERM_FALSE = ChatPermissions(
     can_send_messages=False,

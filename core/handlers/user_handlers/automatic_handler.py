@@ -49,7 +49,7 @@ async def status(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     settings = await GroupSettings.get(chat_id=chat.id)
     user_data = await GroupUsers.get_or_none(tg_id=user.id, tg_group_id=chat.id)
 
-    params = {"id": user.id, "name": user.first_name}
+    params = {"id": user.id, "name": f"<>{user.first_name}</>"}
 
     if superban:
         params["reason"] = superban.motivation_text

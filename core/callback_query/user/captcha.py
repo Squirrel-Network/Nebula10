@@ -51,9 +51,11 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
         await update.effective_message.delete()
         await unmute_user(update.effective_chat.id, user_id, context)
 
-        group_data = await Groups.get(id_group=update.effective_chat.id).values()
+        group_data = await Groups.get(id_group=update.effective_chat.id)
 
-        return await welcome_user(update, context, update.effective_user, group_data)
+        return await welcome_user(
+            update, context, update.effective_user, group_data.welcome_text
+        )
 
     keyboard = [
         [

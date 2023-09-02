@@ -22,7 +22,7 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
 
     await OwnerList.filter(tg_id=user.id).delete()
 
-    params = {"name": user.first_name, "id": user.id}
+    params = {"name": f"<>{user.first_name}</>", "id": user.id}
     await update.callback_query.edit_message_text(
         lang["OWNER_REMOVE"].format_map(Text(params)),
         parse_mode=constants.ParseMode.HTML,

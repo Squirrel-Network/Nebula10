@@ -28,7 +28,7 @@ async def init_reply(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
 
     user_status = await context.bot.get_chat_member(update.effective_chat.id, user.id)
     params = {
-        "user": f'<a href="tg://user?id={user.id}">{user.first_name}</a>',
+        "user": f'<a href="tg://user?id={user.id}"><>{user.first_name}</></a>',
         "id": user.id,
     }
 

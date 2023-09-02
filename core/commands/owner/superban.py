@@ -57,11 +57,11 @@ async def new_superban(
     await message(update, context, lang["SUPERBAN"].format_map(Text(params)))
 
     params = {
-        "name": first_name,
+        "name": f"<>{first_name}</>",
         "id": user_id,
         "reason": motivation,
         "date": save_date,
-        "operator_name": operator_first_name,
+        "operator_name": f"<>{operator_first_name}</>",
         "operator_username": operator_username,
         "operator_id": operator_id,
     }

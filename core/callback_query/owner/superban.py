@@ -30,7 +30,7 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     save_date = datetime.datetime.utcnow().isoformat()
 
     if await WhitelistTable.exists(tg_id=user.id):
-        params = {"name": user.first_name}
+        params = {"name": f"<>{user.first_name}</>"}
 
         await message(
             update,
@@ -70,11 +70,11 @@ async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
         )
 
         params = {
-            "name": user.first_name,
+            "name": f"<>{user.first_name}</>",
             "id": user.id,
             "reason": motivation,
             "date": save_date,
-            "operator_name": operator.first_name,
+            "operator_name": f"<>{operator.first_name}</>",
             "operator_username": f"@{operator.username}",
             "operator_id": operator.id,
         }

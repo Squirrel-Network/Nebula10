@@ -18,7 +18,10 @@ from languages import get_lang
 @delete_command
 async def rules(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await get_lang(update)
-    params = {"name": update.effective_chat.title, "id": update.effective_chat.id}
+    params = {
+        "name": f"<>{update.effective_chat.title}</>",
+        "id": update.effective_chat.id,
+    }
 
     await message(
         update,

@@ -27,9 +27,9 @@ async def report(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     link = (update.effective_message.reply_to_message or update.effective_message).link
     params = {
         "id": update.effective_user.id,
-        "first_name": update.effective_user.first_name,
+        "first_name": f"<>{update.effective_user.first_name}</>",
         "chat_id": update.effective_chat.id,
-        "chat_title": update.effective_chat.title,
+        "chat_title": f"<>{update.effective_chat.title}</>",
         "link": link,
     }
     text = StringLog.REPORT_MSG.format_map(Text(params))

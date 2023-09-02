@@ -20,7 +20,10 @@ from core.utilities.text import Text
 async def settings(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
     lang = await update.lang
     lang_kb = await update.lang_keyboard
-    params = {"name": update.effective_chat.title, "id": update.effective_chat.id}
+    params = {
+        "name": f"<>{update.effective_chat.title}</>",
+        "id": update.effective_chat.id,
+    }
 
     await update.callback_query.edit_message_text(
         lang["SETTINGS"]["SETTINGS_MAIN_TEXT"].format_map(Text(params)),

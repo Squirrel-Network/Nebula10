@@ -128,10 +128,10 @@ async def welcome_user(
         for _, row in itertools.groupby(buttons, key=lambda x: x["row"])
     ]
     params = {
-        "first_name": member.first_name,
-        "chat": update.effective_chat.title,
+        "first_name": f"<>{member.first_name}</>",
+        "chat": f"<>{update.effective_chat.title}</>",
         "username": f"@{member.username}" if member.username else member.first_name,
-        "mention": f'<a href="tg://user?id={member.id}">{member.first_name}</a>',
+        "mention": f'<a href="tg://user?id={member.id}"><>{member.first_name}</></a>',
         "userid": member.id,
     }
 
@@ -162,7 +162,7 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
     if await is_in_blacklist(user.id):
         await ban_user(chat_id, user.id, context)
 
-        params = {"id": user.id, "name": user.first_name}
+        params = {"id": user.id, "name": f"<>{user.first_name}</>"}
 
         await message(
             update,
@@ -171,7 +171,7 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
         )
 
     elif user.id in Session.owner_ids:
-        params = {"id": user.id, "name": user.name}
+        params = {"id": user.id, "name": f"<>{user.name}</>"}
         await message(
             update,
             context,
@@ -189,7 +189,7 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
             await call(chat_id, user.id, context)
 
         if mess := value[1]:
-            params = {"user": user.name, "action": mess}
+            params = {"user": f"<>{user.name}</>", "action": mess}
 
             await message(
                 update,
@@ -203,17 +203,17 @@ async def new_member(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE)
     ):
         await kick_user(chat_id, user.id, context)
 
-        params = {"id": user.id, "name": user.name}
+        params = {"id": user.id, "name": f"<>{user.name}</>"}
         await message(
             update,
             context,
             lang["NEW_MEMBER_WITHOUT_PHOTO"].format_map(Text(params)),
         )
 
-    elif text := check_name(user.name, await settings.get_settings()):
+    elif text := check_name(user.first_name, await settings.get_settings()):
         await ban_user(chat_id, user.id, context)
 
-        params = {"id": user.id, "name": user.name}
+        params = {"id": user.id, "name": f"<>{user.name}</>"}
         await message(update, context, lang[text].format_map(Text(params)))
 
     else:
