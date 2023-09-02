@@ -5,22 +5,27 @@
 
 import json
 import pathlib
+import typing
 
 from config import Session
 from core.database.models import Groups
-from core.utilities.lang import Lang
-from core.utilities.telegram_update import TelegramUpdate
+from languages.lang import Lang
+
+if typing.TYPE_CHECKING:
+    from core.utilities.telegram_update import TelegramUpdate
 
 
-def load_languages() -> dict[str, Lang]:
-    languages = dict()
+def load_languages():
     path = pathlib.Path(__file__).parent
 
     for x in path.glob("*.json"):
         with open(x, "r") as f:
-            languages[x.stem] = json.load(f)
+            if x.stem.endswith("keyboard"):
+                tmp = Session.lang_keyboard
+            else:
+                tmp = Session.lang
 
-    return languages
+            tmp[x.stem] = json.load(f)
 
 
 async def get_group_lang(chat_id: int) -> str | None:
@@ -32,7 +37,7 @@ async def get_group_lang(chat_id: int) -> str | None:
     return Session.config.DEFAULT_LANGUAGE
 
 
-async def get_lang(update: TelegramUpdate) -> Lang:
+async def get_lang(update: "TelegramUpdate") -> Lang:
     lang = Session.config.DEFAULT_LANGUAGE
 
     if (

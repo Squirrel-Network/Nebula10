@@ -1,4 +1,42 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
 import typing
+
+
+class SettingsWelcomeTexts(typing.TypedDict):
+    SETTINGS_WELCOME: str
+    SETTINGS_WELCOME_TEXT: str
+    SETTINGS_WELCOME_TEXT_INVALID_HTML: str
+    SETTINGS_WELCOME_TEXT_DONE: str
+
+
+class SettingsChatBlockTexts(typing.TypedDict):
+    MAIN_TEXT: str
+
+
+class SettingsCaptchaTexts(typing.TypedDict):
+    MAIN_TEXT: str
+
+
+class SettingsAntifloodTexts(typing.TypedDict):
+    MAIN_TEXT: str
+
+
+class SettingsAntistormTexts(typing.TypedDict):
+    MAIN_TEXT: str
+
+
+class SettingsTexts(typing.TypedDict):
+    SETTINGS_MODE_SELECTION: str
+    SETTINGS_MAIN_TEXT: str
+    WELCOME: SettingsWelcomeTexts
+    CHAT_BLOCK: SettingsChatBlockTexts
+    CAPTCHA: SettingsCaptchaTexts
+    ANTIFLOOD: SettingsAntifloodTexts
+    ANTISTORM: SettingsAntistormTexts
 
 
 class Lang(typing.TypedDict):
@@ -19,7 +57,6 @@ class Lang(typing.TypedDict):
     LANG_DEFAULT: str
     LANG_FLAG: str
     LANG_SELECTED: str
-    MAIN_TEXT_SETTINGS: str
     MESSAGE_DM_FILTERS: str
     NEW_MEMBER_WITHOUT_PHOTO: str
     OPERATOR_JOIN: str
@@ -117,3 +154,49 @@ class Lang(typing.TypedDict):
     WELCOME_CAPTCHA_CLEANUP: str
     BAN_ERROR_NO_ID: str
     SETTINGS_MODE_SELECTION: str
+    SETTINGS_WELCOME: str
+    SETTINGS_WELCOME_TEXT: str
+    SETTINGS: SettingsTexts
+
+
+class SettingsMainButtonTexts(typing.TypedDict):
+    SETTINGS_WELCOME: str
+    SETTINGS_RULES: str
+    SETTINGS_ANTIFLOOD: str
+    SETTINGS_ANTISTORM: str
+    SETTINGS_FILTERS: str
+    SETTINGS_CHAT_BLOCK: str
+    SETTINGS_NIGHT: str
+    SETTINGS_CAPTCHA: str
+
+
+class WelcomeKeyboardTexts(typing.TypedDict):
+    SETTINGS_WELCOME_SET_MESSAGE: str
+    SETTINGS_WELCOME_SEE_MESSAGE: str
+
+
+class ChatBlockKeyboardTexts(typing.TypedDict):
+    BLOCK_NEW_MEMBER: str
+    SET_USER_PROFILE_PICTURE: str
+    SET_ARABIC_FILTER: str
+    SET_CIRILLIC_FILTER: str
+    SET_CHINESE_FILTER: str
+    ZOOPHILE_FILTER: str
+    ACTIVE_BUTTON: str
+    DEACTIVE_BUTTON: str
+
+
+class SettingsKeyboardTexts(typing.TypedDict):
+    MAIN_BUTTON: SettingsMainButtonTexts
+    WELCOME: WelcomeKeyboardTexts
+    CHAT_BLOCK: ChatBlockKeyboardTexts
+    ACTIVE: str
+    DEACTIVE: str
+
+
+class LangKeyboard(typing.TypedDict):
+    SETTINGS: SettingsKeyboardTexts
+    CLOSE: str
+    LANG: str
+    BACK: str
+    CANCEL: str

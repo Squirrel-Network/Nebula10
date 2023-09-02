@@ -1,4 +1,9 @@
-from telegram import InlineKeyboardMarkup, Update, constants
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
+from telegram import InlineKeyboardMarkup, Message, Update, constants
 from telegram.ext import ContextTypes
 
 
@@ -12,7 +17,7 @@ async def message(
     img: str = None,
     reply_markup: InlineKeyboardMarkup = None,
     allow_sending_without_reply: bool | None = None,
-):
+) -> Message:
     bot = context.bot
     chat = update.effective_chat
     thread_id = (

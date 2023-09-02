@@ -14,6 +14,7 @@ from core.handlers.chat_handlers import (
     welcome,
 )
 from core.handlers.user_handlers import automatic_handler
+from core.handlers import status
 
 
 def core_handlers(application: Application):
@@ -53,4 +54,7 @@ def core_handlers(application: Application):
         ChatMemberHandler(welcome.welcome_bot, ChatMemberHandler.MY_CHAT_MEMBER)
     )
     application.add_handler(MessageHandler(None, filters.filters_chat))
+    application.add_handler(
+        MessageHandler(None, status.settings_welcome.set_welcome_text_status)
+    )
     application.add_error_handler(error.init)

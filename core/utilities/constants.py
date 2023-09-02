@@ -90,22 +90,43 @@ PERM_MEDIA_FALSE = ChatPermissions(
     can_pin_messages=False,
 )
 
-# Settings Buttons Menu
-BUTTONS_SETTINGS = {
-    "set_welcome": "Welcome 👋🏻",
-    "set_silence": "Silence 🤫",
-    "block_new_member": "Deny All Entry 🚷",
-    "set_antiflood": "AntiFlood 🚫",
-    "set_user_profile_picture": "No User Photo Entry ⛔️",
-    "set_arabic_filter": "No Arabic Entry ⛔️",
-    "set_cirillic_filter": "No Russian Entry ⛔️",
-    "set_chinese_filter": "No Chinese Entry ⛔️",
-    "zoophile_filter": "No ZooPhile Entry ⛔️",
-    "set_no_vocal": "Block Vocal ⛔️",
-    "sender_chat_block": "Block Channel 📢",
-    "spoiler_block": "Block Spoiler 🚫",
-    "set_captcha": "Captcha",
-}
+# Allowed HTML Tags
+ALLOWED_HTML_TAGS = (
+    "b",
+    "strong",
+    "i",
+    "em",
+    "u",
+    "ins",
+    "s",
+    "strike",
+    "del",
+    "span",
+    "tg-spoiler",
+    "a",
+    "tg-emoji",
+    "code",
+    "pre",
+)
+
+SETTING_BUTTONS = (
+    (
+        ("SETTINGS_WELCOME", "settings|welcome"),
+        ("SETTINGS_RULES", "settings|rules"),
+    ),
+    (
+        ("SETTINGS_ANTIFLOOD", "settings|antiflood"),
+        ("SETTINGS_ANTISTORM", "settings|antistorm"),
+    ),
+    (
+        ("SETTINGS_FILTERS", "settings|filters"),
+        ("SETTINGS_CHAT_BLOCK", "settings|chat_block"),
+    ),
+    (
+        ("SETTINGS_NIGHT", "settings|night"),
+        ("SETTINGS_CAPTCHA", "settings|captcha"),
+    ),
+)
 
 # Custom button welcome
 CUSTOM_BUTTONS_WELCOME = {"rules": "rules|open"}

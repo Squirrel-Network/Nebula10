@@ -22,8 +22,7 @@ from core.database.models import (
     OwnerList,
     Users,
 )
-from core.utilities.constants import BUTTONS_SETTINGS, PERM_ALL_TRUE, PERM_FALSE
-from core.utilities.menu import build_menu
+from core.utilities.constants import PERM_ALL_TRUE, PERM_FALSE
 from core.utilities.text import Text
 
 
@@ -86,57 +85,6 @@ async def save_user(member: User, chat: Chat):
         tg_group_id=chat.id,
         defaults={"warn_count": 0, "user_score": 0},
     )
-
-
-async def get_keyboard_settings(chat_id: int, page: int) -> InlineKeyboardMarkup:
-    limit = Session.config.MAX_ELEMENTS_PAGE * 2
-    offset = (page - 1) * limit
-
-    data = await (await GroupSettings.get(chat_id=chat_id)).get_settings()
-    group = dict(list(data.items())[offset : (offset + limit)])
-
-    buttons = [
-        InlineKeyboardButton(
-            f"{'{CHECK_MARK_BUTTON}' if v else '{CROSS_MARK}'} {BUTTONS_SETTINGS[k]}".format_map(
-                Text()
-            ),
-            callback_data=f"settings|select|{k}|{int(v)}|{page}",
-        )
-        for k, v in group.items()
-    ]
-
-    page_buttons = []
-    buttons = build_menu(buttons, 2)
-
-    if page > 1:
-        page_buttons.append(
-            InlineKeyboardButton(
-                "{LEFT_ARROW}".format_map(Text()),
-                callback_data=f"settings|page|{page - 1}",
-            )
-        )
-    if len(data) > (offset + limit):
-        page_buttons.append(
-            InlineKeyboardButton(
-                "{RIGHT_ARROW}".format_map(Text()),
-                callback_data=f"settings|page|{page + 1}",
-            )
-        )
-
-    buttons.extend(
-        [
-            page_buttons,
-            [
-                InlineKeyboardButton(
-                    "Languages {GLOBE_SHOWING_EUROPE_AFRICA}".format_map(Text()),
-                    callback_data="lang",
-                ),
-                InlineKeyboardButton("Close 🗑", callback_data="close"),
-            ],
-        ]
-    )
-
-    return InlineKeyboardMarkup(buttons)
 
 
 async def get_welcome_buttons(chat_id: int):
@@ -209,3 +157,39 @@ async def mute_user_by_id_time(
     await context.bot.restrict_chat_member(
         chat_id, user_id, PERM_FALSE, until_date=int(time.time() + mute_time)
     )
+
+
+def validate_html(msg: str) -> bool:
+    tags = []
+    i = 0
+
+    while i < len(msg):
+        char = msg[i]
+
+        if char == "<":
+            close_tkn_index = msg.index(">", i)
+            next_chr_index = i + 1
+
+            if msg[next_chr_index] == "/":
+                cur_tag = msg[(next_chr_index + 1) : close_tkn_index]
+
+                if tags and cur_tag == tags[-1]:
+                    tags.pop()
+                else:
+                    return False
+            else:
+                new_tag = msg[next_chr_index:close_tkn_index]
+
+                if not new_tag:
+                    return False
+
+                if " " in new_tag:
+                    new_tag = new_tag[0 : new_tag.index(" ")]
+
+                tags.append(new_tag)
+
+            i = close_tkn_index + 1
+        else:
+            i += 1
+
+    return not bool(tags)

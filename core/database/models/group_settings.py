@@ -14,6 +14,7 @@ class GroupSettings(Model):
     set_silence = fields.BooleanField(default=False)
     block_new_member = fields.BooleanField(default=False)
     set_antiflood = fields.BooleanField(default=True)
+    set_antistorm = fields.BooleanField(default=False)
     set_user_profile_picture = fields.BooleanField(default=False)
     set_arabic_filter = fields.BooleanField(default=True)
     set_cirillic_filter = fields.BooleanField(default=True)
@@ -39,6 +40,16 @@ class GroupSettings(Model):
             "sender_chat_block": self.sender_chat_block,
             "spoiler_block": self.spoiler_block,
             "set_captcha": self.set_captcha,
+        }
+
+    async def get_chat_block(self):
+        return {
+            "block_new_member": self.block_new_member,
+            "set_user_profile_picture": self.set_user_profile_picture,
+            "set_arabic_filter": self.set_arabic_filter,
+            "set_cirillic_filter": self.set_cirillic_filter,
+            "set_chinese_filter": self.set_chinese_filter,
+            "zoophile_filter": self.zoophile_filter,
         }
 
     class Meta:

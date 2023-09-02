@@ -15,17 +15,109 @@ def owner_callback(application: Application):
 
 
 def admin_callback(application: Application):
+    # Settings - mode
     application.add_handler(
-        CallbackQueryHandler(
-            admin.settings.init, r"^settings\|select\|([a-zA-Z_]+)\|(\d)\|(\d+)$"
-        )
-    )
-    application.add_handler(
-        CallbackQueryHandler(admin.settings.settings_page, r"^settings\|page\|(\d+)$")
+        CallbackQueryHandler(admin.settings.settings, r"^settings$")
     )
     application.add_handler(
         CallbackQueryHandler(admin.settings.settings_modern, r"^settings\|modern$")
     )
+
+    # Settings - antiflood
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_antiflood.settings_antiflood, r"^settings\|antiflood$"
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_antiflood.settings_antiflood_state_cb,
+            r"^settings\|antiflood\|state$",
+        )
+    )
+
+    # Settings - antistorm
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_antistorm.settings_antistorm, r"^settings\|antistorm$"
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_antistorm.settings_antistorm_state_cb,
+            r"^settings\|antistorm\|state$",
+        )
+    )
+
+    # Settings - captcha
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_captcha.settings_captcha, r"^settings\|captcha$"
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_captcha.settings_captcha_state_cb,
+            r"^settings\|captcha\|state$",
+        )
+    )
+
+    # Settings - chat block
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_chat_block.settings_chat_block, r"^settings\|chat_block$"
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_chat_block.settings_chat_block_change,
+            r"^settings\|chat_block\|([a-zA-Z_-]+)$",
+        )
+    )
+
+    # Settings - filters
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_filters.settings_filters, r"^settings\|filters$"
+        )
+    )
+
+    # Settings - night
+    application.add_handler(
+        CallbackQueryHandler(admin.settings_night.settings_night, r"^settings\|night$")
+    )
+
+    # Settings - rules
+    application.add_handler(
+        CallbackQueryHandler(admin.settings_rules.settings_rules, r"^settings\|rules$")
+    )
+
+    # Settings - welcome
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_welcome.settings_welcome, r"^settings\|welcome$"
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_welcome.settings_welcome_state_cb,
+            r"^settings\|welcome\|state$",
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_welcome.settings_welcome_see_message_cb,
+            r"^settings\|welcome\|see_message$",
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_welcome.settings_welcome_set_message_cb,
+            r"^settings\|welcome\|set_message$",
+        )
+    )
+
+    # Lang
     application.add_handler(CallbackQueryHandler(admin.languages.init, r"^lang$"))
     application.add_handler(
         CallbackQueryHandler(admin.languages.change_lang, r"^lang\|([a-zA-Z]+)$")
@@ -41,7 +133,7 @@ def admin_callback(application: Application):
         CallbackQueryHandler(admin.warn.set_max_warn_cb, r"^warn\|set\|(\d+)$")
     )
 
-    # antiflood
+    # Antiflood
     application.add_handler(
         CallbackQueryHandler(
             admin.antiflood.set_antiflood_minus_cb,
@@ -60,7 +152,7 @@ def admin_callback(application: Application):
         )
     )
 
-    # antistorm
+    # Antistorm
     application.add_handler(
         CallbackQueryHandler(
             admin.antistorm.set_antistorm_minus_cb,

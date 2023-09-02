@@ -6,12 +6,13 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
+from config import Session
 from core.decorators import check_is_admin, delete_command, on_update
 from core.utilities import filters
 from core.utilities.enums import Role
 from core.utilities.message import message
 from core.utilities.telegram_update import TelegramUpdate
-from languages import get_lang
+from core.utilities.text import Text
 
 
 @on_update(
@@ -22,17 +23,19 @@ from languages import get_lang
 @check_is_admin
 @delete_command
 async def init(update: TelegramUpdate, context: ContextTypes.DEFAULT_TYPE):
-    lang = await get_lang(update)
-    buttons = [
-        [
-            InlineKeyboardButton("Classic", callback_data="settings|page|1"),
-            InlineKeyboardButton("Modern", callback_data="settings|modern"),
-        ],
-    ]
+    lang = await update.lang
 
-    await message(
+    m = await message(
         update,
         context,
-        lang["SETTINGS_MODE_SELECTION"],
-        reply_markup=InlineKeyboardMarkup(buttons),
+        lang["SETTINGS"]["SETTINGS_MODE_SELECTION"].format_map(Text()),
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton("Classic", callback_data="settings"),
+                    InlineKeyboardButton("Modern", callback_data="settings|modern"),
+                ],
+            ]
+        ),
     )
+    Session.last_settings[update.effective_chat.id] = m.message_id

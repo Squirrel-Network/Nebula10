@@ -14,7 +14,6 @@
     "LANG_DEFAULT": "en",
     "LANG_FLAG": "{FLAG_UNITED_KINGDOM}",
     "LANG_SELECTED": "You have selected the English language for your group",
-    "MAIN_TEXT_SETTINGS": "{GEAR} Bot settings\n\n{SCROLL} Group Name: <i>{NAME}</i>\n{LABEL} ChatId: <code>{ID}</code>",
     "MESSAGE_DM_FILTERS": "The bot has sent you a private message with the filter settings.",
     "NEW_MEMBER_WITHOUT_PHOTO": "<a href=\"tg://user?id={ID}\">{NAME}</a> set a profile picture! You were kicked for safety!",
     "OPERATOR_JOIN": "The bot operator <a href=\"tg://user?id={ID}\">{NAME}</a> has just joined the group",
@@ -114,5 +113,26 @@
     "WELCOME_CAPTCHA_NOT_VALID": "Captcha not valid",
     "WELCOME_CAPTCHA_CLEANUP": "@{USERNAME} the captcha is no longer valid",
     "BAN_ERROR_NO_ID": "Please enter a valid id or username\nExample: /ban id",
-    "SETTINGS_MODE_SELECTION": "Choose the mode to open the settings"
+    "SETTINGS": {
+        "SETTINGS_MODE_SELECTION": "Choose the method to access the settings {HAMMER_AND_WRENCH}",
+        "SETTINGS_MAIN_TEXT": "{GEAR} Bot settings\n\n{SCROLL} Group Name: <i>{NAME}</i>\n{LABEL} ChatId: <code>{ID}</code>",
+        "WELCOME": {
+            "SETTINGS_WELCOME": "{SCROLL}{BACKHAND_INDEX_POINTING_RIGHT}{WAVING_HAND} From this menu, you can select the setting for the welcome message {GLOWING_STAR}",
+            "SETTINGS_WELCOME_TEXT": "{SPARKLES} Now, go ahead and send the welcome message you'd like! {ENVELOPE}",
+            "SETTINGS_WELCOME_TEXT_INVALID_HTML": "The entered text contains invalid HTML!",
+            "SETTINGS_WELCOME_TEXT_DONE": "{ENVELOPE_WITH_ARROW}{GLOWING_STAR} You've successfully set your welcome message. Now, let's send it! {ROCKET}{WAVING_HAND}"
+        },
+        "CHAT_BLOCK": {
+            "MAIN_TEXT": "Choose your settings regarding blocking of revenue:"
+        },
+        "CAPTCHA": {
+            "MAIN_TEXT": "Settings concerning the captcha:"
+        },
+        "ANTIFLOOD": {
+            "MAIN_TEXT": "Anti-flood settings:"
+        },
+        "ANTISTORM": {
+            "MAIN_TEXT": "Anti-storm settings:"
+        }
+    }
 }

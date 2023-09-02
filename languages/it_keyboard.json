@@ -1,0 +1,34 @@
+{
+    "SETTINGS": {
+        "MAIN_BUTTON": {
+            "SETTINGS_WELCOME": "{WAVING_HAND} Benvenuto",
+            "SETTINGS_RULES": "{SCROLL} Regolamento",
+            "SETTINGS_ANTIFLOOD": "{PROHIBITED} Antiflood",
+            "SETTINGS_ANTISTORM": "{CLOUD_WITH_LIGHTNING} Antistorm",
+            "SETTINGS_FILTERS": "{FACE_WITH_MONOCLE} Filtri",
+            "SETTINGS_CHAT_BLOCK": "{NO_ENTRY} Blocchi chat",
+            "SETTINGS_NIGHT": "{CRESCENT_MOON} Notte",
+            "SETTINGS_CAPTCHA": "{ROBOT} Captcha"
+        },
+        "WELCOME": {
+            "SETTINGS_WELCOME_SET_MESSAGE": "{WRITING_HAND} Imposta messaggio",
+            "SETTINGS_WELCOME_SEE_MESSAGE": "{EYES} Vedi messaggio"
+        },
+        "CHAT_BLOCK": {
+            "BLOCK_NEW_MEMBER": "Deny All Entry {NO_PEDESTRIANS}",
+            "SET_USER_PROFILE_PICTURE": "No User Photo Entry {NO_ENTRY}",
+            "SET_ARABIC_FILTER": "No Arabic Entry {NO_ENTRY}",
+            "SET_CIRILLIC_FILTER": "No Russian Entry {NO_ENTRY}",
+            "SET_CHINESE_FILTER": "No Chinese Entry {NO_ENTRY}",
+            "ZOOPHILE_FILTER": "No ZooPhile Entry {NO_ENTRY}",
+            "ACTIVE_BUTTON": "{CHECK_MARK_BUTTON} ",
+            "DEACTIVE_BUTTON": "{CROSS_MARK} "
+        },
+        "ACTIVE": "{CHECK_MARK_BUTTON} Attiva",
+        "DEACTIVE": "{CROSS_MARK} Disattiva"
+    },
+    "CLOSE": "{WASTEBASKET} Chiudi",
+    "LANG": "{GLOBE_SHOWING_EUROPE_AFRICA} Lingua",
+    "BACK": "{BACK_ARROW} Indietro",
+    "CANCEL": "{CROSS_MARK} Annulla"
+}
