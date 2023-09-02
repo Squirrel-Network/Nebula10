@@ -27,7 +27,7 @@ async def get_keyboard(update: TelegramUpdate) -> InlineKeyboardMarkup:
     )
     buttons = [
         InlineKeyboardButton(
-            lang_kb[is_active].format_map(Text()),
+            lang_kb["SETTINGS"]["WELCOME"][is_active].format_map(Text()),
             callback_data="settings|welcome|state",
         )
     ]
@@ -36,11 +36,15 @@ async def get_keyboard(update: TelegramUpdate) -> InlineKeyboardMarkup:
         buttons.extend(
             [
                 InlineKeyboardButton(
-                    lang_kb["SETTINGS_WELCOME_SET_MESSAGE"].format_map(Text()),
+                    lang_kb["SETTINGS"]["WELCOME"][
+                        "SETTINGS_WELCOME_SET_MESSAGE"
+                    ].format_map(Text()),
                     callback_data="settings|welcome|set_message",
                 ),
                 InlineKeyboardButton(
-                    lang_kb["SETTINGS_WELCOME_SEE_MESSAGE"].format_map(Text()),
+                    lang_kb["SETTINGS"]["WELCOME"][
+                        "SETTINGS_WELCOME_SEE_MESSAGE"
+                    ].format_map(Text()),
                     callback_data="settings|welcome|see_message",
                 ),
             ]

@@ -23,6 +23,19 @@ def admin_callback(application: Application):
         CallbackQueryHandler(admin.settings.settings_modern, r"^settings\|modern$")
     )
 
+    # Settings - chat block
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_chat_block.settings_chat_block, r"^settings\|chat_block$"
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_chat_block.settings_chat_block_change,
+            r"^settings\|chat_block\|([a-zA-Z_-]+)$",
+        )
+    )
+
     # Settings - filters
     application.add_handler(
         CallbackQueryHandler(

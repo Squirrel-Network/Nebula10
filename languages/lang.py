@@ -13,10 +13,15 @@ class SettingsWelcomeTexts(typing.TypedDict):
     SETTINGS_WELCOME_TEXT_DONE: str
 
 
+class SettingsChatBlockTexts(typing.TypedDict):
+    MAIN_TEXT: str
+
+
 class SettingsTexts(typing.TypedDict):
     SETTINGS_MODE_SELECTION: str
     SETTINGS_MAIN_TEXT: str
     WELCOME: SettingsWelcomeTexts
+    CHAT_BLOCK: SettingsChatBlockTexts
 
 
 class Lang(typing.TypedDict):
@@ -150,16 +155,32 @@ class SettingsMainButtonTexts(typing.TypedDict):
     SETTINGS_CAPTCHA: str
 
 
-class SettingsKeyboardTexts(typing.TypedDict):
-    MAIN_BUTTON: SettingsMainButtonTexts
-
-
-class LangKeyboard(typing.TypedDict):
-    SETTINGS: SettingsKeyboardTexts
+class WelcomeKeyboardTexts(typing.TypedDict):
     SETTINGS_WELCOME_STATE_ACTIVE: str
     SETTINGS_WELCOME_STATE_DEACTIVE: str
     SETTINGS_WELCOME_SET_MESSAGE: str
     SETTINGS_WELCOME_SEE_MESSAGE: str
+
+
+class ChatBlockKeyboardTexts(typing.TypedDict):
+    BLOCK_NEW_MEMBER: str
+    SET_USER_PROFILE_PICTURE: str
+    SET_ARABIC_FILTER: str
+    SET_CIRILLIC_FILTER: str
+    SET_CHINESE_FILTER: str
+    ZOOPHILE_FILTER: str
+    ACTIVE_BUTTON: str
+    DEACTIVE_BUTTON: str
+
+
+class SettingsKeyboardTexts(typing.TypedDict):
+    MAIN_BUTTON: SettingsMainButtonTexts
+    WELCOME: WelcomeKeyboardTexts
+    CHAT_BLOCK: ChatBlockKeyboardTexts
+
+
+class LangKeyboard(typing.TypedDict):
+    SETTINGS: SettingsKeyboardTexts
     CLOSE: str
     LANG: str
     BACK: str

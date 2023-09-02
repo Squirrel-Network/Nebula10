@@ -121,6 +121,9 @@
             "SETTINGS_WELCOME_TEXT": "{SPARKLES} Now, go ahead and send the welcome message you'd like! {ENVELOPE}",
             "SETTINGS_WELCOME_TEXT_INVALID_HTML": "The entered text contains invalid HTML!",
             "SETTINGS_WELCOME_TEXT_DONE": "{ENVELOPE_WITH_ARROW}{GLOWING_STAR} You've successfully set your welcome message. Now, let's send it! {ROCKET}{WAVING_HAND}"
+        },
+        "CHAT_BLOCK": {
+            "MAIN_TEXT": "Choose your settings regarding blocking of revenue:"
         }
     }
 }

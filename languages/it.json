@@ -121,6 +121,9 @@
             "SETTINGS_WELCOME_TEXT": "{SPARKLES} Ora vai avanti e invia il messaggio di benvenuto che desideri! {ENVELOPE}",
             "SETTINGS_WELCOME_TEXT_INVALID_HTML": "Il testo inserito contiene HTML non valido!",
             "SETTINGS_WELCOME_TEXT_DONE": "{ENVELOPE_WITH_ARROW}{GLOWING_STAR} Hai impostato correttamente il tuo messaggio di benvenuto. Adesso inviamolo! {ROCKET}{WAVING_HAND}"
+        },
+        "CHAT_BLOCK": {
+            "MAIN_TEXT": "Scegli le impostazioni per quanto riguarda il blocco delle entrate:"
         }
     }
 }
