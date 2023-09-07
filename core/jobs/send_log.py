@@ -15,5 +15,5 @@ async def send_log():
         data = f.read()
 
     await Session.bot.send_document(
-        Session.config.DEFAULT_LOG_CHANNEL, InputFile(data), "#log"
+        Session.config.DEFAULT_DEBUG_CHANNEL, InputFile(data), "#log"
     )

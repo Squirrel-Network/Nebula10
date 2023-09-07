@@ -56,7 +56,7 @@ class Config(BaseSettings):
     # Project settings
     DEBUG: bool = False
     DEFAULT_LANGUAGE: str = "EN"
-    VERSION: str = "10.0.0"
+    VERSION: str = "10.1.8"
     VERSION_NAME: str = "Lucario"
     REPO: str = "https://github.com/Squirrel-Network/nebula10"
     MAX_ELEMENTS_PAGE: int = 5
