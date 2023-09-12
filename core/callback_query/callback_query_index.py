@@ -70,8 +70,14 @@ def admin_callback(application: Application):
     )
     application.add_handler(
         CallbackQueryHandler(
-            admin.settings_chat_block.settings_chat_block_change,
-            r"^settings\|chat_block\|([a-zA-Z_-]+)$",
+            admin.settings_chat_block.settings_chat_block_blocks,
+            r"^settings\|chat_block\|blocks$",
+        )
+    )
+    application.add_handler(
+        CallbackQueryHandler(
+            admin.settings_chat_block.settings_chat_block_blocks_change,
+            r"^settings\|chat_block\|blocks\|([a-zA-Z_-]+)$",
         )
     )
 

@@ -123,16 +123,17 @@
             "SETTINGS_WELCOME_TEXT_DONE": "{ENVELOPE_WITH_ARROW}{GLOWING_STAR} Hai impostato correttamente il tuo messaggio di benvenuto. Adesso inviamolo! {ROCKET}{WAVING_HAND}"
         },
         "CHAT_BLOCK": {
-            "MAIN_TEXT": "Scegli le impostazioni per quanto riguarda il blocco delle entrate:"
+            "MAIN_TEXT": "Cambia le impostazioni per quanto riguarda il blocco delle entrate {CONSTRUCTION}{HAMMER_AND_WRENCH}",
+            "BLOCKS_TEXT": "Imposta qui i blocchi per questa chat:"
         },
         "CAPTCHA": {
             "MAIN_TEXT": "Impostazioni riguardanti il captcha:"
         },
         "ANTIFLOOD": {
-            "MAIN_TEXT": "Impostazioni riguardanti l'antiflood:"
+            "MAIN_TEXT": "{NO_ENTRY}{SPEECH_BALLOON} Impostazioni riguardanti l'antiflood:"
         },
         "ANTISTORM": {
-            "MAIN_TEXT": "Impostazioni riguardanti l'antistorm:"
+            "MAIN_TEXT": "{CLOUD_WITH_RAIN}{GEAR} Impostazioni riguardanti l'antistorm:"
         }
     }
 }

@@ -15,12 +15,16 @@
             "SETTINGS_WELCOME_SEE_MESSAGE": "{EYES} See message"
         },
         "CHAT_BLOCK": {
-            "BLOCK_NEW_MEMBER": "Deny All Entry {NO_PEDESTRIANS}",
-            "SET_USER_PROFILE_PICTURE": "No User Photo Entry {NO_ENTRY}",
-            "SET_ARABIC_FILTER": "No Arabic Entry {NO_ENTRY}",
-            "SET_CIRILLIC_FILTER": "No Russian Entry {NO_ENTRY}",
-            "SET_CHINESE_FILTER": "No Chinese Entry {NO_ENTRY}",
-            "ZOOPHILE_FILTER": "No ZooPhile Entry {NO_ENTRY}",
+            "OBLIGATIONS": "{SCROLL} Obligations",
+            "BLOCKS": "{NO_ENTRY} Blocks",
+            "BLOCKS_BUTTONS": {
+                "BLOCK_NEW_MEMBER": "Deny All Entry {NO_PEDESTRIANS}",
+                "SET_USER_PROFILE_PICTURE": "No User Photo Entry {NO_ENTRY}",
+                "SET_ARABIC_FILTER": "No Arabic Entry {NO_ENTRY}",
+                "SET_CIRILLIC_FILTER": "No Russian Entry {NO_ENTRY}",
+                "SET_CHINESE_FILTER": "No Chinese Entry {NO_ENTRY}",
+                "ZOOPHILE_FILTER": "No ZooPhile Entry {NO_ENTRY}"
+            },
             "ACTIVE_BUTTON": "{CHECK_MARK_BUTTON} ",
             "DEACTIVE_BUTTON": "{CROSS_MARK} "
         },

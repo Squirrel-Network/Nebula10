@@ -123,16 +123,17 @@
             "SETTINGS_WELCOME_TEXT_DONE": "{ENVELOPE_WITH_ARROW}{GLOWING_STAR} You've successfully set your welcome message. Now, let's send it! {ROCKET}{WAVING_HAND}"
         },
         "CHAT_BLOCK": {
-            "MAIN_TEXT": "Choose your settings regarding blocking of revenue:"
+            "MAIN_TEXT": "Choose the settings regarding entrance blocking {CONSTRUCTION}{HAMMER_AND_WRENCH}",
+            "BLOCKS_TEXT": "Imposta qui i blocchi per questa chat:"
         },
         "CAPTCHA": {
             "MAIN_TEXT": "Settings concerning the captcha:"
         },
         "ANTIFLOOD": {
-            "MAIN_TEXT": "Anti-flood settings:"
+            "MAIN_TEXT": "{NO_ENTRY}{SPEECH_BALLOON} Settings concerning antiflood:"
         },
         "ANTISTORM": {
-            "MAIN_TEXT": "Anti-storm settings:"
+            "MAIN_TEXT": "{CLOUD_WITH_RAIN}{GEAR} Settings concerning antistorm:"
         }
     }
 }

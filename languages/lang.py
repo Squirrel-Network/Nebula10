@@ -15,6 +15,7 @@ class SettingsWelcomeTexts(typing.TypedDict):
 
 class SettingsChatBlockTexts(typing.TypedDict):
     MAIN_TEXT: str
+    BLOCKS_TEXT: str
 
 
 class SettingsCaptchaTexts(typing.TypedDict):
@@ -175,13 +176,19 @@ class WelcomeKeyboardTexts(typing.TypedDict):
     SETTINGS_WELCOME_SEE_MESSAGE: str
 
 
-class ChatBlockKeyboardTexts(typing.TypedDict):
+class ChatBlockBlocksButtonsKeyboardTexts(typing.TypedDict):
     BLOCK_NEW_MEMBER: str
     SET_USER_PROFILE_PICTURE: str
     SET_ARABIC_FILTER: str
     SET_CIRILLIC_FILTER: str
     SET_CHINESE_FILTER: str
     ZOOPHILE_FILTER: str
+
+
+class ChatBlockKeyboardTexts(typing.TypedDict):
+    OBLIGATIONS: str
+    BLOCKS: str
+    BLOCKS_BUTTONS: ChatBlockBlocksButtonsKeyboardTexts
     ACTIVE_BUTTON: str
     DEACTIVE_BUTTON: str
 
