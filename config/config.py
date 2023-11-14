@@ -3,57 +3,20 @@
 
 # Copyright SquirrelNetwork
 
-import os
-import typing
-
-from pydantic.fields import FieldInfo
-from pydantic_settings import (
-    BaseSettings,
-    EnvSettingsSource,
-    PydanticBaseSettingsSource,
-)
-
-LIST_ENV = {
-    "HOST": "MYSQL_HOST",
-    "PORT": "MYSQL_PORT",
-    "USER": "MYSQL_USER",
-    "PASSWORD": "MYSQL_PASSWORD",
-    "DBNAME": "MYSQL_DBNAME",
-    "BOT_TOKEN": "TOKEN",
-    "TOKEN_SECRET": "TOKEN_SECRET",
-    "DEFAULT_WELCOME": "TG_DEFAULT_WELCOME",
-    "DEFAULT_RULES": "TG_DEFAULT_RULES",
-    "DEFAULT_LOG_CHANNEL": "TG_DEFAULT_LOG_CHANNEL",
-    "DEFAULT_STAFF_GROUP": "TG_DEFAULT_STAFF_GROUP",
-    "DEFAULT_DEBUG_CHANNEL": "TG_DEFAULT_DEBUG_CHANNEL",
-    "OWNER_ID": "TG_OWNER_ID",
-    "OWNER_USERNAME": "TG_OWNER_USERNAME",
-}
+from pydantic import Field
+from pydantic_settings import BaseSettings
 
 
-class MyCustomSource(EnvSettingsSource):
-    def prepare_field_value(
-        self,
-        field_name: str,
-        field: FieldInfo,
-        value: typing.Any,
-        value_is_complex: bool,
-    ) -> typing.Any:
-        if v := os.environ.get(LIST_ENV.get(field_name) or ""):
-            return v
-        return value
-
-
-class Config(BaseSettings):
+class Config(BaseSettings, case_sensitive=True):
     # Database settings
-    HOST: str = "localhost"
-    PORT: int = 3306
-    USER: str = "root"
-    PASSWORD: str
-    DBNAME: str
-    BOT_TOKEN: str
+    HOST: str = Field("localhost", alias="MYSQL_HOST")
+    PORT: int = Field(3306, alias="MYSQL_PORT")
+    USER: str = Field("root", alias="MYSQL_USER")
+    PASSWORD: str = Field(alias="MYSQL_PASSWORD")
+    DBNAME: str = Field(alias="MYSQL_DBNAME")
 
     # Project settings
+    BOT_TOKEN: str = Field(alias="TOKEN")
     DEBUG: bool = False
     DEFAULT_LANGUAGE: str = "EN"
     VERSION: str = "10.1.8"
@@ -65,28 +28,21 @@ class Config(BaseSettings):
     WEBAPP_URL: str = "https://webapp.nebula.squirrel-network.online"
     INT_WEBSRV_URL: str = "https://nebula.squirrel-network.online"
     WEBAPP_PORT: int = 4046
-    TOKEN_SECRET: str
+    TOKEN_SECRET: str = Field(alias="TOKEN_SECRET")
     JWT_TOKEN_EXPIRES: int = 300
 
     # Telegram settings
-    DEFAULT_WELCOME: str = "Welcome {USERNAME} to the {CHAT} group"
-    DEFAULT_RULES: str = "https://github.com/Squirrel-Network/GroupRules"
-    DEFAULT_LOG_CHANNEL: int
-    DEFAULT_STAFF_GROUP: int
-    DEFAULT_DEBUG_CHANNEL: int
-    OWNER_ID: int
-    OWNER_USERNAME: str
+    DEFAULT_WELCOME: str = Field(
+        "Welcome {USERNAME} to the {CHAT} group", alias="TG_DEFAULT_WELCOME"
+    )
+    DEFAULT_RULES: str = Field(
+        "https://github.com/Squirrel-Network/GroupRules", alias="TG_DEFAULT_RULES"
+    )
+    DEFAULT_LOG_CHANNEL: int = Field(alias="TG_DEFAULT_LOG_CHANNEL")
+    DEFAULT_STAFF_GROUP: int = Field(alias="TG_DEFAULT_STAFF_GROUP")
+    DEFAULT_DEBUG_CHANNEL: int = Field(alias="TG_DEFAULT_DEBUG_CHANNEL")
+    OWNER_ID: int = Field(alias="TG_OWNER_ID")
+    OWNER_USERNAME: str = Field(alias="TG_OWNER_USERNAME")
     MAX_KEYBOARD_ROW: int = 8
     MAX_KEYBOARD_COLUMN: int = 4
     DEVELOPERS_CHAT_ID: list[int] = [1065189838, 1639391463]
-
-    @classmethod
-    def settings_customise_sources(
-        cls,
-        settings_cls: type[BaseSettings],
-        init_settings: PydanticBaseSettingsSource,
-        env_settings: PydanticBaseSettingsSource,
-        dotenv_settings: PydanticBaseSettingsSource,
-        file_secret_settings: PydanticBaseSettingsSource,
-    ) -> tuple[PydanticBaseSettingsSource, ...]:
-        return (MyCustomSource(settings_cls),)
